@@ -130,5 +130,11 @@ namespace Bandwidth.Net
       }
       return await MakeRequestAsync(request, cancellationToken);
     }
+
+    internal async Task<string> MakePostJsonRequestAsync(string path, CancellationToken? cancellationToken = null, object body = null)
+    {
+      var response = await MakeJsonRequestAsync(HttpMethod.Post, path, cancellationToken, null, body);
+      return response.Headers.Location.AbsolutePath.Split('/').LastOrDefault();
+    }
   }
 }

@@ -16,10 +16,10 @@ namespace Bandwidth.Net
   {
     internal readonly string UserId;
     private readonly IHttp _http;
-    private static readonly ProductInfoHeaderValue _userAgent = BuildUserAgent();
+    private static readonly ProductInfoHeaderValue UserAgent = BuildUserAgent();
     private readonly AuthenticationHeaderValue _authentication;
     private readonly string _baseUrl;
-    private const string _version = "v1";
+    private const string Version = "v1";
 
     /// <summary>
     /// Constructor
@@ -86,11 +86,13 @@ namespace Bandwidth.Net
 
     internal HttpRequestMessage CreateRequest(HttpMethod method, string path, object query = null)
     {
-      var url = new UriBuilder(_baseUrl);
-      url.Path = $"/{_version}{path}";
-      url.Query = BuildQueryString(query);
+      var url = new UriBuilder(_baseUrl)
+      {
+        Path = $"/{Version}{path}",
+        Query = BuildQueryString(query)
+      };
       var message = new HttpRequestMessage(method, url.Uri);
-      message.Headers.UserAgent.Add(_userAgent);
+      message.Headers.UserAgent.Add(UserAgent);
       message.Headers.Authorization = _authentication;
       return message;
     }
@@ -98,27 +100,27 @@ namespace Bandwidth.Net
     internal HttpRequestMessage CreateGetRequest(string url)
     {
       var message = new HttpRequestMessage(HttpMethod.Get, url);
-      message.Headers.UserAgent.Add(_userAgent);
+      message.Headers.UserAgent.Add(UserAgent);
       message.Headers.Authorization = _authentication;
       return message;
     }
 
-    internal async Task<HttpResponseMessage> MakeRequest(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken? cancellationToken = null)
+    internal async Task<HttpResponseMessage> MakeRequestAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken? cancellationToken = null)
     {
       var response = await _http.SendAsync(request, completionOption, cancellationToken ?? CancellationToken.None);
-      await response.CheckResponse();
+      await response.CheckResponseAsync();
       return response;
     }
 
-    internal async Task<T> MakeJsonRequest<T>(HttpMethod method, string path, CancellationToken? cancellationToken = null, object query = null, object body = null)
+    internal async Task<T> MakeJsonRequestAsync<T>(HttpMethod method, string path, CancellationToken? cancellationToken = null, object query = null, object body = null)
     {
-      using (var response = await MakeJsonRequest(method, path, cancellationToken, query, body))
+      using (var response = await MakeJsonRequestAsync(method, path, cancellationToken, query, body))
       {
         return await response.ReadAsJsonAsync<T>();
       }
     }
 
-    internal async Task<HttpResponseMessage> MakeJsonRequest(HttpMethod method, string path, CancellationToken? cancellationToken = null, object query = null, object body = null)
+    internal async Task<HttpResponseMessage> MakeJsonRequestAsync(HttpMethod method, string path, CancellationToken? cancellationToken = null, object query = null, object body = null)
     {
       var request = CreateRequest(method, path, query);
       request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -126,7 +128,7 @@ namespace Bandwidth.Net
       {
         request.SetJsonContent(body);
       }
-      return await MakeRequest(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
+      return await MakeRequestAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
     }
   }
 }

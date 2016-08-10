@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -24,7 +23,7 @@ namespace Bandwidth.Net.Test.Api
       context.Arrange(c => c.SendAsync(The<HttpRequestMessage>.Is(m => IsValidGetRequest(m)), HttpCompletionOption.ResponseContentRead,
         CancellationToken.None)).Returns(Task.FromResult(response));
       var api = GetApi(context);
-      var account = await api.Get();
+      var account = await api.GetAsync();
       Assert.Equal("538.37250", account.Balance);
       Assert.Equal(AccountType.PrePay, account.AccountType);
     }

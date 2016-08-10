@@ -8,5 +8,6 @@
 [assembly: AssemblyTrademark("Bandwidth")]
 
 #if DEBUG
+// Allow to tests to see internal members
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Bandwidth.Net.Test")]
 #endif

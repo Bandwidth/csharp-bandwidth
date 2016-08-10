@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -53,7 +52,7 @@ namespace Bandwidth.Net.Test
       }
     }
 
-    class TestItem
+    public class TestItem
     {
       public int Field1 { get; set; }
     }
@@ -64,68 +63,67 @@ namespace Bandwidth.Net.Test
       using (var response = new HttpResponseMessage(HttpStatusCode.OK))
       {
         response.Content = new StringContent("{\"field1\": 100}", Encoding.UTF8, "application/json");
-        await response.CheckResponse();
+        await response.CheckResponseAsync();
       }
     }
 
     [Fact]
     public async void TestCheckResponseForErrorWithJsonPayload()
     {
-      using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
+      var ex = await Assert.ThrowsAsync<BandwidthException>(() =>
       {
-        response.Content = new StringContent("{\"code\": \"100\", \"message\": \"Error message\"}", Encoding.UTF8, "application/json");
-        var ex = await Assert.ThrowsAsync<BandwidthException>(() =>
+        using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
         {
-          return response.CheckResponse();
-        });
-        Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
-        Assert.Equal("Error message", ex.Message);
-      }
+          response.Content = new StringContent("{\"code\": \"100\", \"message\": \"Error message\"}", Encoding.UTF8, "application/json");
+          return response.CheckResponseAsync();
+        }
+      });
+      Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
+      Assert.Equal("Error message", ex.Message);
     }
 
     [Fact]
     public async void TestCheckResponseForErrorWithCodeOnly()
     {
-      using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
+      var ex = await Assert.ThrowsAsync<BandwidthException>(() =>
       {
-        response.Content = new StringContent("{\"code\": \"100\"}", Encoding.UTF8, "application/json");
-        var ex = await Assert.ThrowsAsync<BandwidthException>(() =>
+        using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
         {
-          return response.CheckResponse();
-        });
-        Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
-        Assert.Equal("100", ex.Message);
-      }
+          response.Content = new StringContent("{\"code\": \"100\"}", Encoding.UTF8, "application/json");
+          return response.CheckResponseAsync();
+        }
+      });
+      Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
+      Assert.Equal("100", ex.Message);
     }
 
     [Fact]
     public async void TestCheckResponseWithInvalidJson()
     {
-      using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
+      var ex = await Assert.ThrowsAsync<BandwidthException>(() =>
       {
-        response.Content = new StringContent("{\"code\": \"100", Encoding.UTF8, "application/json");
-        var ex = await Assert.ThrowsAsync<BandwidthException>(() =>
+        using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
         {
-          return response.CheckResponse();
-        });
-        Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
-      }
+          response.Content = new StringContent("{\"code\" \"100", Encoding.UTF8, "application/json");
+          return response.CheckResponseAsync();
+        }
+      });
+      Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
     }
 
     [Fact]
     public async void TestCheckResponseWithNonJson()
     {
-      using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
+      var ex = await Assert.ThrowsAsync<BandwidthException>(() =>
       {
-        response.Content = new StringContent("Error message", Encoding.UTF8, "text/plain");
-        var ex = await Assert.ThrowsAsync<BandwidthException>(() =>
+        using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
         {
-          return response.CheckResponse();
-        });
-        Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
-        Assert.Equal("Error message", ex.Message);
-      }
+          response.Content = new StringContent("Error message", Encoding.UTF8, "text/plain");
+          return response.CheckResponseAsync();
+        }
+      });
+      Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
+      Assert.Equal("Error message", ex.Message);
     }
-
   }
 }

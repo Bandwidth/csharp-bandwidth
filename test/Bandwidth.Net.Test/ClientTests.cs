@@ -74,7 +74,7 @@ namespace Bandwidth.Net.Test
       var request = new HttpRequestMessage(HttpMethod.Get, "/test");
       context.Arrange(c => c.SendAsync(request, HttpCompletionOption.ResponseContentRead, CancellationToken.None))
           .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
-      var response = await api.MakeRequest(request, HttpCompletionOption.ResponseContentRead, CancellationToken.None);
+      var response = await api.MakeRequestAsync(request, HttpCompletionOption.ResponseContentRead, CancellationToken.None);
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
@@ -85,7 +85,7 @@ namespace Bandwidth.Net.Test
       var api = new Client("userId", "apiToken", "apiSecret", "http://host", new Mocks.Http(context));
       context.Arrange(c => c.SendAsync(The<HttpRequestMessage>.IsAnyValue, HttpCompletionOption.ResponseContentRead, CancellationToken.None))
           .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent("{\"test\": \"value\"}", Encoding.UTF8, "application/json") }));
-      var result = await api.MakeJsonRequest<MakeJsonRequestDemo>(HttpMethod.Get, "/test");
+      var result = await api.MakeJsonRequestAsync<MakeJsonRequestDemo>(HttpMethod.Get, "/test");
       Assert.Equal("value", result.Test);
     }
 
@@ -96,7 +96,7 @@ namespace Bandwidth.Net.Test
       var api = new Client("userId", "apiToken", "apiSecret", "http://host", new Mocks.Http(context));
       context.Arrange(c => c.SendAsync(The<HttpRequestMessage>.Is(m => IsValidRequestWithoutBody(m)), HttpCompletionOption.ResponseContentRead, CancellationToken.None))
           .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
-      var response = await api.MakeJsonRequest(HttpMethod.Get, "/test");
+      var response = await api.MakeJsonRequestAsync(HttpMethod.Get, "/test");
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
@@ -107,7 +107,7 @@ namespace Bandwidth.Net.Test
       var api = new Client("userId", "apiToken", "apiSecret", "http://host", new Mocks.Http(context));
       context.Arrange(c => c.SendAsync(The<HttpRequestMessage>.Is(m => IsValidRequestWithBody(m)), HttpCompletionOption.ResponseContentRead, CancellationToken.None))
           .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
-      var response = await api.MakeJsonRequest(HttpMethod.Get, "/test", null,  null, new { Field = "value" });
+      var response = await api.MakeJsonRequestAsync(HttpMethod.Get, "/test", null,  null, new { Field = "value" });
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 

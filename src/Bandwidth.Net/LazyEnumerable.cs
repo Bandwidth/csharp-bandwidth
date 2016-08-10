@@ -50,7 +50,7 @@ namespace Bandwidth.Net
           yield break;
         }
         var request = _client.CreateGetRequest(nextPageUrl);
-        response = _client.MakeRequest(request).Result;
+        response = _client.MakeRequestAsync(request).Result;
       }
     }
 

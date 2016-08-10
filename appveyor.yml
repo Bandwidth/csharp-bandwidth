@@ -11,7 +11,7 @@ test_script:
     - cd test\Bandwidth.Net.Test
     - dotnet build
     - cd bin\Debug\net45\win7-x64
-    - '%HOMEDRIVE%%HOMEPATH%\.nuget\packages\OpenCover\4.6.519\tools\OpenCover.Console.exe -target:"%HOMEDRIVE%%HOMEPATH%\.nuget\packages\xunit.runner.console\2.1.0\tools\xunit.console.exe" -targetargs:"Bandwidth.Net.Test.dll -noshadow -parallel none -appveyor" -output:coverage.xml -skipautoprops -returntargetcode -filter:"+[Bandwidth*]* -[*Test]*" -searchdirs:"." -register:user'
+    - '%HOMEDRIVE%%HOMEPATH%\.nuget\packages\OpenCover\4.6.519\tools\OpenCover.Console.exe -target:"%HOMEDRIVE%%HOMEPATH%\.nuget\packages\xunit.runner.console\2.1.0\tools\xunit.console.exe" -targetargs:"Bandwidth.Net.Test.dll -noshadow -appveyor" -output:coverage.xml -skipautoprops -returntargetcode -filter:"+[Bandwidth*]* -[*Test]*" -searchdirs:"." -register:user'
     - '%HOMEDRIVE%%HOMEPATH%\.nuget\packages\ReportGenerator\2.4.5\tools\ReportGenerator.exe -reports:coverage.xml -targetdir:html -reporttypes:TextSummary'
     - type html\Summary.txt
     - cd ..\..\..\..\..\..

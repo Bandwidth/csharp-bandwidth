@@ -12,14 +12,14 @@ namespace Bandwidth.Net.Api
   public interface IAccount
   {
     /// <summary>
-    /// Get information about account
+    /// GetAsync information about account
     /// </summary>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Task with <see cref="Account"/> Account instance</returns>
-    Task<Account> Get(CancellationToken? cancellationToken = null);
+    Task<Account> GetAsync(CancellationToken? cancellationToken = null);
 
     /// <summary>
-    /// Get a list of the transactions made to account
+    /// GetAsync a list of the transactions made to account
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
@@ -30,14 +30,14 @@ namespace Bandwidth.Net.Api
 
   internal class AccountApi: ApiBase, IAccount
   {
-    public Task<Account> Get(CancellationToken? cancellationToken = null)
+    public Task<Account> GetAsync(CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequest<Account>(HttpMethod.Get, $"/users/{Client.UserId}/account", cancellationToken);
+      return Client.MakeJsonRequestAsync<Account>(HttpMethod.Get, $"/users/{Client.UserId}/account", cancellationToken);
     }
 
     public IEnumerable<AccountTransaction> GetTransactions(AccountTransactionQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<AccountTransaction>(Client, () => Client.MakeJsonRequest(HttpMethod.Get, $"/users/{Client.UserId}/account/transactions", cancellationToken, query));
+      return new LazyEnumerable<AccountTransaction>(Client, () => Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/account/transactions", cancellationToken, query));
     }
   }
 

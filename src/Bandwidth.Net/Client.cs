@@ -105,9 +105,9 @@ namespace Bandwidth.Net
       return message;
     }
 
-    internal async Task<HttpResponseMessage> MakeRequestAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken? cancellationToken = null)
+    internal async Task<HttpResponseMessage> MakeRequestAsync(HttpRequestMessage request, CancellationToken? cancellationToken = null, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
     {
-      var response = await _http.SendAsync(request, completionOption, cancellationToken ?? CancellationToken.None);
+      var response = await _http.SendAsync(request, completionOption, cancellationToken);
       await response.CheckResponseAsync();
       return response;
     }
@@ -128,7 +128,7 @@ namespace Bandwidth.Net
       {
         request.SetJsonContent(body);
       }
-      return await MakeRequestAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken);
+      return await MakeRequestAsync(request, cancellationToken);
     }
   }
 }

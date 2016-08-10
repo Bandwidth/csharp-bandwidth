@@ -55,7 +55,7 @@ namespace Bandwidth.Net.Test
         Content = new StringContent("[\"2\", \"3\"]", Encoding.UTF8, "application/json")
       };
       var context = new MockContext<IHttp>();
-      context.ArrangeSendAsync(The<HttpRequestMessage>.Is(m => IsValidRequest(m)), nextPageResponse);
+      context.Arrange(m => m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequest(r)), HttpCompletionOption.ResponseContentRead, null)).Returns(Task.FromResult(nextPageResponse));
       var list = new LazyEnumerable<string>(Helpers.GetClient(context), () => Task.FromResult(response));
       Assert.Equal(new[] {"1", "2", "3"}, list);
     }

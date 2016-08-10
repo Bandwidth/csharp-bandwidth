@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
+using System.Threading.Tasks;
 using LightMock;
 using Xunit;
 
@@ -80,9 +80,9 @@ namespace Bandwidth.Net.Test
       var context = new MockContext<IHttp>();
       var api = Helpers.GetClient(context);
       var request = new HttpRequestMessage(HttpMethod.Get, "/test");
-      context.ArrangeSendAsync(request, new HttpResponseMessage(HttpStatusCode.OK));
+      context.Arrange(m => m.SendAsync(request, HttpCompletionOption.ResponseContentRead, null)).Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
       var response =
-        await api.MakeRequestAsync(request, HttpCompletionOption.ResponseContentRead, CancellationToken.None);
+        await api.MakeRequestAsync(request);
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
@@ -91,11 +91,10 @@ namespace Bandwidth.Net.Test
     {
       var context = new MockContext<IHttp>();
       var api = Helpers.GetClient(context);
-      context.ArrangeSendAsync(The<HttpRequestMessage>.IsAnyValue,
-        new HttpResponseMessage(HttpStatusCode.OK)
-        {
-          Content = new StringContent("{\"test\": \"value\"}", Encoding.UTF8, "application/json")
-        });
+      context.Arrange(m => m.SendAsync(The<HttpRequestMessage>.IsAnyValue, HttpCompletionOption.ResponseContentRead, null)).Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+      {
+        Content = new StringContent("{\"test\": \"value\"}", Encoding.UTF8, "application/json")
+        }));
       var result = await api.MakeJsonRequestAsync<MakeJsonRequestDemo>(HttpMethod.Get, "/test");
       Assert.Equal("value", result.Test);
     }
@@ -105,8 +104,9 @@ namespace Bandwidth.Net.Test
     {
       var context = new MockContext<IHttp>();
       var api = Helpers.GetClient(context);
-      context.ArrangeSendAsync(The<HttpRequestMessage>.Is(m => IsValidRequestWithoutBody(m)),
-        new HttpResponseMessage(HttpStatusCode.OK));
+      context.Arrange(
+        m => m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithoutBody(r)), HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
       var response = await api.MakeJsonRequestAsync(HttpMethod.Get, "/test");
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
@@ -116,8 +116,9 @@ namespace Bandwidth.Net.Test
     {
       var context = new MockContext<IHttp>();
       var api = Helpers.GetClient(context);
-      context.ArrangeSendAsync(The<HttpRequestMessage>.Is(m => IsValidRequestWithBody(m)),
-        new HttpResponseMessage(HttpStatusCode.OK));
+      context.Arrange(
+       m => m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithBody(r)), HttpCompletionOption.ResponseContentRead, null))
+       .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
       var response = await api.MakeJsonRequestAsync(HttpMethod.Get, "/test", null, null, new {Field = "value"});
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }

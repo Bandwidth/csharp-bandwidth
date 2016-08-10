@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using Bandwidth.Net.Api;
 using LightMock;
 using Xunit;
@@ -19,7 +21,7 @@ namespace Bandwidth.Net.Test.Api
             "application/json")
       };
       var context = new MockContext<IHttp>();
-      context.ArrangeSendAsync(The<HttpRequestMessage>.Is(m => IsValidGetRequest(m)), response);
+      context.Arrange(m =>m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidGetRequest(r)), HttpCompletionOption.ResponseContentRead, null)).Returns(Task.FromResult(response));
       var api = Helpers.GetClient(context).Account;
       var account = await api.GetAsync();
       Assert.Equal("538.37250", account.Balance);
@@ -37,7 +39,7 @@ namespace Bandwidth.Net.Test.Api
             Encoding.UTF8, "application/json")
       };
       var context = new MockContext<IHttp>();
-      context.ArrangeSendAsync(The<HttpRequestMessage>.Is(m => IsValidGetTransactionsRequest(m)), response);
+      context.Arrange(m => m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidGetTransactionsRequest(r)), HttpCompletionOption.ResponseContentRead, null)).Returns(Task.FromResult(response));
       var api = Helpers.GetClient(context).Account;
       var transactions = api.GetTransactions().ToArray();
       Assert.Equal(1, transactions.Length);

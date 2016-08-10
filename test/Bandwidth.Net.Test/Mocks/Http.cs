@@ -14,8 +14,8 @@ namespace Bandwidth.Net.Test.Mocks
       _context = context;
     }
 
-    public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption,
-      CancellationToken cancellationToken)
+    public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
+      CancellationToken? cancellationToken = null)
     {
       return _context.Invoke(f => f.SendAsync(request, completionOption, cancellationToken));
     }

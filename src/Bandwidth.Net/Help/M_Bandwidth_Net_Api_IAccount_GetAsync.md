@@ -1,7 +1,7 @@
-﻿# IAccount.Get Method 
+﻿# IAccount.GetAsync Method 
  
 
-Get information about account
+GetAsync information about account
 
 **Namespace:**&nbsp;<a href ="N_Bandwidth_Net_Api.md">Bandwidth.Net.Api</a><br />**Assembly:**&nbsp;Bandwidth.Net (in Bandwidth.Net.dll) Version: 3.0.0-preview
 
@@ -9,7 +9,7 @@ Get information about account
 
 **C#**<br />
 ``` C#
-Task<Account> Get(
+Task<Account> GetAsync(
 	Nullable<CancellationToken> cancellationToken = null
 )
 ```

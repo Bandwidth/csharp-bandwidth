@@ -11,14 +11,14 @@ Send http request and return response message
 ``` C#
 Task<HttpResponseMessage> SendAsync(
 	HttpRequestMessage request,
-	HttpCompletionOption completionOption,
-	CancellationToken cancellationToken
+	HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
+	Nullable<CancellationToken> cancellationToken = null
 )
 ```
 
 
 #### Parameters
-&nbsp;<dl><dt>request</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/hh159020" target="_blank">System.Net.Http.HttpRequestMessage</a><br />Request message to send</dd><dt>completionOption</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/hh158990" target="_blank">System.Net.Http.HttpCompletionOption</a><br />Indicates if current http operation should be considered completed either as soon as a response is available, or after reading the entire response message including the content.</dd><dt>cancellationToken</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/dd384802" target="_blank">System.Threading.CancellationToken</a><br />Cancelation token for current async operation</dd></dl>
+&nbsp;<dl><dt>request</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/hh159020" target="_blank">System.Net.Http.HttpRequestMessage</a><br />Request message to send</dd><dt>completionOption (Optional)</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/hh158990" target="_blank">System.Net.Http.HttpCompletionOption</a><br />Indicates if current http operation should be considered completed either as soon as a response is available, or after reading the entire response message including the content.</dd><dt>cancellationToken (Optional)</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/b3h38hb0" target="_blank">System.Nullable</a>(<a href="http://msdn2.microsoft.com/en-us/library/dd384802" target="_blank">CancellationToken</a>)<br />Cancelation token for current async operation</dd></dl>
 
 #### Return Value
 Type: <a href="http://msdn2.microsoft.com/en-us/library/dd321424" target="_blank">Task</a>(<a href="http://msdn2.microsoft.com/en-us/library/hh159046" target="_blank">HttpResponseMessage</a>)<br />Task with response message

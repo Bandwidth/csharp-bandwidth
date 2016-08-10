@@ -5,9 +5,9 @@ The <a href ="T_Bandwidth_Net_Api_IAccount.md">IAccount</a> type exposes the fol
 
 
 ## Methods
-&nbsp;<table><tr><th></th><th>Name</th><th>Description</th></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href ="M_Bandwidth_Net_Api_IAccount_Get.md">Get</a></td><td>
-Get information about account</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href ="M_Bandwidth_Net_Api_IAccount_GetTransactions.md">GetTransactions</a></td><td>
-Get a list of the transactions made to account</td></tr></table>&nbsp;
+&nbsp;<table><tr><th></th><th>Name</th><th>Description</th></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href ="M_Bandwidth_Net_Api_IAccount_GetAsync.md">GetAsync</a></td><td>
+GetAsync information about account</td></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href ="M_Bandwidth_Net_Api_IAccount_GetTransactions.md">GetTransactions</a></td><td>
+GetAsync a list of the transactions made to account</td></tr></table>&nbsp;
 <a href="#iaccount-methods">Back to Top</a>
 
 ## See Also

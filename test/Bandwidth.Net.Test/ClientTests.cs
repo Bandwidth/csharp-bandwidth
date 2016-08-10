@@ -126,9 +126,41 @@ namespace Bandwidth.Net.Test
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithBody(r)),
             HttpCompletionOption.ResponseContentRead, null))
         .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
-      var response = await api.MakeJsonRequestAsync(HttpMethod.Get, "/test", null, null, new {Field = "value"});
+      var response = await api.MakeJsonRequestAsync(HttpMethod.Post, "/test", null, null, new {Field = "value"});
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
+
+    [Fact]
+    public async void TestMakePostJsonRequest()
+    {
+      var context = new MockContext<IHttp>();
+      var response = new HttpResponseMessage(HttpStatusCode.OK);
+      response.Headers.Location = new Uri("http://host/path/id");
+      var api = Helpers.GetClient(context);
+      context.Arrange(
+        m =>
+          m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithBody(r)),
+            HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(response));
+      var id = await api.MakePostJsonRequestAsync("/test", null, new { Field = "value" });
+      Assert.Equal("id", id);
+    }
+
+    [Fact]
+    public async void TestMakePostJsonRequestWithoutLocationHeader()
+    {
+      var context = new MockContext<IHttp>();
+      var response = new HttpResponseMessage(HttpStatusCode.OK);
+      var api = Helpers.GetClient(context);
+      context.Arrange(
+        m =>
+          m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithBody(r)),
+            HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(response));
+      var id = await api.MakePostJsonRequestAsync("/test", null, new { Field = "value" });
+      Assert.True(string.IsNullOrEmpty(id));
+    }
+
 
     public static bool IsValidRequestWithBody(HttpRequestMessage request)
     {

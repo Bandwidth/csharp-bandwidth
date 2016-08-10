@@ -5,6 +5,12 @@ namespace Bandwidth.Net.Test
 {
   public class JsonStringEnumConverterTests
   {
+    public enum TestEnum
+    {
+      SomeValue,
+      SomeAnotherValue
+    }
+
     [Fact]
     public void TestReadJson()
     {
@@ -22,28 +28,21 @@ namespace Bandwidth.Net.Test
     [Fact]
     public void TestWriteJson()
     {
-      var item = new TestItem { Item = TestEnum.SomeValue };
+      var item = new TestItem {Item = TestEnum.SomeValue};
       Assert.Equal("{\"Item\":\"some-value\"}", JsonConvert.SerializeObject(item));
     }
 
     [Fact]
     public void TestWriteJson2()
     {
-      var item = new TestItem { Item = TestEnum.SomeAnotherValue };
+      var item = new TestItem {Item = TestEnum.SomeAnotherValue};
       Assert.Equal("{\"Item\":\"some-another-value\"}", JsonConvert.SerializeObject(item));
     }
 
     public class TestItem
     {
-      [JsonConverter(typeof(JsonStringEnumConverter))]
+      [JsonConverter(typeof (JsonStringEnumConverter))]
       public TestEnum Item { get; set; }
     }
-
-    public enum TestEnum
-    {
-      SomeValue,
-      SomeAnotherValue
-    }
   }
-
 }

@@ -1,7 +1,7 @@
-﻿using LightMock;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using LightMock;
 
 namespace Bandwidth.Net.Test.Mocks
 {
@@ -14,7 +14,8 @@ namespace Bandwidth.Net.Test.Mocks
       _context = context;
     }
 
-    public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption, CancellationToken cancellationToken)
+    public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption,
+      CancellationToken cancellationToken)
     {
       return _context.Invoke(f => f.SendAsync(request, completionOption, cancellationToken));
     }

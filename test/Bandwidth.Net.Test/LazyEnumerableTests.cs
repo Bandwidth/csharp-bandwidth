@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Bandwidth.Net.Test.Mocks;
 using LightMock;
 using Xunit;
 
@@ -14,8 +12,9 @@ namespace Bandwidth.Net.Test
     [Fact]
     public void TestConstructorWithNullParameters()
     {
-      Assert.Throws<ArgumentNullException>(() => new LazyEnumerable<string>(null, () => Task.FromResult(new HttpResponseMessage())));
-      Assert.Throws<ArgumentNullException>(() => new LazyEnumerable<string>(new Client("userId", "apiToken", "apiSecret"), null));
+      Assert.Throws<ArgumentNullException>(
+        () => new LazyEnumerable<string>(null, () => Task.FromResult(new HttpResponseMessage())));
+      Assert.Throws<ArgumentNullException>(() => new LazyEnumerable<string>(Helpers.GetClient(), null));
     }
 
     [Fact]
@@ -25,8 +24,8 @@ namespace Bandwidth.Net.Test
       {
         Content = new StringContent("[\"1\", \"2\"]", Encoding.UTF8, "application/json")
       };
-      var list = new LazyEnumerable<string>(new Client("userId", "apiToken", "apiSecret"), () => Task.FromResult(response));
-      Assert.Equal(new[] { "1", "2" }, list);
+      var list = new LazyEnumerable<string>(Helpers.GetClient(), () => Task.FromResult(response));
+      Assert.Equal(new[] {"1", "2"}, list);
     }
 
     [Fact]
@@ -36,9 +35,10 @@ namespace Bandwidth.Net.Test
       {
         Content = new StringContent("[\"1\", \"2\"]", Encoding.UTF8, "application/json")
       };
-      response.Headers.Add("Link", "<https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=0&size=25>; rel=\"first\"");
-      var list = new LazyEnumerable<string>(new Client("userId", "apiToken", "apiSecret"), () => Task.FromResult(response));
-      Assert.Equal(new[] { "1", "2" }, list);
+      response.Headers.Add("Link",
+        "<https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=0&size=25>; rel=\"first\"");
+      var list = new LazyEnumerable<string>(Helpers.GetClient(), () => Task.FromResult(response));
+      Assert.Equal(new[] {"1", "2"}, list);
     }
 
     [Fact]
@@ -48,21 +48,23 @@ namespace Bandwidth.Net.Test
       {
         Content = new StringContent("[\"1\"]", Encoding.UTF8, "application/json")
       };
-      response.Headers.Add("Link", "<https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=0&size=25>; rel=\"first\", <https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=1&size=25>; rel=\"next\"");
+      response.Headers.Add("Link",
+        "<https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=0&size=25>; rel=\"first\", <https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=1&size=25>; rel=\"next\"");
       var nextPageResponse = new HttpResponseMessage
       {
         Content = new StringContent("[\"2\", \"3\"]", Encoding.UTF8, "application/json")
       };
       var context = new MockContext<IHttp>();
-      context.Arrange(h => h.SendAsync(The<HttpRequestMessage>.Is(m => IsValidRequest(m)), HttpCompletionOption.ResponseContentRead, CancellationToken.None)).Returns(Task.FromResult(nextPageResponse));
-      var list = new LazyEnumerable<string>(new Client("userId", "apiToken", "apiSecret", "url", new Http(context)), () => Task.FromResult(response));
-      Assert.Equal(new[] { "1", "2", "3" }, list);
+      context.ArrangeSendAsync(The<HttpRequestMessage>.Is(m => IsValidRequest(m)), nextPageResponse);
+      var list = new LazyEnumerable<string>(Helpers.GetClient(context), () => Task.FromResult(response));
+      Assert.Equal(new[] {"1", "2", "3"}, list);
     }
 
     public static bool IsValidRequest(HttpRequestMessage request)
     {
-      return request.RequestUri.ToString() == "https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=1&size=25"
-       && request.Method == HttpMethod.Get;
+      return request.RequestUri.ToString() ==
+             "https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=1&size=25"
+             && request.Method == HttpMethod.Get;
     }
 
     [Fact]
@@ -72,9 +74,10 @@ namespace Bandwidth.Net.Test
       {
         Content = new StringContent("[\"1\", \"2\"]", Encoding.UTF8, "application/json")
       };
-      response.Headers.Add("Link", "<https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=0&size=25> rel=\"next\"");
-      var list = new LazyEnumerable<string>(new Client("userId", "apiToken", "apiSecret"), () => Task.FromResult(response));
-      Assert.Equal(new[] { "1", "2" }, list);
+      response.Headers.Add("Link",
+        "<https://api.catapult.inetwork.com/v1/users/userId/account/transactions?page=0&size=25> rel=\"next\"");
+      var list = new LazyEnumerable<string>(Helpers.GetClient(), () => Task.FromResult(response));
+      Assert.Equal(new[] {"1", "2"}, list);
     }
   }
 }

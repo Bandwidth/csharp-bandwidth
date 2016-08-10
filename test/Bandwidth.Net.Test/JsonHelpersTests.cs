@@ -1,7 +1,7 @@
-using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using Newtonsoft.Json;
 using Xunit;
 
 namespace Bandwidth.Net.Test
@@ -22,7 +22,7 @@ namespace Bandwidth.Net.Test
     {
       using (var request = new HttpRequestMessage())
       {
-        request.SetJsonContent(new { Field1 = "test" });
+        request.SetJsonContent(new {Field1 = "test"});
         Assert.Equal("application/json", request.Content.Headers.ContentType.MediaType);
         var json = await request.Content.ReadAsStringAsync();
         Assert.Equal("{\"field1\":\"test\"}", json);
@@ -52,11 +52,6 @@ namespace Bandwidth.Net.Test
       }
     }
 
-    public class TestItem
-    {
-      public int Field1 { get; set; }
-    }
-
     [Fact]
     public async void TestCheckResponseForSuccess()
     {
@@ -74,7 +69,8 @@ namespace Bandwidth.Net.Test
       {
         using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
         {
-          response.Content = new StringContent("{\"code\": \"100\", \"message\": \"Error message\"}", Encoding.UTF8, "application/json");
+          response.Content = new StringContent("{\"code\": \"100\", \"message\": \"Error message\"}", Encoding.UTF8,
+            "application/json");
           return response.CheckResponseAsync();
         }
       });
@@ -124,6 +120,11 @@ namespace Bandwidth.Net.Test
       });
       Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
       Assert.Equal("Error message", ex.Message);
+    }
+
+    public class TestItem
+    {
+      public int Field1 { get; set; }
     }
   }
 }

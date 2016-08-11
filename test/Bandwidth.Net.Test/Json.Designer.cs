@@ -60,6 +60,24 @@ namespace Bandwidth.Net.Test {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to {&quot;balance&quot;: &quot;538.37250&quot;,&quot;accountType&quot;:&quot;pre-pay&quot;}.
+        /// </summary>
+        public static string Account {
+            get {
+                return ResourceManager.GetString("Account", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to [{&quot;id&quot;: &quot;transactionId1&quot;, &quot;time&quot;: &quot;2013-02-21T13:39:09Z&quot;,&quot;amount&quot;: &quot;0.00750&quot;,&quot;type&quot;: &quot;charge&quot;,&quot;units&quot;: &quot;1&quot;,&quot;productType&quot;: &quot;sms-out&quot;,&quot;number&quot;: &quot;1234567890&quot;}].
+        /// </summary>
+        public static string AccountTransactions {
+            get {
+                return ResourceManager.GetString("AccountTransactions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to {
         ///    &quot;id&quot;: &quot;applicationId&quot;,
         ///    &quot;name&quot;: &quot;MyFirstApp&quot;,

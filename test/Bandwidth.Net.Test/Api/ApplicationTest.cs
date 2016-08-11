@@ -36,8 +36,7 @@ namespace Bandwidth.Net.Test.Api
       response.Headers.Location = new Uri("http://localhost/path/id");
       var getResponse = new HttpResponseMessage
       {
-        Content =
-          new JsonContent(Helpers.GetJsonResourse("Application"))
+        Content = Helpers.GetJsonContent("Application")
       };
       var context = new MockContext<IHttp>();
       context.Arrange(
@@ -67,8 +66,7 @@ namespace Bandwidth.Net.Test.Api
     {
       var response = new HttpResponseMessage
       {
-        Content =
-          new JsonContent(Helpers.GetJsonResourse("Application"))
+        Content = Helpers.GetJsonContent("Application")
       };
       var context = new MockContext<IHttp>();
       context.Arrange(

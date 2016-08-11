@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Account" xml:space="preserve">
+    <value>{"balance": "538.37250","accountType":"pre-pay"}</value>
+  </data>
+  <data name="AccountTransactions" xml:space="preserve">
+    <value>[{"id": "transactionId1", "time": "2013-02-21T13:39:09Z","amount": "0.00750","type": "charge","units": "1","productType": "sms-out","number": "1234567890"}]</value>
+  </data>
   <data name="Application" xml:space="preserve">
     <value>{
     "id": "applicationId",

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Bandwidth.Net.Api;
 using LightMock;
 using Xunit;
+using Xunit.Sdk;
 
 namespace Bandwidth.Net.Test.Api
 {
@@ -16,9 +17,7 @@ namespace Bandwidth.Net.Test.Api
     {
       var response = new HttpResponseMessage
       {
-        Content =
-          new StringContent("{\"balance\": \"538.37250\",\"accountType\": \"pre-pay\"}", Encoding.UTF8,
-            "application/json")
+        Content = Helpers.GetJsonContent("Account")
       };
       var context = new MockContext<IHttp>();
       context.Arrange(m =>m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidGetRequest(r)), HttpCompletionOption.ResponseContentRead, null)).Returns(Task.FromResult(response));
@@ -33,10 +32,7 @@ namespace Bandwidth.Net.Test.Api
     {
       var response = new HttpResponseMessage
       {
-        Content =
-          new StringContent(
-            "[{\"id\": \"transactionId1\", \"time\": \"2013-02-21T13:39:09Z\",\"amount\": \"0.00750\",\"type\": \"charge\",\"units\": \"1\",\"productType\": \"sms-out\",\"number\": \"1234567890\"}]",
-            Encoding.UTF8, "application/json")
+        Content = Helpers.GetJsonContent("AccountTransactions")
       };
       var context = new MockContext<IHttp>();
       context.Arrange(m => m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidGetTransactionsRequest(r)), HttpCompletionOption.ResponseContentRead, null)).Returns(Task.FromResult(response));

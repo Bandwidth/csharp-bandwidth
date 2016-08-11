@@ -16,6 +16,11 @@ namespace Bandwidth.Net.Api
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
     /// <returns>Collection with <see cref="Application" /> instances</returns>
+    /// <example>
+    /// <code>
+    /// var applications = client.Application.List(); // get access to all applications of user
+    /// </code>
+    /// </example>
     IEnumerable<Application> List(ApplicationQuery query = null,
       CancellationToken? cancellationToken = null);
 
@@ -25,6 +30,11 @@ namespace Bandwidth.Net.Api
     /// <param name="data">Parameters of new application</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Instance of created application</returns>
+    /// <example>
+    /// <code>
+    /// var application = await client.Application.CreateAsync(new CreateApplicationData{ Name = "MyApp"});
+    /// </code>
+    /// </example>
     Task<ILazyInstance<Application>> CreateAsync(CreateApplicationData data, CancellationToken? cancellationToken = null);
 
 
@@ -34,6 +44,11 @@ namespace Bandwidth.Net.Api
     /// <param name="applicationId">Id of application to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Task with <see cref="Application" />Application instance</returns>
+    /// <example>
+    /// <code>
+    /// var application = await client.Application.GetAsync("applicationId");
+    /// </code>
+    /// </example>
     Task<Application> GetAsync(string applicationId, CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -43,6 +58,11 @@ namespace Bandwidth.Net.Api
     /// <param name="data">Changed data</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Task instance for async operation</returns>
+    /// <example>
+    /// <code>
+    /// await client.Application.UpdateAsync("applicationId", new UpdateApplicationData {Name = "NewName"});
+    /// </code>
+    /// </example>
     Task UpdateAsync(string applicationId, UpdateApplicationData data, CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -51,6 +71,11 @@ namespace Bandwidth.Net.Api
     /// <param name="applicationId">Id of application to change</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Task instance for async operation</returns>
+    /// <example>
+    /// <code>
+    /// await client.Application.DeleteAsync("applicationId");
+    /// </code>
+    /// </example>
     Task DeleteAsync(string applicationId, CancellationToken? cancellationToken = null);
   }
 

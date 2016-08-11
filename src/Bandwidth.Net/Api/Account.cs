@@ -12,18 +12,28 @@ namespace Bandwidth.Net.Api
   public interface IAccount
   {
     /// <summary>
-    /// GetAsync information about account
+    /// Get information about account
     /// </summary>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Task with <see cref="Account"/> Account instance</returns>
+    /// <example>
+    /// <code>
+    /// var account = await client.Account.Get();
+    /// </code>
+    /// </example>
     Task<Account> GetAsync(CancellationToken? cancellationToken = null);
 
     /// <summary>
-    /// GetAsync a list of the transactions made to account
+    /// Get a list of the transactions made to account
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
     /// <returns>Collection with <see cref="AccountTransaction"/> instances</returns>
+    /// <example>
+    /// <code>
+    /// var transactions = client.Account.GetTransactions();
+    /// </code>
+    /// </example>
     IEnumerable<AccountTransaction> GetTransactions(AccountTransactionQuery query = null,
       CancellationToken? cancellationToken = null);
   }

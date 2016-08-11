@@ -1,7 +1,7 @@
 ﻿# IAccount.GetTransactions Method 
  
 
-GetAsync a list of the transactions made to account
+Get a list of the transactions made to account
 
 **Namespace:**&nbsp;<a href ="N_Bandwidth_Net_Api.md">Bandwidth.Net.Api</a><br />**Assembly:**&nbsp;Bandwidth.Net (in Bandwidth.Net.dll) Version: 3.0.0-preview
 
@@ -21,6 +21,13 @@ IEnumerable<AccountTransaction> GetTransactions(
 
 #### Return Value
 Type: <a href="http://msdn2.microsoft.com/en-us/library/9eekhta0" target="_blank">IEnumerable</a>(<a href ="T_Bandwidth_Net_Api_AccountTransaction.md">AccountTransaction</a>)<br />Collection with <a href ="T_Bandwidth_Net_Api_AccountTransaction.md">AccountTransaction</a> instances
+
+## Examples
+
+```
+var transactions = client.Account.GetTransactions();
+```
+
 
 ## See Also
 

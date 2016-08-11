@@ -1,7 +1,7 @@
 ﻿# IAccount.GetAsync Method 
  
 
-GetAsync information about account
+Get information about account
 
 **Namespace:**&nbsp;<a href ="N_Bandwidth_Net_Api.md">Bandwidth.Net.Api</a><br />**Assembly:**&nbsp;Bandwidth.Net (in Bandwidth.Net.dll) Version: 3.0.0-preview
 
@@ -20,6 +20,13 @@ Task<Account> GetAsync(
 
 #### Return Value
 Type: <a href="http://msdn2.microsoft.com/en-us/library/dd321424" target="_blank">Task</a>(<a href ="T_Bandwidth_Net_Api_Account.md">Account</a>)<br />Task with <a href ="T_Bandwidth_Net_Api_Account.md">Account</a> Account instance
+
+## Examples
+
+```
+var account = await client.Account.Get();
+```
+
 
 ## See Also
 

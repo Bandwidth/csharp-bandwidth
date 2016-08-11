@@ -31,7 +31,7 @@ var client = new Client("userId", "apiToken", "apiSecret");
 ```
 var client = new Client("userId", "apiToken", "apiSecret", "https://another.server");
 ```
- Using with own implementaion of HTTP processing (usefull in tests) 
+ Using with own implementaion of HTTP processing (usefull for tests) 
 ```
 var client = new Client("userId", "apiToken", "apiSecret", "https://another.server", new YourMockHttp());
 ```

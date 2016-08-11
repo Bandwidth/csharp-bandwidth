@@ -40,7 +40,7 @@ namespace Bandwidth.Net
     /// var client = new Client("userId", "apiToken", "apiSecret", "https://another.server");
     /// </code>
     /// 
-    /// Using with own implementaion of HTTP processing (usefull in tests)
+    /// Using with own implementaion of HTTP processing (usefull for tests)
     /// <code>
     /// var client = new Client("userId", "apiToken", "apiSecret", "https://another.server", new YourMockHttp());
     /// </code>

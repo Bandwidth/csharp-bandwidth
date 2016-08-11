@@ -79,13 +79,13 @@ namespace Bandwidth.Net.Api
     public Task UpdateAsync(string applicationId, UpdateApplicationData data,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Application>(HttpMethod.Post,
-        $"/users/{Client.UserId}/applications/{applicationId}", cancellationToken, null, data);
+      return Client.MakeJsonRequestAsync(HttpMethod.Post,
+        $"/users/{Client.UserId}/applications/{applicationId}", cancellationToken, null, data );
     }
 
     public Task DeleteAsync(string applicationId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Application>(HttpMethod.Delete,
+      return Client.MakeJsonRequestAsync(HttpMethod.Delete,
         $"/users/{Client.UserId}/applications/{applicationId}", cancellationToken);
     }
   }

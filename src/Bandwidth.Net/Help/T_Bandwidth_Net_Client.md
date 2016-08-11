@@ -19,7 +19,7 @@ The Client type exposes the following members.
 
 
 ## Constructors
-&nbsp;<table><tr><th></th><th>Name</th><th>Description</th></tr><tr><td>![Public method](media/pubmethod.gif "Public method")</td><td><a href ="M_Bandwidth_Net_Client__ctor.md">Client</a></td><td>
+&nbsp;<table><tr><th></th><th>Name</th><th>Description</th></tr><tr><td>![Public method](media/pubmethod.gif "Public method")![Code example](media/CodeExample.png "Code example")</td><td><a href ="M_Bandwidth_Net_Client__ctor.md">Client</a></td><td>
 Constructor</td></tr></table>&nbsp;
 <a href="#client-class">Back to Top</a>
 

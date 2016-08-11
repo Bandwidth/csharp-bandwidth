@@ -91,5 +91,39 @@ namespace Bandwidth.Net.Test {
                 return ResourceManager.GetString("Application", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to [
+        ///  {
+        ///    &quot;number&quot;: &quot;{number1}&quot;,
+        ///    &quot;nationalNumber&quot;: &quot;{national_number1}&quot;,
+        ///    &quot;patternMatch&quot;: &quot;          2 9 &quot;,
+        ///    &quot;city&quot;: &quot;CARY&quot;,
+        ///    &quot;lata&quot;: &quot;426&quot;,
+        ///    &quot;rateCenter&quot;: &quot;CARY&quot;,
+        ///    &quot;state&quot;: &quot;NC&quot;,
+        ///    &quot;price&quot;: &quot;0.60&quot;
+        ///  }].
+        /// </summary>
+        public static string AvailableNumbers {
+            get {
+                return ResourceManager.GetString("AvailableNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to [
+        ///    {
+        ///        &quot;number&quot;: &quot;{number1}&quot;,
+        ///        &quot;nationalNumber&quot;: &quot;{national_number1}&quot;,
+        ///        &quot;price&quot;: &quot;2.00&quot;,
+        ///        &quot;location&quot;: &quot;https://.../v1/users/.../phoneNumbers/numberId&quot;
+        ///    }].
+        /// </summary>
+        public static string OrderedNumbers {
+            get {
+                return ResourceManager.GetString("OrderedNumbers", resourceCulture);
+            }
+        }
     }
 }

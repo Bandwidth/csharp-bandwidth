@@ -10,14 +10,21 @@ Account information</td></tr><tr><td>![Public class](media/pubclass.gif "Public 
 Account transaction</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_AccountTransactionQuery.md">AccountTransactionQuery</a></td><td>
 Query to get account transactions</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_Application.md">Application</a></td><td>
 Application information</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_ApplicationQuery.md">ApplicationQuery</a></td><td>
-Query to get applications</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_CreateApplicationData.md">CreateApplicationData</a></td><td>
-Parameters to create an application</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_UpdateApplicationData.md">UpdateApplicationData</a></td><td>
+Query to get applications</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_AvailableNumber.md">AvailableNumber</a></td><td>
+Available number result</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_CreateApplicationData.md">CreateApplicationData</a></td><td>
+Parameters to create an application</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_LocalNumberQuery.md">LocalNumberQuery</a></td><td>
+Search criterias for local numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_LocalNumberQueryForOrder.md">LocalNumberQueryForOrder</a></td><td>
+Search criterias for local numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_OrderedNumber.md">OrderedNumber</a></td><td>
+Ordered number result</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_TollFreeNumberQuery.md">TollFreeNumberQuery</a></td><td>
+Search criterias for toll free numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_TollFreeNumberQueryForOrder.md">TollFreeNumberQueryForOrder</a></td><td>
+Search criterias for toll free numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_UpdateApplicationData.md">UpdateApplicationData</a></td><td>
 Parameters of an application to change</td></tr></table>
 
 ## Interfaces
 &nbsp;<table><tr><th></th><th>Interface</th><th>Description</th></tr><tr><td>![Public interface](media/pubinterface.gif "Public interface")</td><td><a href ="T_Bandwidth_Net_Api_IAccount.md">IAccount</a></td><td>
 Access to Account Api</td></tr><tr><td>![Public interface](media/pubinterface.gif "Public interface")</td><td><a href ="T_Bandwidth_Net_Api_IApplication.md">IApplication</a></td><td>
-Access to Application Api</td></tr></table>
+Access to Application Api</td></tr><tr><td>![Public interface](media/pubinterface.gif "Public interface")</td><td><a href ="T_Bandwidth_Net_Api_IAvailableNumber.md">IAvailableNumber</a></td><td>
+Access to AvailableNumber Api</td></tr></table>
 
 ## Enumerations
 &nbsp;<table><tr><th></th><th>Enumeration</th><th>Description</th></tr><tr><td>![Public enumeration](media/pubenumeration.gif "Public enumeration")</td><td><a href ="T_Bandwidth_Net_Api_AccountTransactionType.md">AccountTransactionType</a></td><td>

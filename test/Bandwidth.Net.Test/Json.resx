@@ -132,4 +132,60 @@
     "autoAnswer": true
   }</value>
   </data>
+  <data name="AvailableNumbers" xml:space="preserve">
+    <value>[
+  {
+    "number": "{number1}",
+    "nationalNumber": "{national_number1}",
+    "patternMatch": "          2 9 ",
+    "city": "CARY",
+    "lata": "426",
+    "rateCenter": "CARY",
+    "state": "NC",
+    "price": "0.60"
+  }]</value>
+  </data>
+  <data name="Bridge" xml:space="preserve">
+    <value>{
+    "id": "bridgeId",
+    "state": "completed",
+    "bridgeAudio": "true",
+    "calls":"https://.../v1/users/{userId}/bridges/{bridgeId}/calls",
+    "createdTime": "2013-04-22T13:55:30.279Z",
+    "activatedTime": "2013-04-22T13:55:30.280Z",
+    "completedTime": "2013-04-22T13:59:30.122Z"
+  }</value>
+  </data>
+  <data name="Call" xml:space="preserve">
+    <value>{
+    "activeTime": "2014-12-19T19:13:20Z",
+    "callbackUrl": "https://example.com",
+    "chargeableDuration": 60,
+    "direction": "out",
+    "endTime": "2014-12-19T19:13:22Z",
+    "events": "https://.../calls/{callId}/events",
+    "fallbackUrl": "https://example-fallback.com",
+    "from": "{fromNumber}",
+    "id": "callId",
+    "recordingEnabled": false,
+    "recordings": "https://.../calls/{callId}/recordings",
+    "startTime": "2014-12-19T19:13:09Z",
+    "state": "completed",
+    "to": "{toNumber}",
+    "transcriptionEnabled": true,
+    "transcriptions": "https://.../calls/{callId}/transcriptions",
+    "sipHeaders" : {
+        "X-header" : "value"
+    }
+}</value>
+  </data>
+  <data name="OrderedNumbers" xml:space="preserve">
+    <value>[
+    {
+        "number": "{number1}",
+        "nationalNumber": "{national_number1}",
+        "price": "2.00",
+        "location": "https://.../v1/users/.../phoneNumbers/numberId"
+    }]</value>
+  </data>
 </root>

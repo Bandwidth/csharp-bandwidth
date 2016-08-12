@@ -91,5 +91,80 @@ namespace Bandwidth.Net.Test {
                 return ResourceManager.GetString("Application", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to [
+        ///  {
+        ///    &quot;number&quot;: &quot;{number1}&quot;,
+        ///    &quot;nationalNumber&quot;: &quot;{national_number1}&quot;,
+        ///    &quot;patternMatch&quot;: &quot;          2 9 &quot;,
+        ///    &quot;city&quot;: &quot;CARY&quot;,
+        ///    &quot;lata&quot;: &quot;426&quot;,
+        ///    &quot;rateCenter&quot;: &quot;CARY&quot;,
+        ///    &quot;state&quot;: &quot;NC&quot;,
+        ///    &quot;price&quot;: &quot;0.60&quot;
+        ///  }].
+        /// </summary>
+        public static string AvailableNumbers {
+            get {
+                return ResourceManager.GetString("AvailableNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to {
+        ///    &quot;id&quot;: &quot;bridgeId&quot;,
+        ///    &quot;state&quot;: &quot;completed&quot;,
+        ///    &quot;bridgeAudio&quot;: &quot;true&quot;,
+        ///    &quot;calls&quot;:&quot;https://.../v1/users/{userId}/bridges/{bridgeId}/calls&quot;,
+        ///    &quot;createdTime&quot;: &quot;2013-04-22T13:55:30.279Z&quot;,
+        ///    &quot;activatedTime&quot;: &quot;2013-04-22T13:55:30.280Z&quot;,
+        ///    &quot;completedTime&quot;: &quot;2013-04-22T13:59:30.122Z&quot;
+        ///  }.
+        /// </summary>
+        public static string Bridge {
+            get {
+                return ResourceManager.GetString("Bridge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to  {
+        ///    &quot;activeTime&quot;: &quot;2014-12-19T19:13:20Z&quot;,
+        ///    &quot;callbackUrl&quot;: &quot;https://example.com&quot;,
+        ///    &quot;chargeableDuration&quot;: 60,
+        ///    &quot;direction&quot;: &quot;out&quot;,
+        ///    &quot;endTime&quot;: &quot;2014-12-19T19:13:22Z&quot;,
+        ///    &quot;events&quot;: &quot;https://.../calls/{callId}/events&quot;,
+        ///    &quot;fallbackUrl&quot;: &quot;https://example-fallback.com&quot;,
+        ///    &quot;from&quot;: &quot;{fromNumber}&quot;,
+        ///    &quot;id&quot;: &quot;callId&quot;,
+        ///    &quot;recordingEnabled&quot;: false,
+        ///    &quot;recordings&quot;: &quot;https://.../calls/{callId}/recordings&quot;,
+        ///    &quot;startTime&quot;: &quot;2014-12-19T19:13:09Z&quot;,
+        ///    &quot;state&quot;: &quot;completed&quot;,
+        ///    &quot;to&quot;: &quot;{toNumber}&quot;,
+        ///   [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Call {
+            get {
+                return ResourceManager.GetString("Call", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to [
+        ///    {
+        ///        &quot;number&quot;: &quot;{number1}&quot;,
+        ///        &quot;nationalNumber&quot;: &quot;{national_number1}&quot;,
+        ///        &quot;price&quot;: &quot;2.00&quot;,
+        ///        &quot;location&quot;: &quot;https://.../v1/users/.../phoneNumbers/numberId&quot;
+        ///    }].
+        /// </summary>
+        public static string OrderedNumbers {
+            get {
+                return ResourceManager.GetString("OrderedNumbers", resourceCulture);
+            }
+        }
     }
 }

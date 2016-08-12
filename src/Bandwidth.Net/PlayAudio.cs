@@ -97,6 +97,7 @@ namespace Bandwidth.Net
         Sentence = sentence,
         Gender = gender,
         Voice = voice,
+        Locale = locale,
         Tag = tag
       }, cancellationToken);
     }

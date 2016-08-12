@@ -19,12 +19,18 @@ namespace Bandwidth.Net
     /// </summary>
     public IAvailableNumber AvailableNumber { get; private set; }
 
+    /// <summary>
+    /// Access to AvailableNumber Api
+    /// </summary>
+    public IBridge Bridge { get; private set; }
+
 
     private void SetupApis()
     {
       Account = new AccountApi {Client = this};
       Application = new ApplicationApi { Client = this };
       AvailableNumber = new AvailableNumberApi { Client = this };
+      Bridge = new BridgeApi{ Client = this };
     }
   }
 }

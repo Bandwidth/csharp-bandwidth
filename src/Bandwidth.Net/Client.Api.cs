@@ -24,6 +24,11 @@ namespace Bandwidth.Net
     /// </summary>
     public IBridge Bridge { get; private set; }
 
+    /// <summary>
+    /// Access to Call Api
+    /// </summary>
+    public ICall Call { get; private set; }
+
 
     private void SetupApis()
     {
@@ -31,6 +36,7 @@ namespace Bandwidth.Net
       Application = new ApplicationApi { Client = this };
       AvailableNumber = new AvailableNumberApi { Client = this };
       Bridge = new BridgeApi{ Client = this };
+      Call = new CallApi { Client = this };
     }
   }
 }

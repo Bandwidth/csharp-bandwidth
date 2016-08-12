@@ -42,7 +42,7 @@ namespace Bandwidth.Net
     ///   The gender of the voice used to synthesize the sentence. It will be considered only if sentence is not null. The
     ///   female gender will be used by default.
     /// </summary>
-    public string Gender { get; set; }
+    public Gender? Gender { get; set; }
 
     /// <summary>
     ///   The locale used to get the accent of the voice used to synthesize the sentence.
@@ -63,6 +63,22 @@ namespace Bandwidth.Net
     ///   A string that will be included in the events delivered when the audio playback starts or finishes
     /// </summary>
     public string Tag { get; set; }
+  }
+
+  /// <summary>
+  /// Genders
+  /// </summary>
+  public enum Gender
+  {
+    /// <summary>
+    /// Male
+    /// </summary>
+    Male,
+
+    /// <summary>
+    /// Female
+    /// </summary>
+    Female
   }
 
   /// <summary>
@@ -88,7 +104,7 @@ namespace Bandwidth.Net
     /// await client.Bridge.SpeakSentenceAsync("bridgeId", "Hello");
     /// </code>
     /// </example>
-    public static Task SpeakSentenceAsync(this IPlayAudio instance, string id, string sentence, string gender = "female",
+    public static Task SpeakSentenceAsync(this IPlayAudio instance, string id, string sentence, Gender gender = Gender.Female,
       string voice = "susan", string locale = "en_US", string tag = null,
       CancellationToken? cancellationToken = null)
     {

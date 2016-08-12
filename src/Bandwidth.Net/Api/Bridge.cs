@@ -74,7 +74,7 @@ namespace Bandwidth.Net.Api
     /// <returns>Collection with <see cref="Call" /> instances</returns>
     /// <example>
     ///   <code>
-    /// var bridges = client.Bridge.List(); 
+    /// var calls = client.Bridge.GetCalls(); 
     /// </code>
     /// </example>
     IEnumerable<Call> GetCalls(string bridgeId, CancellationToken? cancellationToken = null);

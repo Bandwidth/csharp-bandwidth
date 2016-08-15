@@ -766,12 +766,12 @@ namespace Bandwidth.Net.Api
     /// <summary>
     /// The maximum number of digits to collect, not including terminating digits (maximum 30).
     /// </summary>
-    public int? MaxDigits { get; set; }
+    public string MaxDigits { get; set; }
 
     /// <summary>
     /// Stop gathering if a DTMF digit is not detected in this many seconds (default 5.0; maximum 30.0).
     /// </summary>
-    public double? InterDigitTimeout { get; set; }
+    public string InterDigitTimeout { get; set; }
 
     /// <summary>
     /// Terminating digits
@@ -806,14 +806,14 @@ namespace Bandwidth.Net.Api
   public enum CallGatherState
   {
     /// <summary>
-    /// Completed
-    /// </summary>
-    Completed,
-
-    /// <summary>
     /// Created
     /// </summary>
-    Created
+    Created,
+
+    /// <summary>
+    /// Completed
+    /// </summary>
+    Completed
   }
 
   /// <summary>
@@ -824,7 +824,7 @@ namespace Bandwidth.Net.Api
     /// <summary>
     /// Gather state
     /// </summary>
-    public CallGatherState State { get; set; }
+    public CallGatherState? State { get; set; }
   }
 
   /// <summary>

@@ -29,7 +29,7 @@ namespace Bandwidth.Net.Test
 
     public static bool IsValidSpeakSentenceData(PlayAudioData data)
     {
-      return data.Sentence == "Hello" && data.Gender == "female" && data.Voice == "susan";
+      return data.Sentence == "Hello" && data.Gender == Gender.Female && data.Voice == "susan";
     }
 
     public static bool IsValidPlayAudioFileData(PlayAudioData data)

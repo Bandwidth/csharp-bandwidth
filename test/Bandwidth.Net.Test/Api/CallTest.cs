@@ -111,7 +111,7 @@ namespace Bandwidth.Net.Test.Api
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidSendDtmfRequest(r)), HttpCompletionOption.ResponseContentRead,
             null)).Returns(Task.FromResult(new HttpResponseMessage()));
       var api = Helpers.GetClient(context).Call;
-      await api.SendDtmfAsync("callId", new SendDtmfData{DtmfOut = "1"});
+      await api.SendDtmfAsync("id", new SendDtmfData{DtmfOut = "1"});
     }
 
     [Fact]
@@ -154,7 +154,7 @@ namespace Bandwidth.Net.Test.Api
       var context = new MockContext<IHttp>();
       var response = new HttpResponseMessage
       {
-        Content = new JsonContent($"[{Helpers.GetJsonResourse("CallEvent")}]")
+        Content = new JsonContent($"[{Helpers.GetJsonResourse("CallRecording")}]")
       };
       context.Arrange(
         m =>
@@ -171,7 +171,7 @@ namespace Bandwidth.Net.Test.Api
       var context = new MockContext<IHttp>();
       var response = new HttpResponseMessage
       {
-        Content = new JsonContent($"[{Helpers.GetJsonResourse("CallEvent")}]")
+        Content = new JsonContent($"[{Helpers.GetJsonResourse("CallTranscription")}]")
       };
       context.Arrange(
         m =>
@@ -186,7 +186,7 @@ namespace Bandwidth.Net.Test.Api
     public async void TestCreateGather()
     {
       var response = new HttpResponseMessage(HttpStatusCode.Created);
-      response.Headers.Location = new Uri("http://localhost/path/id");
+      response.Headers.Location = new Uri("http://localhost/path/gatherId");
       var getResponse = new HttpResponseMessage
       {
         Content = Helpers.GetJsonContent("CallGather")
@@ -201,12 +201,12 @@ namespace Bandwidth.Net.Test.Api
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidGetGatherRequest(r)), HttpCompletionOption.ResponseContentRead,
             null)).Returns(Task.FromResult(getResponse));
       var api = Helpers.GetClient(context).Call;
-      var gather = await api.CreateGatherAsync("id", new CreateGatherData {MaxDigits = 1});
+      var gather = await api.CreateGatherAsync("id", new CreateGatherData {MaxDigits = "1"});
       context.Assert(
         m =>
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidGetGatherRequest(r)), HttpCompletionOption.ResponseContentRead,
             null), Invoked.Never);
-      Assert.Equal("id", gather.Id);
+      Assert.Equal("gatherId", gather.Id);
       ValidateCallGather(gather.Instance);
       context.Assert(
         m =>
@@ -219,7 +219,7 @@ namespace Bandwidth.Net.Test.Api
     {
       var response = new HttpResponseMessage
       {
-        Content = Helpers.GetJsonContent("Call")
+        Content = Helpers.GetJsonContent("CallGather")
       };
       var context = new MockContext<IHttp>();
       context.Arrange(
@@ -252,7 +252,7 @@ namespace Bandwidth.Net.Test.Api
     {
       return request.Method == HttpMethod.Post && request.RequestUri.PathAndQuery == "/v1/users/userId/calls" &&
              request.Content.Headers.ContentType.MediaType == "application/json" &&
-             request.Content.ReadAsStringAsync().Result == "{\"from\":\"+1234567980\",\"to\":\"+1234567891\"}";
+             request.Content.ReadAsStringAsync().Result == "{\"from\":\"+1234567890\",\"to\":\"+1234567981\"}";
     }
 
     public static bool IsValidGetRequest(HttpRequestMessage request)
@@ -303,29 +303,29 @@ namespace Bandwidth.Net.Test.Api
 
     public static bool IsValidCreateGatherRequest(HttpRequestMessage request)
     {
-      return request.Method == HttpMethod.Post && request.RequestUri.PathAndQuery == "/v1/users/userId/calls/id/gathers" &&
+      return request.Method == HttpMethod.Post && request.RequestUri.PathAndQuery == "/v1/users/userId/calls/id/gather" &&
              request.Content.Headers.ContentType.MediaType == "application/json" &&
              request.Content.ReadAsStringAsync().Result == "{\"maxDigits\":\"1\"}";
     }
 
     public static bool IsValidGetGatherRequest(HttpRequestMessage request)
     {
-      return request.Method == HttpMethod.Get && request.RequestUri.PathAndQuery == "/v1/users/userId/calls/id/gathers/gatherId";
+      return request.Method == HttpMethod.Get && request.RequestUri.PathAndQuery == "/v1/users/userId/calls/id/gather/gatherId";
     }
 
     public static bool IsValidUpdateGatherRequest(HttpRequestMessage request)
     {
-      return request.Method == HttpMethod.Post && request.RequestUri.PathAndQuery == "/v1/users/userId/calls/id/gathers/gatherId" &&
+      return request.Method == HttpMethod.Post && request.RequestUri.PathAndQuery == "/v1/users/userId/calls/id/gather/gatherId" &&
              request.Content.Headers.ContentType.MediaType == "application/json" &&
              request.Content.ReadAsStringAsync().Result == "{\"state\":\"completed\"}";
     }
 
     private static void ValidateCall(Call item)
     {
-      Assert.Equal("id", item.Id);
+      Assert.Equal("callId", item.Id);
       Assert.Equal("+1234567890", item.From);
       Assert.Equal("+1234567891", item.To);
-      Assert.Equal(CallState.Active, item.State);
+      Assert.Equal(CallState.Completed, item.State);
     }
 
     private static void ValidateCallGather(CallGather item)

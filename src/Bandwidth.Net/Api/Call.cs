@@ -59,13 +59,13 @@ namespace Bandwidth.Net.Api
     /// <param name="callId">Id of call to change</param>
     /// <param name="data">Changed data</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task instance for async operation</returns>
+    /// <returns>Http response message</returns>
     /// <example>
     ///   <code>
     /// await client.Call.UpdateAsync("callId", new UpdateCallData {CallAudio = true});
     /// </code>
     /// </example>
-    Task UpdateAsync(string callId, UpdateCallData data, CancellationToken? cancellationToken = null);
+    Task<HttpResponseMessage> UpdateAsync(string callId, UpdateCallData data, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Send DTMF (phone keypad digit presses)
@@ -201,7 +201,7 @@ namespace Bandwidth.Net.Api
         $"/users/{Client.UserId}/calls/{callId}", cancellationToken);
     }
 
-    public Task UpdateAsync(string callId, UpdateCallData data,
+    public Task<HttpResponseMessage> UpdateAsync(string callId, UpdateCallData data,
       CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync(HttpMethod.Post,
@@ -265,6 +265,122 @@ namespace Bandwidth.Net.Api
       return
         Client.MakeJsonRequestAsync(HttpMethod.Post,
           $"/users/{Client.UserId}/calls/{callId}/audio", cancellationToken, null, data);
+    }
+  }
+
+  /// <summary>
+  /// Additional methods for ICall
+  /// </summary>
+  public static class CallExtensions
+  {
+    /// <summary>
+    /// Answer incoming call
+    /// </summary>
+    /// <param name="call">Instance of <see cref="ICall"/></param>
+    /// <param name="callId">Id of call</param>
+    /// <param name="cancellationToken">Optional token to cancel async operation</param>
+    /// <returns>Task instance for async operation</returns>
+    /// <example>
+    /// <code>
+    /// await call.AnswerAsync("callId");
+    /// </code>
+    /// </example>
+    public static Task AnswerAsync(this ICall call, string callId, CancellationToken? cancellationToken = null)
+    {
+      return call.UpdateAsync(callId, new UpdateCallData
+      {
+        State = CallState.Active
+      }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Reject incoming call
+    /// </summary>
+    /// <param name="call">Instance of <see cref="ICall"/></param>
+    /// <param name="callId">Id of call</param>
+    /// <param name="cancellationToken">Optional token to cancel async operation</param>
+    /// <returns>Task instance for async operation</returns>
+    /// <example>
+    /// <code>
+    /// await call.RejectAsync("callId");
+    /// </code>
+    /// </example>
+    public static Task RejectAsync(this ICall call, string callId, CancellationToken? cancellationToken = null)
+    {
+      return call.UpdateAsync(callId, new UpdateCallData
+      {
+        State = CallState.Rejected
+      }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Complete active call
+    /// </summary>
+    /// <param name="call">Instance of <see cref="ICall"/></param>
+    /// <param name="callId">Id of call</param>
+    /// <param name="cancellationToken">Optional token to cancel async operation</param>
+    /// <returns>Task instance for async operation</returns>
+    /// <example>
+    /// <code>
+    /// await call.HangupAsync("callId");
+    /// </code>
+    /// </example>
+    public static Task HangupAsync(this ICall call, string callId, CancellationToken? cancellationToken = null)
+    {
+      return call.UpdateAsync(callId, new UpdateCallData
+      {
+        State = CallState.Completed
+      }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Tune on (or tune off) call recording
+    /// </summary>
+    /// <param name="call">Instance of <see cref="ICall"/></param>
+    /// <param name="callId">Id of call</param>
+    /// <param name="enabled">Enable or disable call recording</param>
+    /// <param name="cancellationToken">Optional token to cancel async operation</param>
+    /// <returns>Task instance for async operation</returns>
+    /// <example>
+    /// <code>
+    /// await call.TurnCallRecordingAsync("callId", true); // tune on call recording
+    /// </code>
+    /// </example>
+    public static Task TurnCallRecordingAsync(this ICall call, string callId, bool enabled, CancellationToken? cancellationToken = null)
+    {
+      return call.UpdateAsync(callId, new UpdateCallData
+      {
+        RecordingEnabled = enabled 
+      }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Transfer current call
+    /// </summary>
+    /// <param name="call">Instance of <see cref="ICall"/></param>
+    /// <param name="callId">Id of call</param>
+    /// <param name="to">Phone number or SIP address that the call is going to be transferred to.</param>
+    /// <param name="callerId">This is the caller id that will be used when the call is transferred.</param>
+    /// <param name="whisperAudio">Audio to be played to the caller that the call will be transferred to.</param>
+    /// <param name="callbackUrl">The full server URL where the call events related to the Call will be sent to.</param>
+    /// <param name="cancellationToken">Optional token to cancel async operation</param>
+    /// <returns>Id of transfered call</returns>
+    /// <example>
+    /// <code>
+    /// var transferedCallId = await call.TransferAsync("callId", "number"); 
+    /// </code>
+    /// </example>
+    public static async Task<string> TransferAsync(this ICall call, string callId, string to, string callerId = null, WhisperAudio whisperAudio = null, string callbackUrl = null, CancellationToken ? cancellationToken = null)
+    {
+      var response = await call.UpdateAsync(callId, new UpdateCallData
+      {
+        State = CallState.Transferring,
+        TransferTo = to,
+        TransferCallerId = callerId,
+        CallbackUrl = callbackUrl,
+        WhisperAudio = whisperAudio
+      }, cancellationToken);
+      return response.Headers.Location.AbsolutePath.Split('/').Last();
     }
   }
 
@@ -783,12 +899,41 @@ namespace Bandwidth.Net.Api
     HungUp
   }
 
+  /// <summary>
+  /// The event that occurred during the call
+  /// </summary>
   public class CallEvent
   {
+    /// <summary>
+    /// The call event id
+    /// </summary>
+    public string Id { get; set; }
+
+    /// <summary>
+    /// The name of the event.
+    /// </summary>
+    public string Name { get; set; }
+
+    /// <summary>
+    /// The time the event occurred.
+    /// </summary>
+    public DateTime Time { get; set; }
+
+    /// <summary>
+    /// Optional event data
+    /// </summary>
+    public Dictionary<string, object> Data { get; set; }
   }
 
+  /// <summary>
+  /// Send DTMF data
+  /// </summary>
   public class SendDtmfData
   {
+    /// <summary>
+    /// String containing the DTMF characters to be sent in a call.
+    /// </summary>
+    public string DtmfOut { get; set; }
   }
 
 }

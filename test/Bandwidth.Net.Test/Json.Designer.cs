@@ -137,18 +137,81 @@ namespace Bandwidth.Net.Test {
         ///    &quot;endTime&quot;: &quot;2014-12-19T19:13:22Z&quot;,
         ///    &quot;events&quot;: &quot;https://.../calls/{callId}/events&quot;,
         ///    &quot;fallbackUrl&quot;: &quot;https://example-fallback.com&quot;,
-        ///    &quot;from&quot;: &quot;{fromNumber}&quot;,
+        ///    &quot;from&quot;: &quot;+1234567890&quot;,
         ///    &quot;id&quot;: &quot;callId&quot;,
         ///    &quot;recordingEnabled&quot;: false,
         ///    &quot;recordings&quot;: &quot;https://.../calls/{callId}/recordings&quot;,
         ///    &quot;startTime&quot;: &quot;2014-12-19T19:13:09Z&quot;,
         ///    &quot;state&quot;: &quot;completed&quot;,
-        ///    &quot;to&quot;: &quot;{toNumber}&quot;,
+        ///    &quot;to&quot;: &quot;+1234567891&quot;,
         ///   [rest of string was truncated]&quot;;.
         /// </summary>
         public static string Call {
             get {
                 return ResourceManager.GetString("Call", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to {
+        ///   &quot;id&quot;: &quot;eventId&quot;,
+        ///    &quot;time&quot;: &quot;2012-09-19T13:55:41.343Z&quot;,
+        ///    &quot;name&quot;: &quot;create&quot;
+        ///  }.
+        /// </summary>
+        public static string CallEvent {
+            get {
+                return ResourceManager.GetString("CallEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to {
+        ///  &quot;id&quot;: &quot;gatherId&quot;,
+        ///  &quot;state&quot;: &quot;completed&quot;,
+        ///  &quot;reason&quot;: &quot;max-digits&quot;,
+        ///  &quot;createdTime&quot;: &quot;2014-02-12T19:33:56Z&quot;,
+        ///  &quot;completedTime&quot;: &quot;2014-02-12T19:33:59Z&quot;,
+        ///  &quot;call&quot;: &quot;https://api.catapult.inetwork.com/v1/users/{userId}/calls/{callId}&quot;,
+        ///  &quot;digits&quot;: &quot;1&quot;
+        ///}.
+        /// </summary>
+        public static string CallGather {
+            get {
+                return ResourceManager.GetString("CallGather", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to {
+        ///    &quot;endTime&quot;: &quot;2013-02-08T12:06:55.007Z&quot;,
+        ///    &quot;id&quot;: &quot;recordingId&quot;,
+        ///    &quot;media&quot;: &quot;https://.../v1/users/.../media/{callId}-1.wav&quot;,
+        ///    &quot;call&quot;: &quot;https://.../v1/users/.../calls/{callId}&quot;,
+        ///    &quot;startTime&quot;: &quot;2013-02-08T12:05:17.807Z&quot;,
+        ///    &quot;state&quot;: &quot;complete&quot;
+        ///  }.
+        /// </summary>
+        public static string CallRecording {
+            get {
+                return ResourceManager.GetString("CallRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to {
+        ///        &quot;chargeableDuration&quot;: 60,
+        ///        &quot;id&quot;: &quot;transcriptionId&quot;,
+        ///        &quot;state&quot;: &quot;completed&quot;,        
+        ///        &quot;time&quot;: &quot;2014-10-09T12:09:16Z&quot;,
+        ///        &quot;text&quot;: &quot;{transcription-text}&quot;,
+        ///        &quot;textSize&quot;: 3627,
+        ///        &quot;textUrl&quot;: &quot;{url-to-full-text}&quot;
+        ///    }.
+        /// </summary>
+        public static string CallTranscription {
+            get {
+                return ResourceManager.GetString("CallTranscription", resourceCulture);
             }
         }
         

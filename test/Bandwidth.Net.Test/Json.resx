@@ -165,19 +165,58 @@
     "endTime": "2014-12-19T19:13:22Z",
     "events": "https://.../calls/{callId}/events",
     "fallbackUrl": "https://example-fallback.com",
-    "from": "{fromNumber}",
+    "from": "+1234567890",
     "id": "callId",
     "recordingEnabled": false,
     "recordings": "https://.../calls/{callId}/recordings",
     "startTime": "2014-12-19T19:13:09Z",
     "state": "completed",
-    "to": "{toNumber}",
+    "to": "+1234567891",
     "transcriptionEnabled": true,
     "transcriptions": "https://.../calls/{callId}/transcriptions",
     "sipHeaders" : {
         "X-header" : "value"
     }
 }</value>
+  </data>
+  <data name="CallEvent" xml:space="preserve">
+    <value>{
+   "id": "eventId",
+    "time": "2012-09-19T13:55:41.343Z",
+    "name": "create"
+  }</value>
+  </data>
+  <data name="CallGather" xml:space="preserve">
+    <value>{
+  "id": "gatherId",
+  "state": "completed",
+  "reason": "max-digits",
+  "createdTime": "2014-02-12T19:33:56Z",
+  "completedTime": "2014-02-12T19:33:59Z",
+  "call": "https://api.catapult.inetwork.com/v1/users/{userId}/calls/{callId}",
+  "digits": "1"
+}</value>
+  </data>
+  <data name="CallRecording" xml:space="preserve">
+    <value>{
+    "endTime": "2013-02-08T12:06:55.007Z",
+    "id": "recordingId",
+    "media": "https://.../v1/users/.../media/{callId}-1.wav",
+    "call": "https://.../v1/users/.../calls/{callId}",
+    "startTime": "2013-02-08T12:05:17.807Z",
+    "state": "complete"
+  }</value>
+  </data>
+  <data name="CallTranscription" xml:space="preserve">
+    <value>{
+        "chargeableDuration": 60,
+        "id": "transcriptionId",
+        "state": "completed",        
+        "time": "2014-10-09T12:09:16Z",
+        "text": "{transcription-text}",
+        "textSize": 3627,
+        "textUrl": "{url-to-full-text}"
+    }</value>
   </data>
   <data name="OrderedNumbers" xml:space="preserve">
     <value>[

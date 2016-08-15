@@ -9,7 +9,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Access to Conference Api
   /// </summary>
-  public interface IConference
+  public interface IConference: IPlayAudio
   {
 
     /// <summary>
@@ -109,6 +109,17 @@ namespace Bandwidth.Net.Api
     /// </example>
     Task UpdateMemberAsync(string conferenceId, string memberId, UpdateConferenceMemberData data, CancellationToken? cancellationToken = null);
 
+    /// <summary>
+    /// Play audio to conference member
+    /// </summary>
+    /// <param name="conferenceId">Id of the conference</param>
+    /// <param name="memberId">Id of the member to play audio</param>
+    /// <param name="data">Audio data to play</param>
+    /// <param name="cancellationToken">Optional token to cancel async operation</param>
+    /// <returns>Task instance for async operation</returns>
+    Task PlayAudioToMemberAsync(string conferenceId, string memberId, PlayAudioData data,
+      CancellationToken? cancellationToken = null);
+
   }
   
   internal class ConferenceApi : ApiBase, IConference
@@ -147,6 +158,158 @@ namespace Bandwidth.Net.Api
       CancellationToken? cancellationToken = null)
     {
       throw new NotImplementedException();
+    }
+
+    public Task PlayAudioToMemberAsync(string conferenceId, string memberId, PlayAudioData data,
+      CancellationToken? cancellationToken = null)
+    {
+      throw new NotImplementedException();
+    }
+
+    public Task PlayAudioAsync(string id, PlayAudioData data, CancellationToken? cancellationToken = null)
+    {
+      throw new NotImplementedException();
+    }
+  }
+
+  /// <summary>
+  /// Conference extension methods
+  /// </summary>
+  public static class ConferenceExtensions
+  {
+    /// <summary>
+    ///   Speak a sentence
+    /// </summary>
+    /// <param name="instance">Instance of <see cref="IPlayAudio" /></param>
+    /// <param name="conferenceId">Id of the conference</param>
+    /// <param name="memberId">Id of the member to play audio</param>
+    /// <param name="sentence">The sentence to speak</param>
+    /// <param name="gender">The gender of the voice used to synthesize the sentence.</param>
+    /// <param name="voice">The voice to speak the sentence.</param>
+    /// <param name="locale">The locale used to get the accent of the voice used to synthesize the sentence.</param>
+    /// <param name="tag">A string that will be included in the events delivered when the audio playback starts or finishes</param>
+    /// <param name="cancellationToken">
+    ///   Optional token to cancel async operation</param>
+    /// <returns>Task instance for async operation</returns>
+    /// <example>
+    ///   <code>
+    /// await client.Conference.SpeakSentenceToMemberAsync("conferenceId", "memberId, "Hello");
+    /// </code>
+    /// </example>
+    public static Task SpeakSentenceToMemberAsync(this IConference instance, string conferenceId, string memberId, string sentence, Gender gender = Gender.Female,
+      string voice = "susan", string locale = "en_US", string tag = null,
+      CancellationToken? cancellationToken = null)
+    {
+      return instance.PlayAudioToMemberAsync(conferenceId, memberId, new PlayAudioData
+      {
+        Sentence = sentence,
+        Gender = gender,
+        Voice = voice,
+        Locale = locale,
+        Tag = tag
+      }, cancellationToken);
+    }
+
+    /// <summary>
+    ///   Play audio file by url
+    /// </summary>
+    /// <param name="instance">>Instance of <see cref="IPlayAudio" /></param>
+    /// <param name="conferenceId">Id of the conference</param>
+    /// <param name="memberId">Id of the member to play audio</param>
+    /// <param name="fileUrl">Url to file to play</param>
+    /// <param name="tag">A string that will be included in the events delivered when the audio playback starts or finishes</param>
+    /// <param name="cancellationToken">
+    ///   Optional token to cancel async operation</param>
+    /// <returns>Task instance for async operation</returns>
+    /// <example>
+    ///   <code>
+    /// await client.Conference.PlayAudioFileToMemberAsync("conferenceId", "memberId, "http://host/path/to/file.mp3");
+    /// </code>
+    /// </example>
+    public static Task PlayAudioFileToMemberAsync(this IConference instance, string conferenceId, string memberId, string fileUrl, string tag = null,
+      CancellationToken? cancellationToken = null)
+    {
+      return instance.PlayAudioToMemberAsync(conferenceId, memberId, new PlayAudioData
+      {
+        FileUrl = fileUrl,
+        Tag = tag
+      }, cancellationToken);
+    }
+
+    /// <summary>
+    /// Remove member from the conference
+    /// </summary>
+    /// <param name="instance">>Instance of <see cref="IPlayAudio" /></param>
+    /// <param name="conferenceId">Id of the conference</param>
+    /// <param name="memberId">Id of the member to remove</param>
+    /// <returns>Task instance for async operation</returns>
+    public static Task DeleteMemberAsync(this IConference instance, string conferenceId, string memberId)
+    {
+      return instance.UpdateMemberAsync(conferenceId, memberId,
+        new UpdateConferenceMemberData {State = ConferenceMemberState.Completed});
+    }
+
+    /// <summary>
+    /// Hold/Unhold the conference member
+    /// </summary>
+    /// <param name="instance">>Instance of <see cref="IPlayAudio" /></param>
+    /// <param name="conferenceId">Id of the conference</param>
+    /// <param name="memberId">Id of the member</param>
+    /// <param name="hold">'true' to hold member or 'false'</param>
+    /// <returns>Task instance for async operation</returns>
+    public static Task HoldMemberAsync(this IConference instance, string conferenceId, string memberId, bool hold)
+    {
+      return instance.UpdateMemberAsync(conferenceId, memberId,
+        new UpdateConferenceMemberData { Hold = hold});
+    }
+
+    /// <summary>
+    /// Mute/Unmute the conference member
+    /// </summary>
+    /// <param name="instance">>Instance of <see cref="IPlayAudio" /></param>
+    /// <param name="conferenceId">Id of the conference</param>
+    /// <param name="memberId">Id of the member</param>
+    /// <param name="mute">'true' to mute member or 'false'</param>
+    /// <returns>Task instance for async operation</returns>
+    public static Task MuteMemberAsync(this IConference instance, string conferenceId, string memberId, bool mute)
+    {
+      return instance.UpdateMemberAsync(conferenceId, memberId,
+        new UpdateConferenceMemberData { Mute = mute });
+    }
+
+    /// <summary>
+    /// Terminate the conference
+    /// </summary>
+    /// <param name="instance">>Instance of <see cref="IPlayAudio" /></param>
+    /// <param name="conferenceId">Id of the conference to terminate</param>
+    /// <returns>Task instance for async operation</returns>    /// <returns></returns>
+    public static Task TerminateAsync(this IConference instance, string conferenceId)
+    {
+      return instance.UpdateAsync(conferenceId, new UpdateConferenceData {State = ConferenceState.Completed});
+    }
+
+    /// <summary>
+    /// Hold/Unhold the conference 
+    /// </summary>
+    /// <param name="instance">>Instance of <see cref="IPlayAudio" /></param>
+    /// <param name="conferenceId">Id of the conference</param>
+    /// <param name="hold">'true' to hold the conference or 'false'</param>
+    /// <returns>Task instance for async operation</returns>
+    public static Task HoldAsync(this IConference instance, string conferenceId, bool hold)
+    {
+      return instance.UpdateAsync(conferenceId, new UpdateConferenceData { Hold = hold });
+    }
+
+    /// <summary>
+    /// Mute/Unmute the conference
+    /// </summary>
+    /// <param name="instance">>Instance of <see cref="IPlayAudio" /></param>
+    /// <param name="conferenceId">Id of the conference</param>
+    /// <param name="mute">'true' to the conference or 'false'</param>
+    /// <returns>Task instance for async operation</returns>
+    public static Task MuteAsync(this IConference instance, string conferenceId, bool mute)
+    {
+      return instance.UpdateAsync(conferenceId, new UpdateConferenceData { Mute = mute });
     }
   }
 
@@ -438,6 +601,11 @@ namespace Bandwidth.Net.Api
   /// </summary>
   public class UpdateConferenceMemberData
   {
+    /// <summary>
+    /// Conference state
+    /// </summary>
+    public ConferenceMemberState State { get; set; }
+
     /// <summary>
     /// If "true", member can't hear the conference. If "false", the member can hear the conference.
     /// </summary>

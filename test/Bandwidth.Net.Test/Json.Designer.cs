@@ -172,7 +172,7 @@ namespace Bandwidth.Net.Test {
         ///  &quot;reason&quot;: &quot;max-digits&quot;,
         ///  &quot;createdTime&quot;: &quot;2014-02-12T19:33:56Z&quot;,
         ///  &quot;completedTime&quot;: &quot;2014-02-12T19:33:59Z&quot;,
-        ///  &quot;call&quot;: &quot;https://api.catapult.inetwork.com/v1/users/{userId}/calls/{callId}&quot;,
+        ///  &quot;call&quot;: &quot;https://api.catapult.inetwork.com/v1/users/{userId}/calls/callId&quot;,
         ///  &quot;digits&quot;: &quot;1&quot;
         ///}.
         /// </summary>

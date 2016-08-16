@@ -332,6 +332,7 @@ namespace Bandwidth.Net.Test.Api
     {
       Assert.Equal("gatherId", item.Id);
       Assert.Equal("1", item.Digits);
+      Assert.Equal("callId", item.CallId);
     }
   }
 

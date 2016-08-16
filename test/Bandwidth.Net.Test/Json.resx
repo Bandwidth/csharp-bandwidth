@@ -218,6 +218,27 @@
         "textUrl": "{url-to-full-text}"
     }</value>
   </data>
+  <data name="Conference" xml:space="preserve">
+    <value>{
+    "activeMembers": 0,
+    "createdTime": "2013-07-12T15:22:47-02",
+    "from": "+19703255647",
+    "id": "conferenceId",
+    "state": "created"
+}</value>
+  </data>
+  <data name="ConferenceMember" xml:space="preserve">
+    <value>{
+      "addedTime": "2013-07-12T15:54:47-02",
+      "hold": false,
+      "id": "memberId",
+      "mute": false,
+      "state": "active",
+      "joinTone": false,
+      "leavingTone": false,
+      "call": "https://localhost:8444/v1/users/{userId}/calls/callId1"
+  }</value>
+  </data>
   <data name="OrderedNumbers" xml:space="preserve">
     <value>[
     {

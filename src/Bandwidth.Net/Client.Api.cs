@@ -29,6 +29,11 @@ namespace Bandwidth.Net
     /// </summary>
     public ICall Call { get; private set; }
 
+    /// <summary>
+    /// Access to Conference Api
+    /// </summary>
+    public IConference Conference { get; private set; }
+
 
     private void SetupApis()
     {
@@ -37,6 +42,7 @@ namespace Bandwidth.Net
       AvailableNumber = new AvailableNumberApi { Client = this };
       Bridge = new BridgeApi{ Client = this };
       Call = new CallApi { Client = this };
+      Conference = new ConferenceApi { Client = this };
     }
   }
 }

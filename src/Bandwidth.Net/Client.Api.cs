@@ -29,6 +29,11 @@ namespace Bandwidth.Net
     /// </summary>
     public ICall Call { get; private set; }
 
+    /// <summary>
+    /// Access to IntelligenceService Api
+    /// </summary>
+    public IIntelligenceService IntelligenceService { get; private set; }
+
 
     private void SetupApis()
     {
@@ -37,6 +42,7 @@ namespace Bandwidth.Net
       AvailableNumber = new AvailableNumberApi { Client = this };
       Bridge = new BridgeApi{ Client = this };
       Call = new CallApi { Client = this };
+      IntelligenceService = new IntelligenceServiceApi { Client = this };
     }
   }
 }

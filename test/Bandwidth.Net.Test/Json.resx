@@ -218,6 +218,9 @@
         "textUrl": "{url-to-full-text}"
     }</value>
   </data>
+  <data name="NumberIntelligenceData" xml:space="preserve">
+    <value>{"number": "+1234567890", "nationalNumber": "(234) 456-78-90", "lineType": "fixed_voip", "riskType": "not_applicable", "riskCategory": "other_spam"}</value>
+  </data>
   <data name="OrderedNumbers" xml:space="preserve">
     <value>[
     {

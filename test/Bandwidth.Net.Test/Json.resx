@@ -218,6 +218,13 @@
         "textUrl": "{url-to-full-text}"
     }</value>
   </data>
+  <data name="MediaFile" xml:space="preserve">
+    <value>{
+    "contentLength": 10,
+    "mediaName": "mediaName1",
+    "content": "api.catapult.inetwork.com/.../media/mediaName1"
+  }</value>
+  </data>
   <data name="OrderedNumbers" xml:space="preserve">
     <value>[
     {

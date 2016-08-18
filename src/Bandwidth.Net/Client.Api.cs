@@ -29,6 +29,11 @@ namespace Bandwidth.Net
     /// </summary>
     public ICall Call { get; private set; }
 
+    /// <summary>
+    /// Access to Media Api
+    /// </summary>
+    public IMedia Media { get; private set; }
+
 
     private void SetupApis()
     {
@@ -37,6 +42,7 @@ namespace Bandwidth.Net
       AvailableNumber = new AvailableNumberApi { Client = this };
       Bridge = new BridgeApi{ Client = this };
       Call = new CallApi { Client = this };
+      Media = new MediaApi { Client = this };
     }
   }
 }

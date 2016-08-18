@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -83,11 +84,14 @@ namespace Bandwidth.Net.Api
     {
       if (data == null) throw new ArgumentNullException(nameof(data));
       if (string.IsNullOrEmpty(data.MediaName)) throw new ArgumentException("data.MediaName is required");
+      IDisposable resourceToClean = null;
       var request = Client.CreateRequest(HttpMethod.Put,
         $"/users/{Client.UserId}/media/{Uri.EscapeDataString(data.MediaName)}");
       if (data.Path != null)
       {
-        request.Content = new StreamContent(File.OpenRead(data.Path));
+        var stream = File.OpenRead(data.Path);
+        resourceToClean = stream;
+        request.Content = new StreamContent(stream);
       }
       if (data.Stream != null)
       {
@@ -99,11 +103,12 @@ namespace Bandwidth.Net.Api
       }
       if (data.String != null)
       {
-        request.Content = new StringContent(data.String);
+        request.Content = new StringContent(data.String, Encoding.UTF8);
       }
       if (request.Content == null) throw new ArgumentException("Path, Stream, Buffer or String is required. Please fill one of them.");
       request.Content.Headers.ContentType = new MediaTypeHeaderValue(data.ContentType ?? "application/octet-stream");
       var response = await Client.MakeRequestAsync(request, cancellationToken);
+      resourceToClean?.Dispose();
       await response.CheckResponseAsync();
     }
 
@@ -193,12 +198,12 @@ namespace Bandwidth.Net.Api
     /// <summary>
     /// Length of media file
     /// </summary>
-    public int ContentLength { get; set; }
+    public long? ContentLength => _response.Content.Headers.ContentLength;
 
     /// <summary>
     /// Content type of media file
     /// </summary>
-    public string ContentType { get; set; }
+    public string ContentType => _response.Content.Headers.ContentType.MediaType;
 
     /// <summary>
     /// Read content of downloaded file as byte array

@@ -41,9 +41,6 @@ namespace Bandwidth.Net
     public ICall Call { get; private set; }
 
     /// <summary>
-    /// Access to Media Api
-    /// </summary>
-    public IMedia Media { get; private set; }
     /// Access to Conference Api
     /// </summary>
     public IConference Conference { get; private set; }
@@ -93,7 +90,6 @@ namespace Bandwidth.Net
       Bridge = new BridgeApi{ Client = this };
       Domain = new DomainApi{ Client = this };
       Call = new CallApi { Client = this };
-      Media = new MediaApi { Client = this };
       Conference = new ConferenceApi { Client = this };
       Message = new MessageApi { Client = this };
       NumberInfo = new NumberInfoApi { Client = this };

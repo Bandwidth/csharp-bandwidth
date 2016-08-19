@@ -284,7 +284,17 @@
     }]</value>
   </data>
   <data name="Message" xml:space="preserve">
-    <value>TODO</value>
+    <value>{
+  "direction": "out",
+  "from": "{fromPhoneNumber}",
+  "id": "messageId",
+  "state": "received",
+  "text": "Hello",
+  "media": [],
+  "time": "2014-06-09T19:29:09Z",
+  "to": "{toPhoneNumber",
+  "skipMMSCarrierValidation": false
+}</value>
   </data>
   <data name="NumberInfo" xml:space="preserve">
     <value>TODO</value>

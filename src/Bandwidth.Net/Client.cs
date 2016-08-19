@@ -93,7 +93,7 @@ namespace Bandwidth.Net
 
     private static string TransformQueryParameterValue(object value)
     {
-      if (value is DateTime)
+      if (value is DateTime || value is DateTime?)
       {
         return ((DateTime)value).ToUniversalTime().ToString("o");
       }

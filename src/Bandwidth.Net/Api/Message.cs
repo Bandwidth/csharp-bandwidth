@@ -87,7 +87,7 @@ namespace Bandwidth.Net.Api
     public Task<SendMessageResult[]> SendAsync(MessageData[] data,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<SendMessageResult[]>(HttpMethod.Post,  $"/users/{Client.UserId}/messages", cancellationToken, data);
+      return Client.MakeJsonRequestAsync<SendMessageResult[]>(HttpMethod.Post,  $"/users/{Client.UserId}/messages", cancellationToken, null, data);
     }
 
     public Task<Message> GetAsync(string messageId, CancellationToken? cancellationToken = null)
@@ -292,12 +292,12 @@ namespace Bandwidth.Net.Api
     /// <summary>
     /// The starting date time to filter the messages
     /// </summary>
-    public DateTime? FromDateTime { get; set; }
+    public MessageQueryDateTime FromDateTime { get; set; }
 
     /// <summary>
     /// The ending date time to filter the messages
     /// </summary>
-    public DateTime? ToDateTime { get; set; }
+    public MessageQueryDateTime ToDateTime { get; set; }
 
     /// <summary>
     /// Filter by direction of message
@@ -389,14 +389,19 @@ namespace Bandwidth.Net.Api
     public SendMessageResults Result { get; set; }
 
     /// <summary>
-    /// Url to sent message
+    /// Url to new message
     /// </summary>
     public string Location { get; set; }
 
     /// <summary>
-    /// Id of sent message
+    /// Id of new message
     /// </summary>
     public string Id => Location.Split('/').Last();
+
+    /// <summary>
+    /// Error information (if Result is Error)
+    /// </summary>
+    public Error Error { get; set; }
   }
 
   /// <summary>
@@ -407,6 +412,55 @@ namespace Bandwidth.Net.Api
     /// <summary>
     /// Accepted
     /// </summary>
-    Accepted
+    Accepted,
+
+    /// <summary>
+    /// Error
+    /// </summary>
+    Error
+  }
+
+  /// <summary>
+  /// Custom DateTime type to support specific serializing to string. It can be converted to/from date time implicitly
+  /// </summary>
+  public class MessageQueryDateTime
+  {
+    private readonly DateTime _time;
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="time">DateTime instance</param>
+    public MessageQueryDateTime(DateTime time)
+    {
+      _time = time;
+    }
+
+    /// <summary>
+    /// MessageQueryDateTime -> DateTime  implicit convert 
+    /// </summary>
+    /// <param name="time">Instance to convert</param>
+    public static implicit operator DateTime(MessageQueryDateTime time)
+    {
+      return time._time;
+    }
+    
+    /// <summary>
+    /// DateTime -> MessageQueryDateTime implicit convert
+    /// </summary>
+    /// <param name="time">Instance to convert</param>
+    public static implicit operator MessageQueryDateTime(DateTime time)
+    {
+      return new MessageQueryDateTime(time);
+    }
+
+    /// <summary>
+    /// Convert to string
+    /// </summary>
+    /// <returns>String presentation</returns>
+    public override string ToString()
+    {
+      return _time.ToString("yyyy-MM-dd HH:mm:ss");
+    }
   }
 }

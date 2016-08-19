@@ -193,7 +193,7 @@
   "reason": "max-digits",
   "createdTime": "2014-02-12T19:33:56Z",
   "completedTime": "2014-02-12T19:33:59Z",
-  "call": "https://api.catapult.inetwork.com/v1/users/{userId}/calls/{callId}",
+  "call": "https://api.catapult.inetwork.com/v1/users/{userId}/calls/callId",
   "digits": "1"
 }</value>
   </data>
@@ -223,6 +223,61 @@
     "contentLength": 10,
     "mediaName": "mediaName1",
     "content": "api.catapult.inetwork.com/.../media/mediaName1"
+  </data>  
+  <data name="Error" xml:space="preserve">
+    <value>{
+      "time" : "2012-11-15T01:30:16.208Z",
+      "category" : "unavailable",
+      "id" : "errorId",
+      "details" : [
+         {
+            "id" : "{userErrorDetailId1}"
+,            "name" : "applicationId",
+            "value" : "{applicationId}",
+         },
+         {
+            "id" : "{userErrorDetailId2}"
+,            "name" : "number",
+            "value" : "{number}",
+         },
+         {
+            "id" : "{userErrorDetailId3}"
+,            "name" : "callId",
+            "value" : "{callId}",
+         }
+      ],
+      "message" : "Application {applicationId} (\"Dial a Tune\") for number 
+                   {number} does not specify a URL for call events",
+      "code" : "no-callback-for-call"
+   }</value>
+  </data>
+  <data name="Domain" xml:space="preserve">
+    <value>{
+	"id" : "domainId", 
+		"name" : "mycoolapp", 
+	"description" : "disruptive app that's going to revolutonize telecom", 
+		"endpoints" : "/v1/users/{user-id}/domains/dom-xyz123/endpoints"
+	}</value>
+  </data>
+  <data name="Conference" xml:space="preserve">
+    <value>{
+    "activeMembers": 0,
+    "createdTime": "2013-07-12T15:22:47-02",
+    "from": "+19703255647",
+    "id": "conferenceId",
+    "state": "created"
+}</value>
+  </data>
+  <data name="ConferenceMember" xml:space="preserve">
+    <value>{
+      "addedTime": "2013-07-12T15:54:47-02",
+      "hold": false,
+      "id": "memberId",
+      "mute": false,
+      "state": "active",
+      "joinTone": false,
+      "leavingTone": false,
+      "call": "https://localhost:8444/v1/users/{userId}/calls/callId1"
   }</value>
   </data>
   <data name="OrderedNumbers" xml:space="preserve">

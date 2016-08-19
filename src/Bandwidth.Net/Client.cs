@@ -136,6 +136,7 @@ namespace Bandwidth.Net
       }
     }
 
+    //TODO check all usage calls Dispose()
     internal async Task<HttpResponseMessage> MakeJsonRequestAsync(HttpMethod method, string path, CancellationToken? cancellationToken = null, object query = null, object body = null)
     {
       var request = CreateRequest(method, path, query);

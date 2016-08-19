@@ -1,4 +1,4 @@
-﻿using Bandwidth.Net.Api;
+using Bandwidth.Net.Api;
 
 namespace Bandwidth.Net
 {
@@ -40,6 +40,7 @@ namespace Bandwidth.Net
     /// </summary>
     public ICall Call { get; private set; }
 
+    
     /// <summary>
     /// Access to Conference Api
     /// </summary>

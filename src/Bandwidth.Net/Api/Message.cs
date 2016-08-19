@@ -84,10 +84,16 @@ namespace Bandwidth.Net.Api
       return new LazyInstance<Message>(id, () => GetAsync(id));
     }
 
-    public Task<SendMessageResult[]> SendAsync(MessageData[] data,
+    public async Task<SendMessageResult[]> SendAsync(MessageData[] data,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<SendMessageResult[]>(HttpMethod.Post,  $"/users/{Client.UserId}/messages", cancellationToken, null, data);
+      var list =  await Client.MakeJsonRequestAsync<SendMessageResult[]>(HttpMethod.Post,  $"/users/{Client.UserId}/messages", cancellationToken, null, data);
+      var l = data.Length;
+      for (var i = 0; i < l; i ++)
+      {
+        list[i].Message = data[i];
+      }
+      return list;
     }
 
     public Task<Message> GetAsync(string messageId, CancellationToken? cancellationToken = null)
@@ -402,6 +408,11 @@ namespace Bandwidth.Net.Api
     /// Error information (if Result is Error)
     /// </summary>
     public Error Error { get; set; }
+
+    /// <summary>
+    /// Message data
+    /// </summary>
+    public MessageData Message { get; set; }
   }
 
   /// <summary>

@@ -291,4 +291,19 @@
         "location": "https://.../v1/users/.../phoneNumbers/numberId"
     }]</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="NumberInfo" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="Recording" xml:space="preserve">
+    <value>TODO</value>
+  </data>
+  <data name="Transciption" xml:space="preserve">
+    <value>TODO</value>
+  </data>
 </root>

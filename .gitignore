@@ -186,3 +186,4 @@ FakesAssemblies/
 coverage.xml
 .vs
 .vscode
+Json.Designer.cs

@@ -54,8 +54,8 @@ namespace Bandwidth.Net
         {
           yield break;
         }
-        var request = _client.CreateGetRequest(nextPageUrl);
-        getData = () => _client.MakeRequestAsync(request);
+        var request = _client.CreateRequest(HttpMethod.Get, nextPageUrl, _client.CatapultAuthData);
+        getData = () => _client.MakeJsonRequestAsync(request, _client.CatapultAuthData);
       }
     }
 

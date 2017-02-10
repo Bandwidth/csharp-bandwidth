@@ -27,7 +27,7 @@ namespace Bandwidth.Net
       message.Content = new StringContent(json, Encoding.UTF8, "application/json");
     }
 
-    public static async Task CheckResponseAsync(this HttpResponseMessage response)
+    public static async Task CheckJsonResponseAsync(this HttpResponseMessage response)
     {
       if (!response.IsSuccessStatusCode)
       {

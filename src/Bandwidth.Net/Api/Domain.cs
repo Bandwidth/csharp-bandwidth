@@ -58,19 +58,19 @@ namespace Bandwidth.Net.Api
     {
       return new LazyEnumerable<Domain>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/domains", cancellationToken, query));
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/domains", Client.CatapultAuthData, cancellationToken, query));
     }
 
     public Task<string> CreateAsync(CreateDomainData data,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/domains", cancellationToken, data);
+      return Client.MakePostJsonRequestAsync($"/users/{Client.CatapultAuthData.UserId}/domains", Client.CatapultAuthData, cancellationToken, data);
     }
 
     public Task DeleteAsync(string domainId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Delete,
-        $"/users/{Client.UserId}/domains/{domainId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/domains/{domainId}", Client.CatapultAuthData, cancellationToken);
     }
   }
 

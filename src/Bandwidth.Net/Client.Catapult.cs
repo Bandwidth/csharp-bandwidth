@@ -40,7 +40,7 @@ namespace Bandwidth.Net
     /// </summary>
     public ICall Call { get; private set; }
 
-    
+
     /// <summary>
     /// Access to Conference Api
     /// </summary>
@@ -82,7 +82,7 @@ namespace Bandwidth.Net
     public IEndpoint Endpoint { get; private set; }
 
 
-    private void SetupApis()
+    private void SetupCatapultApis()
     {
       Error = new ErrorApi { Client = this };
       Account = new AccountApi {Client = this};

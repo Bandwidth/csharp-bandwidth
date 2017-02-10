@@ -52,7 +52,7 @@ namespace Bandwidth.Net.Test
       using (var response = new HttpResponseMessage(HttpStatusCode.OK))
       {
         response.Content = new StringContent("{\"field1\": 100}", Encoding.UTF8, "application/json");
-        await response.CheckResponseAsync();
+        await response.CheckJsonResponseAsync();
       }
     }
 
@@ -65,7 +65,7 @@ namespace Bandwidth.Net.Test
         {
           response.Content = new StringContent("{\"code\": \"100\", \"message\": \"Error message\"}", Encoding.UTF8,
             "application/json");
-          return response.CheckResponseAsync();
+          return response.CheckJsonResponseAsync();
         }
       });
       Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
@@ -80,7 +80,7 @@ namespace Bandwidth.Net.Test
         using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
         {
           response.Content = new StringContent("{\"code\": \"100\"}", Encoding.UTF8, "application/json");
-          return response.CheckResponseAsync();
+          return response.CheckJsonResponseAsync();
         }
       });
       Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
@@ -95,7 +95,7 @@ namespace Bandwidth.Net.Test
         using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
         {
           response.Content = new StringContent("{\"code\" \"100", Encoding.UTF8, "application/json");
-          return response.CheckResponseAsync();
+          return response.CheckJsonResponseAsync();
         }
       });
       Assert.Equal(HttpStatusCode.BadRequest, ex.Code);
@@ -109,7 +109,7 @@ namespace Bandwidth.Net.Test
         using (var response = new HttpResponseMessage(HttpStatusCode.BadRequest))
         {
           response.Content = new StringContent("Error message", Encoding.UTF8, "text/plain");
-          return response.CheckResponseAsync();
+          return response.CheckJsonResponseAsync();
         }
       });
       Assert.Equal(HttpStatusCode.BadRequest, ex.Code);

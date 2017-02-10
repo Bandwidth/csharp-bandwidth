@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace Bandwidth.Net.Api
 {
@@ -189,26 +187,26 @@ namespace Bandwidth.Net.Api
     {
       return new LazyEnumerable<Call>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/calls", cancellationToken, query));
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/calls", Client.CatapultAuthData, cancellationToken, query));
     }
 
     public Task<string> CreateAsync(CreateCallData data,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/calls", cancellationToken, data);
+      return Client.MakePostJsonRequestAsync($"/users/{Client.CatapultAuthData.UserId}/calls", Client.CatapultAuthData, cancellationToken, data);
     }
 
     public Task<Call> GetAsync(string callId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<Call>(HttpMethod.Get,
-        $"/users/{Client.UserId}/calls/{callId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}", Client.CatapultAuthData, cancellationToken);
     }
 
     public async Task<HttpResponseMessage> UpdateAsync(string callId, UpdateCallData data,
       CancellationToken? cancellationToken = null, bool disposeResponse = true)
     {
       var response =  await Client.MakeJsonRequestAsync(HttpMethod.Post,
-        $"/users/{Client.UserId}/calls/{callId}", cancellationToken, null, data);
+        $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}", Client.CatapultAuthData, cancellationToken, null, data);
       if (disposeResponse)
       {
         response.Dispose();
@@ -219,19 +217,19 @@ namespace Bandwidth.Net.Api
     public Task SendDtmfAsync(string callId, SendDtmfData data, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-        $"/users/{Client.UserId}/calls/{callId}/dtmf", cancellationToken, null, data);
+        $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}/dtmf", Client.CatapultAuthData, cancellationToken, null, data);
     }
 
     public IEnumerable<CallEvent> GetEvents(string callId, CancellationToken? cancellationToken = null)
     {
       return new LazyEnumerable<CallEvent>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/calls/{callId}/events", cancellationToken));
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}/events", Client.CatapultAuthData, cancellationToken));
     }
 
     public Task<CallEvent> GetEventAsync(string callId, string eventId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<CallEvent>(HttpMethod.Get, $"/users/{Client.UserId}/calls/{callId}/events/{eventId}",
+      return Client.MakeJsonRequestAsync<CallEvent>(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}/events/{eventId}", Client.CatapultAuthData,
         cancellationToken);
     }
 
@@ -239,39 +237,39 @@ namespace Bandwidth.Net.Api
     {
       return new LazyEnumerable<Recording>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/calls/{callId}/recordings", cancellationToken));
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}/recordings", Client.CatapultAuthData, cancellationToken));
     }
 
     public IEnumerable<Transcription> GetTranscriptions(string callId, CancellationToken? cancellationToken = null)
     {
       return new LazyEnumerable<Transcription>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/calls/{callId}/transcriptions", cancellationToken));
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}/transcriptions", Client.CatapultAuthData, cancellationToken));
     }
 
     public Task<string> CreateGatherAsync(string callId, CreateGatherData data, CancellationToken? cancellationToken = null)
     {
-      return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/calls/{callId}/gather", cancellationToken, data);
+      return Client.MakePostJsonRequestAsync($"/users/{Client.CatapultAuthData.UserId}/calls/{callId}/gather", Client.CatapultAuthData, cancellationToken, data);
     }
 
     public Task<CallGather> GetGatherAsync(string callId, string gatherId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<CallGather>(HttpMethod.Get,
-        $"/users/{Client.UserId}/calls/{callId}/gather/{gatherId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}/gather/{gatherId}", Client.CatapultAuthData, cancellationToken);
     }
 
     public Task UpdateGatherAsync(string callId, string gatherId, UpdateGatherData data,
       CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-        $"/users/{Client.UserId}/calls/{callId}/gather/{gatherId}", cancellationToken, null, data);
+        $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}/gather/{gatherId}", Client.CatapultAuthData, cancellationToken, null, data);
     }
 
     public Task PlayAudioAsync(string callId, PlayAudioData data, CancellationToken? cancellationToken = null)
     {
       return
         Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-          $"/users/{Client.UserId}/calls/{callId}/audio", cancellationToken, null, data);
+          $"/users/{Client.CatapultAuthData.UserId}/calls/{callId}/audio", Client.CatapultAuthData, cancellationToken, null, data);
     }
   }
 

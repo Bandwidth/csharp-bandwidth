@@ -108,34 +108,34 @@ namespace Bandwidth.Net.Api
     {
       return new LazyEnumerable<Endpoint>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/domains/{domainId}/endpoints",
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/domains/{domainId}/endpoints", Client.CatapultAuthData,
             cancellationToken, query));
     }
 
     public Task<string> CreateAsync(CreateEndpointData data,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/domains/{data.DomainId}/endpoints", cancellationToken,
+      return Client.MakePostJsonRequestAsync($"/users/{Client.CatapultAuthData.UserId}/domains/{data.DomainId}/endpoints", Client.CatapultAuthData, cancellationToken, 
             data);
     }
 
     public Task<Endpoint> GetAsync(string domainId, string endpointId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<Endpoint>(HttpMethod.Get,
-        $"/users/{Client.UserId}/domains/{domainId}/endpoints/{endpointId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/domains/{domainId}/endpoints/{endpointId}", Client.CatapultAuthData, cancellationToken);
     }
 
     public Task UpdateAsync(string domainId, string endpointId, UpdateEndpointData data,
       CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-        $"/users/{Client.UserId}/domains/{domainId}/endpoints/{endpointId}", cancellationToken, null, data);
+        $"/users/{Client.CatapultAuthData.UserId}/domains/{domainId}/endpoints/{endpointId}", Client.CatapultAuthData, cancellationToken, null, data);
     }
 
     public Task DeleteAsync(string domainId, string endpointId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Delete,
-        $"/users/{Client.UserId}/domains/{domainId}/endpoints/{endpointId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/domains/{domainId}/endpoints/{endpointId}", Client.CatapultAuthData, cancellationToken);
     }
 
     public Task<EndpointAuthToken> CreateAuthTokenAsync(string domainId, string endpointId,
@@ -143,7 +143,7 @@ namespace Bandwidth.Net.Api
       CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<EndpointAuthToken>(HttpMethod.Post,
-        $"/users/{Client.UserId}/domains/{domainId}/endpoints/{endpointId}/tokens", cancellationToken, null, data);
+        $"/users/{Client.CatapultAuthData.UserId}/domains/{domainId}/endpoints/{endpointId}/tokens", Client.CatapultAuthData, cancellationToken, null, data);
     }
   }
 

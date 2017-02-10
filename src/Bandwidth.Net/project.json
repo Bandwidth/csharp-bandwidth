@@ -26,6 +26,7 @@
       "frameworkAssemblies": {
         "System.Net.Http": "4.0.0.0",
         "System.Xml": "4.0.0.0",
+        "System.Xml.Linq": "4.0.0.0",
         "System.Xml.Serialization": "4.0.0.0"
       }
     },
@@ -33,6 +34,7 @@
       "frameworkAssemblies": {
         "System.Net.Http": "4.0.0.0",
         "System.Xml": "4.0.0.0",
+        "System.Xml.Linq": "4.0.0.0",
         "System.Xml.Serialization": "4.0.0.0"
       }
     },
@@ -51,7 +53,8 @@
         "System.IO": "4.0.0.0",
         "System": "4.0.0.0",
         "System.Reflection.Extensions": "4.0.0.0",
-        "System.Reflection.Primitives": "4.0.0.0"
+        "System.Reflection.Primitives": "4.0.0.0",
+        "System.Xml.Linq": "4.0.0.0"
       }
     },
     "monoandroid10": {
@@ -66,7 +69,8 @@
         "System": "2.0.5.0",
         "System.Xml": "2.0.5.0",
         "System.Xml.Serialization": "2.0.5.0",
-        "mscorlib": "2.0.5.0"
+        "mscorlib": "2.0.5.0",
+        "System.Xml.Linq": "2.0.5.0"
       }
     },
     "monotouch10": {
@@ -81,7 +85,8 @@
         "System": "2.0.5.0",
         "System.Xml": "2.0.5.0",
         "System.Xml.Serialization": "2.0.5.0",
-        "mscorlib": "2.0.5.0"
+        "mscorlib": "2.0.5.0",
+        "System.Xml.Linq": "2.0.5.0"
       }
     },
     "xamarinios10": {
@@ -96,7 +101,8 @@
         "System": "2.0.5.0",
         "System.Xml": "2.0.5.0",
         "System.Xml.Serialization": "2.0.5.0",
-        "mscorlib": "2.0.5.0"
+        "mscorlib": "2.0.5.0",
+        "System.Xml.Linq": "2.0.5.0"
       }
     }
   },

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Bandwidth.Net
@@ -12,9 +13,8 @@ namespace Bandwidth.Net
     /// <summary>
     /// MissingCredentialsException
     /// </summary>
-    public MissingCredentialsException()
-        : base("Missing credentials.\n" +
-        "Use new Client(<userId>, <apiToken>, <apiSecret>) to set up them.")
+    public MissingCredentialsException(string credentialType)
+        : base($"Missing {credentialType} credentials in constructor of Client. Please fill them as parameter of type {credentialType}AuthData.")
     {
     }
   }
@@ -53,5 +53,24 @@ namespace Bandwidth.Net
     {
       Code = code;
     }
+
+    /// <summary>
+    /// BandwidthException
+    /// </summary>
+    /// <param name="message">Error message</param>
+    /// <param name="additionalData">Additional data for exception</param>
+    /// <param name="code">Status code</param>
+    public BandwidthException(string message, IDictionary<string, string> additionalData, HttpStatusCode code) : this(message, code)
+    {
+      foreach (var item in additionalData)
+      {
+        AdditionalData[item.Key] = item.Value;
+      }
+    }
+
+    /// <summary>
+    /// Additional data of exception
+    /// </summary>
+    public readonly Dictionary<string, string> AdditionalData = new Dictionary<string, string>();
   }
 }

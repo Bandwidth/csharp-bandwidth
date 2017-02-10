@@ -69,28 +69,28 @@ namespace Bandwidth.Net.Api
   {
     public Task<AvailableNumber[]> SearchLocalAsync(LocalNumberQuery query, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<AvailableNumber[]>(HttpMethod.Get, "/availableNumbers/local", cancellationToken,
+      return Client.MakeJsonRequestAsync<AvailableNumber[]>(HttpMethod.Get, "/availableNumbers/local", Client.CatapultAuthData, cancellationToken,
         query);
     }
 
     public Task<AvailableNumber[]> SearchTollFreeAsync(TollFreeNumberQuery query,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<AvailableNumber[]>(HttpMethod.Get, "/availableNumbers/tollFree",
+      return Client.MakeJsonRequestAsync<AvailableNumber[]>(HttpMethod.Get, "/availableNumbers/tollFree", Client.CatapultAuthData,
         cancellationToken, query);
     }
 
     public Task<OrderedNumber[]> SearchAndOrderLocalAsync(LocalNumberQueryForOrder query,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<OrderedNumber[]>(HttpMethod.Post, "/availableNumbers/local", cancellationToken,
+      return Client.MakeJsonRequestAsync<OrderedNumber[]>(HttpMethod.Post, "/availableNumbers/local", Client.CatapultAuthData, cancellationToken,
         query);
     }
 
     public Task<OrderedNumber[]> SearchAndOrderTollFreeAsync(TollFreeNumberQueryForOrder query,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<OrderedNumber[]>(HttpMethod.Post, "/availableNumbers/tollFree",
+      return Client.MakeJsonRequestAsync<OrderedNumber[]>(HttpMethod.Post, "/availableNumbers/tollFree", Client.CatapultAuthData,
         cancellationToken, query);
     }
   }

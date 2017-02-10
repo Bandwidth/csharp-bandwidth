@@ -129,34 +129,34 @@ namespace Bandwidth.Net.Api
     public Task<string> CreateAsync(CreateConferenceData data,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/conferences", cancellationToken, data);
+      return Client.MakePostJsonRequestAsync($"/users/{Client.CatapultAuthData.UserId}/conferences", Client.CatapultAuthData, cancellationToken, data);
     }
 
     public Task<Conference> GetAsync(string conferenceId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<Conference>(HttpMethod.Get,
-        $"/users/{Client.UserId}/conferences/{conferenceId}",
+        $"/users/{Client.CatapultAuthData.UserId}/conferences/{conferenceId}", Client.CatapultAuthData,
         cancellationToken);
     }
 
     public Task UpdateAsync(string conferenceId, UpdateConferenceData data, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-        $"/users/{Client.UserId}/conferences/{conferenceId}", cancellationToken, null, data);
+        $"/users/{Client.CatapultAuthData.UserId}/conferences/{conferenceId}", Client.CatapultAuthData, cancellationToken, null, data);
     }
 
     public IEnumerable<ConferenceMember> GetMembers(string conferenceId, CancellationToken? cancellationToken = null)
     {
       return new LazyEnumerable<ConferenceMember>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/conferences/{conferenceId}/members",
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/conferences/{conferenceId}/members", Client.CatapultAuthData,
             cancellationToken));
     }
 
     public Task<string> CreateMemberAsync(string conferenceId,
       CreateConferenceMemberData data, CancellationToken? cancellationToken = null)
     {
-      return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/conferences/{conferenceId}/members",
+      return Client.MakePostJsonRequestAsync($"/users/{Client.CatapultAuthData.UserId}/conferences/{conferenceId}/members", Client.CatapultAuthData,
             cancellationToken, data);
     }
 
@@ -164,7 +164,7 @@ namespace Bandwidth.Net.Api
       CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<ConferenceMember>(HttpMethod.Get,
-        $"/users/{Client.UserId}/conferences/{conferenceId}/members/{memberId}",
+        $"/users/{Client.CatapultAuthData.UserId}/conferences/{conferenceId}/members/{memberId}", Client.CatapultAuthData,
         cancellationToken);
     }
 
@@ -172,7 +172,7 @@ namespace Bandwidth.Net.Api
       CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-        $"/users/{Client.UserId}/conferences/{conferenceId}/members/{memberId}", cancellationToken, null, data);
+        $"/users/{Client.CatapultAuthData.UserId}/conferences/{conferenceId}/members/{memberId}", Client.CatapultAuthData, cancellationToken, null, data);
     }
 
     public Task PlayAudioToMemberAsync(string conferenceId, string memberId, PlayAudioData data,
@@ -180,14 +180,14 @@ namespace Bandwidth.Net.Api
     {
       return
         Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-          $"/users/{Client.UserId}/conferences/{conferenceId}/members/{memberId}/audio", cancellationToken, null, data);
+          $"/users/{Client.CatapultAuthData.UserId}/conferences/{conferenceId}/members/{memberId}/audio", Client.CatapultAuthData, cancellationToken, null, data);
     }
 
     public Task PlayAudioAsync(string conferenceId, PlayAudioData data, CancellationToken? cancellationToken = null)
     {
       return
         Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-          $"/users/{Client.UserId}/conferences/{conferenceId}/audio", cancellationToken, null, data);
+          $"/users/{Client.CatapultAuthData.UserId}/conferences/{conferenceId}/audio", Client.CatapultAuthData, cancellationToken, null, data);
     }
   }
 

@@ -63,14 +63,14 @@ namespace Bandwidth.Net.Api
     {
       return new LazyEnumerable<Transcription>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/recordings/{recordingId}/transcriptions",
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/recordings/{recordingId}/transcriptions", Client.CatapultAuthData,
             cancellationToken, query));
     }
 
     public Task<string> CreateAsync(string recordingId,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/recordings/{recordingId}/transcriptions",
+      return Client.MakePostJsonRequestAsync($"/users/{Client.CatapultAuthData.UserId}/recordings/{recordingId}/transcriptions", Client.CatapultAuthData,
             cancellationToken, new object());
     }
 
@@ -78,7 +78,7 @@ namespace Bandwidth.Net.Api
       CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<Transcription>(HttpMethod.Get,
-        $"/users/{Client.UserId}/bridges/recordings/{recordingId}/transcriptions/{transcriptionId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/bridges/recordings/{recordingId}/transcriptions/{transcriptionId}", Client.CatapultAuthData, cancellationToken);
     }
   }
 

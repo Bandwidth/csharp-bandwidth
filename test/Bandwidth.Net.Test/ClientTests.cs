@@ -11,22 +11,19 @@ namespace Bandwidth.Net.Test
   public class ClientTests
   {
     [Fact]
-    public void TestConstructorWithBaseUrl()
+    public void TestConstructor()
     {
-      var api = new Client("userId", "apiToken", "apiSecret", "http://host");
-      Assert.Equal("http://host/v1/", api.CreateRequest(HttpMethod.Get, "/").RequestUri.ToString());
+      var api = new Client(new CatapultAuthData(), new IrisAuthData());
+      Assert.NotNull(api.CatapultAuthData);
+      Assert.NotNull(api.IrisAuthData);
     }
 
     [Fact]
-    public void TestConstructorWithEmptyCredentialParams()
+    public void TestConstructorEmpty()
     {
-      Assert.Throws<MissingCredentialsException>(() => new Client("", "apiToken", "apiSecret"));
-    }
-
-    [Fact]
-    public void TestConstructorWithEmptyBaseUrl()
-    {
-      Assert.Throws<InvalidBaseUrlException>(() => new Client("userId", "apiToken", "apiSecret", ""));
+      var api = new Client();
+      Assert.NotNull(api.CatapultAuthData);
+      Assert.NotNull(api.IrisAuthData);
     }
 
 
@@ -34,7 +31,7 @@ namespace Bandwidth.Net.Test
     public void TestCreateRequest()
     {
       var api = Helpers.GetClient();
-      var request = api.CreateRequest(HttpMethod.Get, "/test");
+      var request = api.CreateRequest(HttpMethod.Get, "/test", api.CatapultAuthData);
       Assert.Equal(HttpMethod.Get, request.Method);
       Assert.Equal("http://localhost/v1/test", request.RequestUri.ToString());
       var hash = Convert.ToBase64String(Encoding.UTF8.GetBytes("apiToken:apiSecret"));
@@ -42,10 +39,19 @@ namespace Bandwidth.Net.Test
     }
 
     [Fact]
+    public void TestCreateRequestWithAbsoluteUrl()
+    {
+      var api = Helpers.GetClient();
+      var request = api.CreateRequest(HttpMethod.Get, "http://my-host/test", api.CatapultAuthData);
+      Assert.Equal(HttpMethod.Get, request.Method);
+      Assert.Equal("http://my-host/test", request.RequestUri.ToString());
+    }
+
+    [Fact]
     public void TestCreateRequestWithQuery()
     {
       var api = Helpers.GetClient();
-      var request = api.CreateRequest(HttpMethod.Get, "/test",
+      var request = api.CreateRequest(HttpMethod.Get, "/test",  api.CatapultAuthData,
         new
         {
           Field1 = 1,
@@ -63,19 +69,7 @@ namespace Bandwidth.Net.Test
     }
 
     [Fact]
-    public void TestCreateGetRequest()
-    {
-      var api = Helpers.GetClient();
-      var request = api.CreateGetRequest("http://host/path");
-      Assert.Equal(HttpMethod.Get, request.Method);
-      Assert.Equal("http://host/path", request.RequestUri.ToString());
-      var hash = Convert.ToBase64String(Encoding.UTF8.GetBytes("apiToken:apiSecret"));
-      Assert.Equal($"Basic {hash}", request.Headers.Authorization.ToString());
-    }
-
-
-    [Fact]
-    public async void TestMakeRequest()
+    public async void TestMakeJsonRequestReq()
     {
       var context = new MockContext<IHttp>();
       var api = Helpers.GetClient(context);
@@ -83,7 +77,7 @@ namespace Bandwidth.Net.Test
       context.Arrange(m => m.SendAsync(request, HttpCompletionOption.ResponseContentRead, null))
         .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
       using (var response =
-        await api.MakeRequestAsync(request))
+        await api.MakeJsonRequestAsync(request, api.CatapultAuthData))
       {
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
       }
@@ -100,7 +94,7 @@ namespace Bandwidth.Net.Test
         {
           Content = new StringContent("{\"test\": \"value\"}", Encoding.UTF8, "application/json")
         }));
-      var result = await api.MakeJsonRequestAsync<MakeJsonRequestDemo>(HttpMethod.Get, "/test");
+      var result = await api.MakeJsonRequestAsync<MakeJsonRequestDemo>(HttpMethod.Get, "/test", api.CatapultAuthData);
       Assert.Equal("value", result.Test);
     }
 
@@ -114,7 +108,7 @@ namespace Bandwidth.Net.Test
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithoutBody(r)),
             HttpCompletionOption.ResponseContentRead, null))
         .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
-      using (var response = await api.MakeJsonRequestAsync(HttpMethod.Get, "/test"))
+      using (var response = await api.MakeJsonRequestAsync(HttpMethod.Get, "/test", api.CatapultAuthData))
       {
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
       }
@@ -130,8 +124,8 @@ namespace Bandwidth.Net.Test
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithoutBody(r)),
             HttpCompletionOption.ResponseContentRead, null))
         .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
-      await api.MakeJsonRequestWithoutResponseAsync(HttpMethod.Get, "/test");
-      
+      await api.MakeJsonRequestWithoutResponseAsync(HttpMethod.Get, "/test", api.CatapultAuthData);
+
     }
 
     [Fact]
@@ -144,7 +138,7 @@ namespace Bandwidth.Net.Test
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithBody(r)),
             HttpCompletionOption.ResponseContentRead, null))
         .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
-      var response = await api.MakeJsonRequestAsync(HttpMethod.Post, "/test", null, null, new {Field = "value"});
+      var response = await api.MakeJsonRequestAsync(HttpMethod.Post, "/test", api.CatapultAuthData, null, null, new {Field = "value"});
       Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
@@ -160,7 +154,7 @@ namespace Bandwidth.Net.Test
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithBody(r)),
             HttpCompletionOption.ResponseContentRead, null))
         .Returns(Task.FromResult(response));
-      var id = await api.MakePostJsonRequestAsync("/test", null, new { Field = "value" });
+      var id = await api.MakePostJsonRequestAsync("/test", api.CatapultAuthData, null, new { Field = "value" });
       Assert.Equal("id", id);
     }
 
@@ -175,7 +169,112 @@ namespace Bandwidth.Net.Test
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithBody(r)),
             HttpCompletionOption.ResponseContentRead, null))
         .Returns(Task.FromResult(response));
-      var id = await api.MakePostJsonRequestAsync("/test", null, new { Field = "value" });
+      var id = await api.MakePostJsonRequestAsync("/test", api.CatapultAuthData, null, new { Field = "value" });
+      Assert.True(string.IsNullOrEmpty(id));
+    }
+
+    [Fact]
+    public async void TestMakeXmlRequestReq()
+    {
+      var context = new MockContext<IHttp>();
+      var api = Helpers.GetClient(context);
+      var request = new HttpRequestMessage(HttpMethod.Get, "/test");
+      context.Arrange(m => m.SendAsync(request, HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+      using (var response =
+        await api.MakeXmlRequestAsync(request, api.CatapultAuthData))
+      {
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+      }
+    }
+
+    [Fact]
+    public async void TestMakeXmlTRequest()
+    {
+      var context = new MockContext<IHttp>();
+      var api = Helpers.GetClient(context);
+      context.Arrange(
+        m => m.SendAsync(The<HttpRequestMessage>.IsAnyValue, HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+        {
+          Content = new StringContent("<MakeJsonRequestDemo><Test>value</Test></MakeJsonRequestDemo>", Encoding.UTF8, "application/xml")
+        }));
+      var result = await api.MakeXmlRequestAsync<MakeJsonRequestDemo>(HttpMethod.Get, "/test", api.CatapultAuthData);
+      Assert.Equal("value", result.Test);
+    }
+
+    [Fact]
+    public async void TestMakeXmlRequest()
+    {
+      var context = new MockContext<IHttp>();
+      var api = Helpers.GetClient(context);
+      context.Arrange(
+        m =>
+          m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithoutBody(r)),
+            HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+      using (var response = await api.MakeXmlRequestAsync(HttpMethod.Get, "/test", api.CatapultAuthData))
+      {
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+      }
+    }
+
+    [Fact]
+    public async void TestMakeXmlWithoutRequestRequest()
+    {
+      var context = new MockContext<IHttp>();
+      var api = Helpers.GetClient(context);
+      context.Arrange(
+        m =>
+          m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidRequestWithoutBody(r)),
+            HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+      await api.MakeXmlRequestWithoutResponseAsync(HttpMethod.Get, "/test", api.CatapultAuthData);
+
+    }
+
+    [Fact]
+    public async void TestMakeXmlRequestWithBody()
+    {
+      var context = new MockContext<IHttp>();
+      var api = Helpers.GetClient(context);
+      context.Arrange(
+        m =>
+          m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidXmlRequestWithBody(r)),
+            HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)));
+      var response = await api.MakeXmlRequestAsync(HttpMethod.Post, "/test", api.CatapultAuthData, null, null, new MakeJsonRequestDemo { Test = "value" });
+      Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async void TestMakePostXmlRequest()
+    {
+      var context = new MockContext<IHttp>();
+      var response = new HttpResponseMessage(HttpStatusCode.OK);
+      response.Headers.Location = new Uri("http://host/path/id");
+      var api = Helpers.GetClient(context);
+      context.Arrange(
+        m =>
+          m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidXmlRequestWithBody(r)),
+            HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(response));
+      var id = await api.MakePostXmlRequestAsync("/test", api.CatapultAuthData, null, new MakeJsonRequestDemo { Test = "value" });
+      Assert.Equal("id", id);
+    }
+
+    [Fact]
+    public async void TestMakePostXmlRequestWithoutLocationHeader()
+    {
+      var context = new MockContext<IHttp>();
+      var response = new HttpResponseMessage(HttpStatusCode.OK);
+      var api = Helpers.GetClient(context);
+      context.Arrange(
+        m =>
+          m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidXmlRequestWithBody(r)),
+            HttpCompletionOption.ResponseContentRead, null))
+        .Returns(Task.FromResult(response));
+      var id = await api.MakePostXmlRequestAsync("/test", api.CatapultAuthData, null, new MakeJsonRequestDemo { Test = "value" });
       Assert.True(string.IsNullOrEmpty(id));
     }
 
@@ -184,6 +283,12 @@ namespace Bandwidth.Net.Test
     {
       return request.Content.Headers.ContentType.MediaType == "application/json"
              && request.Content.ReadAsStringAsync().Result == "{\"field\":\"value\"}";
+    }
+
+    public static bool IsValidXmlRequestWithBody(HttpRequestMessage request)
+    {
+      return request.Content.Headers.ContentType.MediaType == "application/xml"
+             && request.Content.ReadAsStringAsync().Result.Contains("<Test>value</Test>");
     }
 
     public static bool IsValidRequestWithoutBody(HttpRequestMessage request)

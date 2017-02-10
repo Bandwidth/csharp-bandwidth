@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
@@ -14,54 +13,45 @@ namespace Bandwidth.Net
   /// </summary>
   public partial class Client
   {
-    internal readonly string UserId;
+    internal readonly IrisAuthData IrisAuthData;
+    internal readonly CatapultAuthData CatapultAuthData;
     private readonly IHttp _http;
     private static readonly ProductInfoHeaderValue UserAgent = BuildUserAgent();
-    private readonly AuthenticationHeaderValue _authentication;
-    private readonly string _baseUrl;
-    private const string Version = "v1";
 
     /// <summary>
     /// Constructor
     /// </summary>
-    /// <param name="userId">Id of user on Catapult API</param>
-    /// <param name="apiToken">Authorization token of Catapult API</param>
-    /// <param name="apiSecret">Authorization secret of Catapult API</param>
-    /// <param name="baseUrl">Base url of Catapult API server</param>
+    /// <param name="catapultAuthData">Auth data for Catapult</param>
+    /// <param name="irisAuthData">Auth data for Iris</param>
     /// <param name="http">Optional processor of http requests. Use it to owerwrite default http request processing (useful for test, logs, etc)</param>
     /// <example>
     /// Regular usage
     /// <code>
-    /// var client = new Client("userId", "apiToken", "apiSecret");
+    /// var client = new Client(new CatapultAuthData("userId", "apiToken", "apiSecret"), new IrisAuthData("accountId", "userName", "password"));
     /// </code>
     /// 
-    /// Using another server
+    /// Using Catapult API only
     /// <code>
-    /// var client = new Client("userId", "apiToken", "apiSecret", "https://another.server");
+    /// var client = new Client(new CatapultAuthData("userId", "apiToken", "apiSecret"));
+    /// </code>
+    /// 
+    /// Using Iris API only
+    /// <code>
+    /// var client = new Client(null, new IrisAuthData("accountId", "userName", "password"));
     /// </code>
     /// 
     /// Using with own implementaion of HTTP processing (usefull for tests)
     /// <code>
-    /// var client = new Client("userId", "apiToken", "apiSecret", "https://another.server", new YourMockHttp());
+    /// var client = new Client(new CatapultAuthData("userId", "apiToken", "apiSecret"), new IrisAuthData("accountId", "userName", "password"), new YourMockHttp());
     /// </code>
     /// </example>
-    public Client(string userId, string apiToken, string apiSecret, string baseUrl = "https://api.catapult.inetwork.com", IHttp http = null)
+    public Client(CatapultAuthData catapultAuthData = null, IrisAuthData irisAuthData = null, IHttp http = null)
     {
-      if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(apiToken) || string.IsNullOrEmpty(apiSecret))
-      {
-        throw new MissingCredentialsException();
-      }
-      if (string.IsNullOrEmpty(baseUrl))
-      {
-        throw new InvalidBaseUrlException();
-      }
-      UserId = userId;
-      _baseUrl = baseUrl;
+      CatapultAuthData = catapultAuthData ?? new CatapultAuthData();
+      IrisAuthData = irisAuthData ?? new IrisAuthData();
       _http = http ?? new Http<HttpClientHandler>();
-      _authentication =
-          new AuthenticationHeaderValue("Basic",
-              Convert.ToBase64String(Encoding.UTF8.GetBytes($"{apiToken}:{apiSecret}")));
-      SetupApis();
+      SetupCatapultApis();
+      SetupIrisApis();
     }
 
     private static ProductInfoHeaderValue BuildUserAgent()
@@ -100,64 +90,101 @@ namespace Bandwidth.Net
       return Convert.ToString(value);
     }
 
-    internal HttpRequestMessage CreateRequest(HttpMethod method, string path, object query = null)
+    internal HttpRequestMessage CreateRequest(HttpMethod method, string path, IAuthData authData, object query = null)
     {
-      var url = new UriBuilder(_baseUrl)
+      authData.Validate();
+      var url = path.Contains("://") ? path : $"{authData.BaseUrl}{path}";
+      var urlWithQuery = new UriBuilder(url);
+      if (query != null)
       {
-        Path = $"/{Version}{path}",
-        Query = BuildQueryString(query)
-      };
-      var message = new HttpRequestMessage(method, url.Uri);
+        urlWithQuery.Query = BuildQueryString(query);
+      }
+      var message = new HttpRequestMessage(method, urlWithQuery.Uri);
       message.Headers.UserAgent.Add(UserAgent);
-      message.Headers.Authorization = _authentication;
+      message.Headers.Authorization = authData.AuthenticationHeader;
       return message;
     }
 
-    internal HttpRequestMessage CreateGetRequest(string url)
-    {
-      var message = new HttpRequestMessage(HttpMethod.Get, url);
-      message.Headers.UserAgent.Add(UserAgent);
-      message.Headers.Authorization = _authentication;
-      return message;
-    }
-
-    internal async Task<HttpResponseMessage> MakeRequestAsync(HttpRequestMessage request, CancellationToken? cancellationToken = null, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
+    internal async Task<HttpResponseMessage> MakeJsonRequestAsync(HttpRequestMessage request, IAuthData authData, CancellationToken? cancellationToken = null, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
     {
       var response = await _http.SendAsync(request, completionOption, cancellationToken);
-      await response.CheckResponseAsync();
+      await response.CheckJsonResponseAsync();
       return response;
     }
 
-    internal async Task<T> MakeJsonRequestAsync<T>(HttpMethod method, string path, CancellationToken? cancellationToken = null, object query = null, object body = null)
+    internal async Task<HttpResponseMessage> MakeXmlRequestAsync(HttpRequestMessage request, IAuthData authData, CancellationToken? cancellationToken = null, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead)
     {
-      using (var response = await MakeJsonRequestAsync(method, path, cancellationToken, query, body))
+      var response = await _http.SendAsync(request, completionOption, cancellationToken);
+      await response.CheckXmlResponseAsync();
+      return response;
+    }
+
+
+    internal async Task<T> MakeJsonRequestAsync<T>(HttpMethod method, string path, IAuthData authData, CancellationToken? cancellationToken = null, object query = null, object body = null)
+    {
+      using (var response = await MakeJsonRequestAsync(method, path, authData,  cancellationToken, query, body))
       {
         return await response.Content.ReadAsJsonAsync<T>();
       }
     }
 
-    internal async Task<HttpResponseMessage> MakeJsonRequestAsync(HttpMethod method, string path, CancellationToken? cancellationToken = null, object query = null, object body = null)
+    internal async Task<T> MakeXmlRequestAsync<T>(HttpMethod method, string path, IAuthData authData, CancellationToken? cancellationToken = null, object query = null, object body = null)
     {
-      var request = CreateRequest(method, path, query);
+      using (var response = await MakeXmlRequestAsync(method, path, authData, cancellationToken, query, body))
+      {
+        return await response.Content.ReadAsXmlAsync<T>();
+      }
+    }
+
+    internal async Task<HttpResponseMessage> MakeJsonRequestAsync(HttpMethod method, string path, IAuthData authData, CancellationToken? cancellationToken = null, object query = null, object body = null)
+    {
+      var request = CreateRequest(method, path, authData, query);
       request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
       if (body != null)
       {
         request.SetJsonContent(body);
       }
-      return await MakeRequestAsync(request, cancellationToken);
+      return await MakeJsonRequestAsync(request, authData, cancellationToken);
     }
 
-    internal async Task MakeJsonRequestWithoutResponseAsync(HttpMethod method, string path,
+    internal async Task<HttpResponseMessage> MakeXmlRequestAsync(HttpMethod method, string path, IAuthData authData, CancellationToken? cancellationToken = null, object query = null, object body = null)
+    {
+      var request = CreateRequest(method, path, authData, query);
+      request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/xml"));
+      if (body != null)
+      {
+        request.SetXmlContent(body);
+      }
+      return await MakeXmlRequestAsync(request, authData, cancellationToken);
+    }
+
+    internal async Task MakeJsonRequestWithoutResponseAsync(HttpMethod method, string path, IAuthData authData,
       CancellationToken? cancellationToken = null, object query = null, object body = null)
     {
-      using (await MakeJsonRequestAsync(method, path, cancellationToken, query, body))
+      using (await MakeJsonRequestAsync(method, path, authData, cancellationToken, query, body))
       {
       }
     }
 
-    internal async Task<string> MakePostJsonRequestAsync(string path, CancellationToken? cancellationToken = null, object body = null)
+    internal async Task MakeXmlRequestWithoutResponseAsync(HttpMethod method, string path, IAuthData authData,
+      CancellationToken? cancellationToken = null, object query = null, object body = null)
     {
-      using (var response = await MakeJsonRequestAsync(HttpMethod.Post, path, cancellationToken, null, body))
+      using (await MakeXmlRequestAsync(method, path, authData, cancellationToken, query, body))
+      {
+      }
+    }
+
+    internal async Task<string> MakePostJsonRequestAsync(string path, IAuthData authData, CancellationToken? cancellationToken = null, object body = null)
+    {
+      using (var response = await MakeJsonRequestAsync(HttpMethod.Post, path, authData, cancellationToken, null, body))
+      {
+        return (response.Headers.Location ?? new Uri("http://localhost")).AbsolutePath.Split('/').LastOrDefault();
+      }
+    }
+
+    internal async Task<string> MakePostXmlRequestAsync(string path, IAuthData authData, CancellationToken? cancellationToken = null, object body = null)
+    {
+      using (var response = await MakeXmlRequestAsync(HttpMethod.Post, path, authData, cancellationToken, null, body))
       {
         return (response.Headers.Location ?? new Uri("http://localhost")).AbsolutePath.Split('/').LastOrDefault();
       }

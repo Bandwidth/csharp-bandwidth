@@ -85,32 +85,32 @@ namespace Bandwidth.Net.Api
     {
       return new LazyEnumerable<Application>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/applications", cancellationToken, query));
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/applications", Client.CatapultAuthData, cancellationToken, query));
     }
 
     public Task<string> CreateAsync(CreateApplicationData data,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/applications", cancellationToken, data);
+      return Client.MakePostJsonRequestAsync($"/users/{Client.CatapultAuthData.UserId}/applications", Client.CatapultAuthData, cancellationToken, data);
     }
 
     public Task<Application> GetAsync(string applicationId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<Application>(HttpMethod.Get,
-        $"/users/{Client.UserId}/applications/{applicationId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/applications/{applicationId}", Client.CatapultAuthData, cancellationToken);
     }
 
     public Task UpdateAsync(string applicationId, UpdateApplicationData data,
       CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-        $"/users/{Client.UserId}/applications/{applicationId}", cancellationToken, null, data );
+        $"/users/{Client.CatapultAuthData.UserId}/applications/{applicationId}", Client.CatapultAuthData, cancellationToken, null, data );
     }
 
     public Task DeleteAsync(string applicationId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Delete,
-        $"/users/{Client.UserId}/applications/{applicationId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/applications/{applicationId}", Client.CatapultAuthData, cancellationToken);
     }
   }
 

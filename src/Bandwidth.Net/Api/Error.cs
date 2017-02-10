@@ -45,13 +45,13 @@ namespace Bandwidth.Net.Api
     {
       return new LazyEnumerable<Error>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/errors", cancellationToken, query));
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/errors", Client.CatapultAuthData, cancellationToken, query));
     }
 
     public Task<Error> GetAsync(string errorId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<Error>(HttpMethod.Get,
-        $"/users/{Client.UserId}/errors/{errorId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/errors/{errorId}", Client.CatapultAuthData, cancellationToken);
     }
   }
 

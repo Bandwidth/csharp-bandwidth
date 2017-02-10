@@ -42,12 +42,12 @@ namespace Bandwidth.Net.Api
   {
     public Task<Account> GetAsync(CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Account>(HttpMethod.Get, $"/users/{Client.UserId}/account", cancellationToken);
+      return Client.MakeJsonRequestAsync<Account>(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/account", Client.CatapultAuthData, cancellationToken);
     }
 
     public IEnumerable<AccountTransaction> GetTransactions(AccountTransactionQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<AccountTransaction>(Client, () => Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/account/transactions", cancellationToken, query));
+      return new LazyEnumerable<AccountTransaction>(Client, () => Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/account/transactions", Client.CatapultAuthData, cancellationToken, query));
     }
   }
 

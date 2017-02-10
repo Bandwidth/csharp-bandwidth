@@ -87,32 +87,32 @@ namespace Bandwidth.Net.Api
     {
       return new LazyEnumerable<PhoneNumber>(Client,
         () =>
-          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/phoneNumbers", cancellationToken, query));
+          Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.CatapultAuthData.UserId}/phoneNumbers", Client.CatapultAuthData, cancellationToken, query));
     }
 
     public Task<string> CreateAsync(CreatePhoneNumberData data,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/phoneNumbers", cancellationToken, data);
+      return Client.MakePostJsonRequestAsync($"/users/{Client.CatapultAuthData.UserId}/phoneNumbers", Client.CatapultAuthData, cancellationToken, data);
     }
 
     public Task<PhoneNumber> GetAsync(string phoneNumberId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestAsync<PhoneNumber>(HttpMethod.Get,
-        $"/users/{Client.UserId}/phoneNumbers/{phoneNumberId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/phoneNumbers/{phoneNumberId}", Client.CatapultAuthData, cancellationToken);
     }
 
     public Task UpdateAsync(string phoneNumberId, UpdatePhoneNumberData data,
       CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Post,
-        $"/users/{Client.UserId}/phoneNumbers/{phoneNumberId}", cancellationToken, null, data);
+        $"/users/{Client.CatapultAuthData.UserId}/phoneNumbers/{phoneNumberId}", Client.CatapultAuthData, cancellationToken, null, data);
     }
 
     public Task DeleteAsync(string phoneNumberId, CancellationToken? cancellationToken = null)
     {
       return Client.MakeJsonRequestWithoutResponseAsync(HttpMethod.Delete,
-        $"/users/{Client.UserId}/phoneNumbers/{phoneNumberId}", cancellationToken);
+        $"/users/{Client.CatapultAuthData.UserId}/phoneNumbers/{phoneNumberId}", Client.CatapultAuthData, cancellationToken);
     }
   }
 

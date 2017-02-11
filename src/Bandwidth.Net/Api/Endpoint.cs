@@ -17,13 +17,13 @@ namespace Bandwidth.Net.Api
     /// <param name="domainId">Id of endpoint's domain</param>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Endpoint" /> instances</returns>
+    /// <returns>Collection with <see cref="EndpointData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var endpoints = client.Endpoint.List("domainId"); 
     /// </code>
     /// </example>
-    IEnumerable<Endpoint> List(string domainId, EndpointQuery query = null,
+    IEnumerable<EndpointData> List(string domainId, EndpointQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -46,13 +46,13 @@ namespace Bandwidth.Net.Api
     /// <param name="domainId">Id of endpoint's domain</param>
     /// <param name="endpointId">Id of endpoint to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="Endpoint" />Endpoint instance</returns>
+    /// <returns>Task with <see cref="EndpointData" />Endpoint instance</returns>
     /// <example>
     ///   <code>
     /// var endpoint = await client.Endpoint.GetAsync("domainId", "endpointId");
     /// </code>
     /// </example>
-    Task<Endpoint> GetAsync(string domainId, string endpointId, CancellationToken? cancellationToken = null);
+    Task<EndpointData> GetAsync(string domainId, string endpointId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Update the endpoint
@@ -103,10 +103,10 @@ namespace Bandwidth.Net.Api
 
   internal class EndpointApi : ApiBase, IEndpoint
   {
-    public IEnumerable<Endpoint> List(string domainId, EndpointQuery query = null,
+    public IEnumerable<EndpointData> List(string domainId, EndpointQuery query = null,
       CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Endpoint>(Client,
+      return new LazyEnumerable<EndpointData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/domains/{domainId}/endpoints",
             cancellationToken, query));
@@ -119,9 +119,9 @@ namespace Bandwidth.Net.Api
             data);
     }
 
-    public Task<Endpoint> GetAsync(string domainId, string endpointId, CancellationToken? cancellationToken = null)
+    public Task<EndpointData> GetAsync(string domainId, string endpointId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Endpoint>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<EndpointData>(HttpMethod.Get,
         $"/users/{Client.UserId}/domains/{domainId}/endpoints/{endpointId}", cancellationToken);
     }
 
@@ -151,7 +151,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Endpoint information
   /// </summary>
-  public class Endpoint
+  public class EndpointData
   {
     /// <summary>
     ///   The unique identifier for the endpoint.

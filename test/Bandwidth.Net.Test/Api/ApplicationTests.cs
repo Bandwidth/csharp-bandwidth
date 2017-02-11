@@ -119,7 +119,7 @@ namespace Bandwidth.Net.Test.Api
              request.RequestUri.PathAndQuery == "/v1/users/userId/applications/id";
     }
 
-    private static void ValidateApplication(Application item)
+    private static void ValidateApplication(ApplicationData item)
     {
       Assert.Equal("applicationId", item.Id);
       Assert.Equal("MyFirstApp", item.Name);

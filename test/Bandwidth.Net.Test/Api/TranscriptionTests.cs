@@ -81,7 +81,7 @@ namespace Bandwidth.Net.Test.Api
       return request.Method == HttpMethod.Get && request.RequestUri.PathAndQuery == "/v1/users/userId/bridges/recordings/recordingId/transcriptions/transcriptionId";
     }
 
-    private static void ValidateTranscription(Transcription item)
+    private static void ValidateTranscription(TranscriptionData item)
     {
       Assert.Equal("transcriptionId", item.Id);
       Assert.Equal(TranscriptionState.Completed, item.State);

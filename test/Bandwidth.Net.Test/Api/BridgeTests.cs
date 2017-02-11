@@ -143,7 +143,7 @@ namespace Bandwidth.Net.Test.Api
       return request.Method == HttpMethod.Get && request.RequestUri.PathAndQuery == "/v1/users/userId/bridges/id/calls";
     }
 
-    private static void ValidateBridge(Bridge item)
+    private static void ValidateBridge(BridgeData item)
     {
       Assert.Equal("bridgeId", item.Id);
       Assert.True(item.BridgeAudio);

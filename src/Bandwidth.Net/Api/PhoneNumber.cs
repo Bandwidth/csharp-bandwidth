@@ -16,13 +16,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="PhoneNumber" /> instances</returns>
+    /// <returns>Collection with <see cref="PhoneNumberData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var phoneNumbers = client.PhoneNumber.List(); 
     /// </code>
     /// </example>
-    IEnumerable<PhoneNumber> List(PhoneNumberQuery query = null,
+    IEnumerable<PhoneNumberData> List(PhoneNumberQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -44,13 +44,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="phoneNumberId">Id of phone number to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="PhoneNumber" />PhoneNumber instance</returns>
+    /// <returns>Task with <see cref="PhoneNumberData" />PhoneNumber instance</returns>
     /// <example>
     ///   <code>
     /// var phoneNumber = await client.PhoneNumber.GetAsync("phoneNumberId");
     /// </code>
     /// </example>
-    Task<PhoneNumber> GetAsync(string phoneNumberId, CancellationToken? cancellationToken = null);
+    Task<PhoneNumberData> GetAsync(string phoneNumberId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Make changes to a number
@@ -83,9 +83,9 @@ namespace Bandwidth.Net.Api
 
   internal class PhoneNumberApi : ApiBase, IPhoneNumber
   {
-    public IEnumerable<PhoneNumber> List(PhoneNumberQuery query = null, CancellationToken? cancellationToken = null)
+    public IEnumerable<PhoneNumberData> List(PhoneNumberQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<PhoneNumber>(Client,
+      return new LazyEnumerable<PhoneNumberData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/phoneNumbers", cancellationToken, query));
     }
@@ -96,9 +96,9 @@ namespace Bandwidth.Net.Api
       return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/phoneNumbers", cancellationToken, data);
     }
 
-    public Task<PhoneNumber> GetAsync(string phoneNumberId, CancellationToken? cancellationToken = null)
+    public Task<PhoneNumberData> GetAsync(string phoneNumberId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<PhoneNumber>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<PhoneNumberData>(HttpMethod.Get,
         $"/users/{Client.UserId}/phoneNumbers/{phoneNumberId}", cancellationToken);
     }
 
@@ -120,7 +120,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Phone number information
   /// </summary>
-  public class PhoneNumber
+  public class PhoneNumberData
   {
     /// <summary>
     ///   The unique identifier for the phone number.

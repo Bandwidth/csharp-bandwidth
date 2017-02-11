@@ -28,7 +28,7 @@ namespace Bandwidth.Net.Test.Mocks
       throw new NotImplementedException();
     }
 
-    public Task<Net.Api.Conference> GetAsync(string conferenceId, CancellationToken? cancellationToken = null)
+    public Task<Net.Api.ConferenceData> GetAsync(string conferenceId, CancellationToken? cancellationToken = null)
     {
       throw new NotImplementedException();
     }
@@ -38,7 +38,7 @@ namespace Bandwidth.Net.Test.Mocks
       return _context.Invoke(m => m.UpdateAsync(conferenceId, data, cancellationToken));
     }
 
-    public IEnumerable<ConferenceMember> GetMembers(string conferenceId, CancellationToken? cancellationToken = null)
+    public IEnumerable<ConferenceMemberData> GetMembers(string conferenceId, CancellationToken? cancellationToken = null)
     {
       throw new NotImplementedException();
     }
@@ -49,7 +49,7 @@ namespace Bandwidth.Net.Test.Mocks
       throw new NotImplementedException();
     }
 
-    public Task<ConferenceMember> GetMemberAsync(string conferenceId, string memberId,
+    public Task<ConferenceMemberData> GetMemberAsync(string conferenceId, string memberId,
       CancellationToken? cancellationToken = null)
     {
       throw new NotImplementedException();

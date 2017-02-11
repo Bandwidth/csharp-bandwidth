@@ -20,13 +20,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Call" /> instances</returns>
+    /// <returns>Collection with <see cref="CallData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var calls = client.Call.List(); 
     /// </code>
     /// </example>
-    IEnumerable<Call> List(CallQuery query = null,
+    IEnumerable<CallData> List(CallQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -48,13 +48,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="callId">Id of call to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="Call" />Call instance</returns>
+    /// <returns>Task with <see cref="CallData" />Call instance</returns>
     /// <example>
     ///   <code>
     /// var call = await client.Call.GetAsync("callId");
     /// </code>
     /// </example>
-    Task<Call> GetAsync(string callId, CancellationToken? cancellationToken = null);
+    Task<CallData> GetAsync(string callId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Manage an active phone call. E.g. Answer an incoming call, reject an incoming call, turn on / off recording, transfer, hang up.
@@ -90,13 +90,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="callId">Id of call to get events</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="CallEvent" /> instances</returns>
+    /// <returns>Collection with <see cref="CallEventData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var events = client.Call.GetEvents("callId"); 
     /// </code>
     /// </example>
-    IEnumerable<CallEvent> GetEvents(string callId, CancellationToken? cancellationToken = null);
+    IEnumerable<CallEventData> GetEvents(string callId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Get an event of the call
@@ -104,39 +104,39 @@ namespace Bandwidth.Net.Api
     /// <param name="callId">Id of call to get event</param>
     /// <param name="eventId">Id of event</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="CallEvent" /> instances</returns>
+    /// <returns>Collection with <see cref="CallEventData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var ev = client.Call.GetEventAsync("callId", "eventId"); 
     /// </code>
     /// </example>
-    Task<CallEvent> GetEventAsync(string callId, string eventId, CancellationToken? cancellationToken = null);
+    Task<CallEventData> GetEventAsync(string callId, string eventId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Get a list of recordings of call
     /// </summary>
     /// <param name="callId">Id of call to get recordings</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Recording" /> instances</returns>
+    /// <returns>Collection with <see cref="RecordingData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var recordings = client.Call.GetRecordings("callId"); 
     /// </code>
     /// </example>
-    IEnumerable<Recording> GetRecordings(string callId, CancellationToken? cancellationToken = null);
+    IEnumerable<RecordingData> GetRecordings(string callId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Get a list of transcriptions of call
     /// </summary>
     /// <param name="callId">Id of call to get transcriptions</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Transcription" /> instances</returns>
+    /// <returns>Collection with <see cref="TranscriptionData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var transcriptions = client.Call.GetTranscriptions("callId"); 
     /// </code>
     /// </example>
-    IEnumerable<Transcription> GetTranscriptions(string callId, CancellationToken? cancellationToken = null);
+    IEnumerable<TranscriptionData> GetTranscriptions(string callId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Gather the DTMF digits pressed
@@ -164,7 +164,7 @@ namespace Bandwidth.Net.Api
     /// var gather = await client.Call.GetGatherAsync("callId", "gatherId");
     /// </code>
     /// </example>
-    Task<CallGather> GetGatherAsync(string callId, string gatherId, CancellationToken? cancellationToken = null);
+    Task<CallGatherData> GetGatherAsync(string callId, string gatherId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Update the gather 
@@ -185,9 +185,9 @@ namespace Bandwidth.Net.Api
   
   internal class CallApi : ApiBase, ICall
   {
-    public IEnumerable<Call> List(CallQuery query = null, CancellationToken? cancellationToken = null)
+    public IEnumerable<CallData> List(CallQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Call>(Client,
+      return new LazyEnumerable<CallData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/calls", cancellationToken, query));
     }
@@ -198,9 +198,9 @@ namespace Bandwidth.Net.Api
       return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/calls", cancellationToken, data);
     }
 
-    public Task<Call> GetAsync(string callId, CancellationToken? cancellationToken = null)
+    public Task<CallData> GetAsync(string callId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Call>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<CallData>(HttpMethod.Get,
         $"/users/{Client.UserId}/calls/{callId}", cancellationToken);
     }
 
@@ -222,29 +222,29 @@ namespace Bandwidth.Net.Api
         $"/users/{Client.UserId}/calls/{callId}/dtmf", cancellationToken, null, data);
     }
 
-    public IEnumerable<CallEvent> GetEvents(string callId, CancellationToken? cancellationToken = null)
+    public IEnumerable<CallEventData> GetEvents(string callId, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<CallEvent>(Client,
+      return new LazyEnumerable<CallEventData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/calls/{callId}/events", cancellationToken));
     }
 
-    public Task<CallEvent> GetEventAsync(string callId, string eventId, CancellationToken? cancellationToken = null)
+    public Task<CallEventData> GetEventAsync(string callId, string eventId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<CallEvent>(HttpMethod.Get, $"/users/{Client.UserId}/calls/{callId}/events/{eventId}",
+      return Client.MakeJsonRequestAsync<CallEventData>(HttpMethod.Get, $"/users/{Client.UserId}/calls/{callId}/events/{eventId}",
         cancellationToken);
     }
 
-    public IEnumerable<Recording> GetRecordings(string callId, CancellationToken? cancellationToken = null)
+    public IEnumerable<RecordingData> GetRecordings(string callId, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Recording>(Client,
+      return new LazyEnumerable<RecordingData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/calls/{callId}/recordings", cancellationToken));
     }
 
-    public IEnumerable<Transcription> GetTranscriptions(string callId, CancellationToken? cancellationToken = null)
+    public IEnumerable<TranscriptionData> GetTranscriptions(string callId, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Transcription>(Client,
+      return new LazyEnumerable<TranscriptionData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/calls/{callId}/transcriptions", cancellationToken));
     }
@@ -254,9 +254,9 @@ namespace Bandwidth.Net.Api
       return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/calls/{callId}/gather", cancellationToken, data);
     }
 
-    public Task<CallGather> GetGatherAsync(string callId, string gatherId, CancellationToken? cancellationToken = null)
+    public Task<CallGatherData> GetGatherAsync(string callId, string gatherId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<CallGather>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<CallGatherData>(HttpMethod.Get,
         $"/users/{Client.UserId}/calls/{callId}/gather/{gatherId}", cancellationToken);
     }
 
@@ -397,7 +397,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Call information
   /// </summary>
-  public class Call
+  public class CallData
   {
     /// <summary>
     ///   The unique identifier for the call.
@@ -850,7 +850,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   /// Gather of a call
   /// </summary>
-  public class CallGather
+  public class CallGatherData
   {
     /// <summary>
     /// The gather event unique id.
@@ -922,7 +922,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   /// The event that occurred during the call
   /// </summary>
-  public class CallEvent
+  public class CallEventData
   {
     /// <summary>
     /// The call event id

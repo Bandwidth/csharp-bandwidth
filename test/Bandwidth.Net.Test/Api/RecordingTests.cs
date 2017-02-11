@@ -54,7 +54,7 @@ namespace Bandwidth.Net.Test.Api
       return request.Method == HttpMethod.Get && request.RequestUri.PathAndQuery == "/v1/users/userId/recordings/id";
     }
 
-    private static void ValidateRecording(Recording item)
+    private static void ValidateRecording(RecordingData item)
     {
       Assert.Equal("recordingId", item.Id);
       Assert.Equal(RecordingState.Complete, item.State);

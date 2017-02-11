@@ -104,14 +104,14 @@ namespace Bandwidth.Net.Test.Api
              request.RequestUri.PathAndQuery == "/v1/availableNumbers/tollFree?quantity=1";
     }
 
-    private static void ValidateAvailableNumbers(AvailableNumber[] items)
+    private static void ValidateAvailableNumbers(AvailableNumberData[] items)
     {
       Assert.Equal(1, items.Length);
       Assert.Equal("{number1}", items[0].Number);
       Assert.Equal("CARY", items[0].City);
     }
 
-    private static void ValidateOrderedNumbers(OrderedNumber[] items)
+    private static void ValidateOrderedNumbers(OrderedNumberData[] items)
     {
       Assert.Equal(1, items.Length);
       Assert.Equal("{number1}", items[0].Number);

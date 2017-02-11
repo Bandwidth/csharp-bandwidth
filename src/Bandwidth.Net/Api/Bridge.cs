@@ -16,13 +16,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Bridge" /> instances</returns>
+    /// <returns>Collection with <see cref="BridgeData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var bridges = client.Bridge.List(); 
     /// </code>
     /// </example>
-    IEnumerable<Bridge> List(BridgeQuery query = null,
+    IEnumerable<BridgeData> List(BridgeQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -44,13 +44,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="bridgeId">Id of bridge to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="Bridge" />Bridge instance</returns>
+    /// <returns>Task with <see cref="BridgeData" />Bridge instance</returns>
     /// <example>
     ///   <code>
     /// var bridge = await client.Bridge.GetAsync("bridgeId");
     /// </code>
     /// </example>
-    Task<Bridge> GetAsync(string bridgeId, CancellationToken? cancellationToken = null);
+    Task<BridgeData> GetAsync(string bridgeId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Update a bridge
@@ -71,20 +71,20 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="bridgeId">Id of bridge to get calls</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Call" /> instances</returns>
+    /// <returns>Collection with <see cref="CallData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var calls = client.Bridge.GetCalls(); 
     /// </code>
     /// </example>
-    IEnumerable<Call> GetCalls(string bridgeId, CancellationToken? cancellationToken = null);
+    IEnumerable<CallData> GetCalls(string bridgeId, CancellationToken? cancellationToken = null);
   }
 
   internal class BridgeApi : ApiBase, IBridge
   {
-    public IEnumerable<Bridge> List(BridgeQuery query = null, CancellationToken? cancellationToken = null)
+    public IEnumerable<BridgeData> List(BridgeQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Bridge>(Client,
+      return new LazyEnumerable<BridgeData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/bridges", cancellationToken, query));
     }
@@ -95,9 +95,9 @@ namespace Bandwidth.Net.Api
       return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/bridges", cancellationToken, data);
     }
 
-    public Task<Bridge> GetAsync(string bridgeId, CancellationToken? cancellationToken = null)
+    public Task<BridgeData> GetAsync(string bridgeId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Bridge>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<BridgeData>(HttpMethod.Get,
         $"/users/{Client.UserId}/bridges/{bridgeId}", cancellationToken);
     }
 
@@ -108,9 +108,9 @@ namespace Bandwidth.Net.Api
         $"/users/{Client.UserId}/bridges/{bridgeId}", cancellationToken, null, data);
     }
 
-    public IEnumerable<Call> GetCalls(string bridgeId, CancellationToken? cancellationToken = null)
+    public IEnumerable<CallData> GetCalls(string bridgeId, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Call>(Client,
+      return new LazyEnumerable<CallData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/bridges/{bridgeId}/calls",
             cancellationToken));
@@ -128,7 +128,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Bridge information
   /// </summary>
-  public class Bridge
+  public class BridgeData
   {
     /// <summary>
     ///   The unique identifier for the bridge.

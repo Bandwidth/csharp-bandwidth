@@ -15,20 +15,20 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="number">Phone number to get CNAM informations</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="NumberInfo" />NumberInfo instance</returns>
+    /// <returns>Task with <see cref="NumberInfoData" />NumberInfo instance</returns>
     /// <example>
     ///   <code>
     /// var numberInfo = await client.NumberInfo.GetAsync("1234567890");
     /// </code>
     /// </example>
-    Task<NumberInfo> GetAsync(string number, CancellationToken? cancellationToken = null);
+    Task<NumberInfoData> GetAsync(string number, CancellationToken? cancellationToken = null);
   }
 
   internal class NumberInfoApi : ApiBase, INumberInfo
   {
-    public Task<NumberInfo> GetAsync(string number, CancellationToken? cancellationToken = null)
+    public Task<NumberInfoData> GetAsync(string number, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<NumberInfo>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<NumberInfoData>(HttpMethod.Get,
         $"/phoneNumbers/numberInfo/{Uri.EscapeDataString(number)}", cancellationToken);
     }
   }
@@ -37,7 +37,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   CNAM information
   /// </summary>
-  public class NumberInfo
+  public class NumberInfoData
   {
     /// <summary>
     ///   The Caller ID name information.

@@ -15,39 +15,39 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Search criterias</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Array with <see cref="AvailableNumber" /> instances</returns>
+    /// <returns>Array with <see cref="AvailableNumberData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var numbers = await client.AvailableNumber.SearchLocalAsync(new LocalNumberQuery {AreaCode = 910}); 
     /// </code>
     /// </example>
-    Task<AvailableNumber[]> SearchLocalAsync(LocalNumberQuery query, CancellationToken? cancellationToken = null);
+    Task<AvailableNumberData[]> SearchLocalAsync(LocalNumberQuery query, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Search for available toll free numbers
     /// </summary>
     /// <param name="query">Search criterias</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Array with <see cref="AvailableNumber" /> instances</returns>
+    /// <returns>Array with <see cref="AvailableNumberData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var numbers = await client.AvailableNumber.SearchTollFreeAsync(new TollFreeNumberQuery {Quantity = 5}); 
     /// </code>
     /// </example>
-    Task<AvailableNumber[]> SearchTollFreeAsync(TollFreeNumberQuery query, CancellationToken? cancellationToken = null);
+    Task<AvailableNumberData[]> SearchTollFreeAsync(TollFreeNumberQuery query, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Search and order available local numbers
     /// </summary>
     /// <param name="query">Search criterias</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Array with <see cref="OrderedNumber" /> instances</returns>
+    /// <returns>Array with <see cref="OrderedNumberData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var orderedNumbers = await client.AvailableNumber.SearchAndOrderLocalAsync(new LocalNumberQueryForOrder {AreaCode = 910, Quantity = 1}); 
     /// </code>
     /// </example>
-    Task<OrderedNumber[]> SearchAndOrderLocalAsync(LocalNumberQueryForOrder query,
+    Task<OrderedNumberData[]> SearchAndOrderLocalAsync(LocalNumberQueryForOrder query,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -55,42 +55,42 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Search criterias</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Array with <see cref="OrderedNumber" /> instances</returns>
+    /// <returns>Array with <see cref="OrderedNumberData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var orderedNumbers = await client.AvailableNumber.SearchAndOrderTollFreeAsync(new TollFreeNumberQueryForOrder {Quantity = 1}); 
     /// </code>
     /// </example>
-    Task<OrderedNumber[]> SearchAndOrderTollFreeAsync(TollFreeNumberQueryForOrder query,
+    Task<OrderedNumberData[]> SearchAndOrderTollFreeAsync(TollFreeNumberQueryForOrder query,
       CancellationToken? cancellationToken = null);
   }
 
   internal class AvailableNumberApi : ApiBase, IAvailableNumber
   {
-    public Task<AvailableNumber[]> SearchLocalAsync(LocalNumberQuery query, CancellationToken? cancellationToken = null)
+    public Task<AvailableNumberData[]> SearchLocalAsync(LocalNumberQuery query, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<AvailableNumber[]>(HttpMethod.Get, "/availableNumbers/local", cancellationToken,
+      return Client.MakeJsonRequestAsync<AvailableNumberData[]>(HttpMethod.Get, "/availableNumbers/local", cancellationToken,
         query);
     }
 
-    public Task<AvailableNumber[]> SearchTollFreeAsync(TollFreeNumberQuery query,
+    public Task<AvailableNumberData[]> SearchTollFreeAsync(TollFreeNumberQuery query,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<AvailableNumber[]>(HttpMethod.Get, "/availableNumbers/tollFree",
+      return Client.MakeJsonRequestAsync<AvailableNumberData[]>(HttpMethod.Get, "/availableNumbers/tollFree",
         cancellationToken, query);
     }
 
-    public Task<OrderedNumber[]> SearchAndOrderLocalAsync(LocalNumberQueryForOrder query,
+    public Task<OrderedNumberData[]> SearchAndOrderLocalAsync(LocalNumberQueryForOrder query,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<OrderedNumber[]>(HttpMethod.Post, "/availableNumbers/local", cancellationToken,
+      return Client.MakeJsonRequestAsync<OrderedNumberData[]>(HttpMethod.Post, "/availableNumbers/local", cancellationToken,
         query);
     }
 
-    public Task<OrderedNumber[]> SearchAndOrderTollFreeAsync(TollFreeNumberQueryForOrder query,
+    public Task<OrderedNumberData[]> SearchAndOrderTollFreeAsync(TollFreeNumberQueryForOrder query,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<OrderedNumber[]>(HttpMethod.Post, "/availableNumbers/tollFree",
+      return Client.MakeJsonRequestAsync<OrderedNumberData[]>(HttpMethod.Post, "/availableNumbers/tollFree",
         cancellationToken, query);
     }
   }
@@ -176,7 +176,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Available number result
   /// </summary>
-  public class AvailableNumber
+  public class AvailableNumberData
   {
     /// <summary>
     ///   The telephone number in E.164 format.
@@ -224,7 +224,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Ordered number result
   /// </summary>
-  public class OrderedNumber
+  public class OrderedNumberData
   {
     /// <summary>
     ///   Id of ordered number

@@ -40,7 +40,7 @@ namespace Bandwidth.Net.Test.Api
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidSendRequest(r)), HttpCompletionOption.ResponseContentRead,
             null)).Returns(Task.FromResult(response));
       var api = Helpers.GetClient(context).Message;
-      var messageId = await api.SendAsync(new MessageData {From = "+1234567890", To = "+1234567891", Text = "Hello"});
+      var messageId = await api.SendAsync(new CreateMessageData {From = "+1234567890", To = "+1234567891", Text = "Hello"});
       context.Assert(
         m =>
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidGetRequest(r)), HttpCompletionOption.ResponseContentRead,
@@ -61,7 +61,7 @@ namespace Bandwidth.Net.Test.Api
           m.SendAsync(The<HttpRequestMessage>.Is(r => IsValidBatchSendRequest(r)), HttpCompletionOption.ResponseContentRead,
             null)).Returns(Task.FromResult(response));
       var api = Helpers.GetClient(context).Message;
-      var result = await api.SendAsync(new []{new MessageData {From = "+1234567890", To = "+1234567891", Text = "Hello"}});
+      var result = await api.SendAsync(new []{new CreateMessageData {From = "+1234567890", To = "+1234567891", Text = "Hello"}});
       Assert.Equal("id", result[0].Id);
       Assert.Equal(SendMessageResults.Accepted, result[0].Result);
     }
@@ -109,7 +109,7 @@ namespace Bandwidth.Net.Test.Api
     }
 
 
-    private static void ValidateMessage(Message item)
+    private static void ValidateMessage(MessageData item)
     {
       Assert.Equal("messageId", item.Id);
       Assert.Equal(MessageDirection.Out, item.Direction);

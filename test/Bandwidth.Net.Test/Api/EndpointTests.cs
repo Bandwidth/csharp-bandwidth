@@ -141,7 +141,7 @@ namespace Bandwidth.Net.Test.Api
     }
 
 
-    private static void ValidateEndpoint(Endpoint item)
+    private static void ValidateEndpoint(EndpointData item)
     {
       Assert.Equal("domainId", item.DomainId);
       Assert.Equal("applicationId", item.ApplicationId);

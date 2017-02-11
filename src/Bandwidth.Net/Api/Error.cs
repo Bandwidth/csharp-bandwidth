@@ -16,13 +16,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Error" /> instances</returns>
+    /// <returns>Collection with <see cref="ErrorData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var errors = client.Error.List(); 
     /// </code>
     /// </example>
-    IEnumerable<Error> List(ErrorQuery query = null,
+    IEnumerable<ErrorData> List(ErrorQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -30,27 +30,27 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="errorId">Id of error to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="Error" />Error instance</returns>
+    /// <returns>Task with <see cref="ErrorData" />Error instance</returns>
     /// <example>
     ///   <code>
     /// var error = await client.Error.GetAsync("errorId");
     /// </code>
     /// </example>
-    Task<Error> GetAsync(string errorId, CancellationToken? cancellationToken = null);
+    Task<ErrorData> GetAsync(string errorId, CancellationToken? cancellationToken = null);
   }
 
   internal class ErrorApi : ApiBase, IError
   {
-    public IEnumerable<Error> List(ErrorQuery query = null, CancellationToken? cancellationToken = null)
+    public IEnumerable<ErrorData> List(ErrorQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Error>(Client,
+      return new LazyEnumerable<ErrorData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/errors", cancellationToken, query));
     }
 
-    public Task<Error> GetAsync(string errorId, CancellationToken? cancellationToken = null)
+    public Task<ErrorData> GetAsync(string errorId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Error>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<ErrorData>(HttpMethod.Get,
         $"/users/{Client.UserId}/errors/{errorId}", cancellationToken);
     }
   }
@@ -59,7 +59,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Error information
   /// </summary>
-  public class Error
+  public class ErrorData
   {
     /// <summary>
     ///   The unique identifier for the error.

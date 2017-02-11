@@ -31,13 +31,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="conferenceId">Id of conference to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="Conference" />Conference instance</returns>
+    /// <returns>Task with <see cref="ConferenceData" />Conference instance</returns>
     /// <example>
     ///   <code>
     /// var conference = await client.Conference.GetAsync("conferenceId");
     /// </code>
     /// </example>
-    Task<Conference> GetAsync(string conferenceId, CancellationToken? cancellationToken = null);
+    Task<ConferenceData> GetAsync(string conferenceId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Change the conference properties and/or status
@@ -58,13 +58,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="conferenceId">Id of conference to get members</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="ConferenceMember" /> instances</returns>
+    /// <returns>Collection with <see cref="ConferenceMemberData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var members = client.Conference.GetMembers("conferenceId");
     /// </code>
     /// </example>
-    IEnumerable<ConferenceMember> GetMembers(string conferenceId, CancellationToken? cancellationToken = null);
+    IEnumerable<ConferenceMemberData> GetMembers(string conferenceId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Add a member to a conference.
@@ -93,7 +93,7 @@ namespace Bandwidth.Net.Api
     /// var member = await client.Conference.GetMemberAsync("conferenceId", "memberId");
     /// </code>
     /// </example>
-    Task<ConferenceMember> GetMemberAsync(string conferenceId, string memberId,
+    Task<ConferenceMemberData> GetMemberAsync(string conferenceId, string memberId,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -132,9 +132,9 @@ namespace Bandwidth.Net.Api
       return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/conferences", cancellationToken, data);
     }
 
-    public Task<Conference> GetAsync(string conferenceId, CancellationToken? cancellationToken = null)
+    public Task<ConferenceData> GetAsync(string conferenceId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Conference>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<ConferenceData>(HttpMethod.Get,
         $"/users/{Client.UserId}/conferences/{conferenceId}",
         cancellationToken);
     }
@@ -145,9 +145,9 @@ namespace Bandwidth.Net.Api
         $"/users/{Client.UserId}/conferences/{conferenceId}", cancellationToken, null, data);
     }
 
-    public IEnumerable<ConferenceMember> GetMembers(string conferenceId, CancellationToken? cancellationToken = null)
+    public IEnumerable<ConferenceMemberData> GetMembers(string conferenceId, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<ConferenceMember>(Client,
+      return new LazyEnumerable<ConferenceMemberData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/conferences/{conferenceId}/members",
             cancellationToken));
@@ -160,10 +160,10 @@ namespace Bandwidth.Net.Api
             cancellationToken, data);
     }
 
-    public Task<ConferenceMember> GetMemberAsync(string conferenceId, string memberId,
+    public Task<ConferenceMemberData> GetMemberAsync(string conferenceId, string memberId,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<ConferenceMember>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<ConferenceMemberData>(HttpMethod.Get,
         $"/users/{Client.UserId}/conferences/{conferenceId}/members/{memberId}",
         cancellationToken);
     }
@@ -342,7 +342,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Conference information
   /// </summary>
-  public class Conference
+  public class ConferenceData
   {
     /// <summary>
     ///   The unique identifier for the conference.
@@ -473,7 +473,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Conference member
   /// </summary>
-  public class ConferenceMember
+  public class ConferenceMemberData
   {
     /// <summary>
     ///   The unique identifier for the member.

@@ -206,14 +206,14 @@ namespace Bandwidth.Net.Test.Api
              request.Content.ReadAsStringAsync().Result == "{\"state\":\"completed\"}";
     }
 
-    private static void ValidateConference(Conference item)
+    private static void ValidateConference(ConferenceData item)
     {
       Assert.Equal("conferenceId", item.Id);
       Assert.Equal("+19703255647", item.From);
       Assert.Equal(ConferenceState.Created, item.State);
     }
 
-    private static void ValidateConferenceMember(ConferenceMember item)
+    private static void ValidateConferenceMember(ConferenceMemberData item)
     {
       Assert.Equal("memberId", item.Id);
       Assert.Equal("callId1", item.CallId);

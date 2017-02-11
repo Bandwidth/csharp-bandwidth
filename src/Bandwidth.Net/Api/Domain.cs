@@ -15,13 +15,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Domain" /> instances</returns>
+    /// <returns>Collection with <see cref="DomainData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var domains = client.Domain.List(); 
     /// </code>
     /// </example>
-    IEnumerable<Domain> List(DomainQuery query = null,
+    IEnumerable<DomainData> List(DomainQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -54,9 +54,9 @@ namespace Bandwidth.Net.Api
 
   internal class DomainApi : ApiBase, IDomain
   {
-    public IEnumerable<Domain> List(DomainQuery query = null, CancellationToken? cancellationToken = null)
+    public IEnumerable<DomainData> List(DomainQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Domain>(Client,
+      return new LazyEnumerable<DomainData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/domains", cancellationToken, query));
     }
@@ -78,7 +78,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Domain information
   /// </summary>
-  public class Domain
+  public class DomainData
   {
     /// <summary>
     ///   The unique identifier for the domain.

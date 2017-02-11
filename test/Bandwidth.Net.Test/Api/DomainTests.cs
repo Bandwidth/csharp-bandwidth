@@ -73,7 +73,7 @@ namespace Bandwidth.Net.Test.Api
       return request.Method == HttpMethod.Delete && request.RequestUri.PathAndQuery == "/v1/users/userId/domains/id";
     }
 
-    private static void ValidateDomain(Domain item)
+    private static void ValidateDomain(DomainData item)
     {
       Assert.Equal("domainId", item.Id);
       Assert.Equal("mycoolapp", item.Name);

@@ -15,13 +15,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Application" /> instances</returns>
+    /// <returns>Collection with <see cref="ApplicationData" /> instances</returns>
     /// <example>
     /// <code>
     /// var applications = client.Application.List(); // get access to all applications of user
     /// </code>
     /// </example>
-    IEnumerable<Application> List(ApplicationQuery query = null,
+    IEnumerable<ApplicationData> List(ApplicationQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -43,13 +43,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="applicationId">Id of application to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="Application" />Application instance</returns>
+    /// <returns>Task with <see cref="ApplicationData" />Application instance</returns>
     /// <example>
     /// <code>
     /// var application = await client.Application.GetAsync("applicationId");
     /// </code>
     /// </example>
-    Task<Application> GetAsync(string applicationId, CancellationToken? cancellationToken = null);
+    Task<ApplicationData> GetAsync(string applicationId, CancellationToken? cancellationToken = null);
 
     /// <summary>
     ///   Update an application
@@ -81,9 +81,9 @@ namespace Bandwidth.Net.Api
 
   internal class ApplicationApi : ApiBase, IApplication
   {
-    public IEnumerable<Application> List(ApplicationQuery query = null, CancellationToken? cancellationToken = null)
+    public IEnumerable<ApplicationData> List(ApplicationQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Application>(Client,
+      return new LazyEnumerable<ApplicationData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/applications", cancellationToken, query));
     }
@@ -94,9 +94,9 @@ namespace Bandwidth.Net.Api
       return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/applications", cancellationToken, data);
     }
 
-    public Task<Application> GetAsync(string applicationId, CancellationToken? cancellationToken = null)
+    public Task<ApplicationData> GetAsync(string applicationId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Application>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<ApplicationData>(HttpMethod.Get,
         $"/users/{Client.UserId}/applications/{applicationId}", cancellationToken);
     }
 
@@ -117,7 +117,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Application information
   /// </summary>
-  public class Application
+  public class ApplicationData
   {
     /// <summary>
     ///   The unique identifier for the application.

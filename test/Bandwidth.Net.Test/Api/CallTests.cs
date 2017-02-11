@@ -294,7 +294,7 @@ namespace Bandwidth.Net.Test.Api
              request.Content.ReadAsStringAsync().Result == "{\"state\":\"completed\"}";
     }
 
-    private static void ValidateCall(Call item)
+    private static void ValidateCall(CallData item)
     {
       Assert.Equal("callId", item.Id);
       Assert.Equal("+1234567890", item.From);
@@ -302,7 +302,7 @@ namespace Bandwidth.Net.Test.Api
       Assert.Equal(CallState.Completed, item.State);
     }
 
-    private static void ValidateCallGather(CallGather item)
+    private static void ValidateCallGather(CallGatherData item)
     {
       Assert.Equal("gatherId", item.Id);
       Assert.Equal("1", item.Digits);

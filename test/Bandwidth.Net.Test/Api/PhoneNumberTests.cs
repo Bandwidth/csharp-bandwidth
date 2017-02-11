@@ -119,7 +119,7 @@ namespace Bandwidth.Net.Test.Api
              request.RequestUri.PathAndQuery == "/v1/users/userId/phoneNumbers/id";
     }
 
-    private static void ValidatePhoneNumber(PhoneNumber item)
+    private static void ValidatePhoneNumber(PhoneNumberData item)
     {
       Assert.Equal("numberId", item.Id);
       Assert.Equal(PhoneNumberState.Enabled, item.NumberState);

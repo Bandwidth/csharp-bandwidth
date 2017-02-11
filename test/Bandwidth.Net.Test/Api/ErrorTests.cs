@@ -53,7 +53,7 @@ namespace Bandwidth.Net.Test.Api
       return request.Method == HttpMethod.Get && request.RequestUri.PathAndQuery == "/v1/users/userId/errors/id";
     }
 
-    private static void ValidateError(Error item)
+    private static void ValidateError(ErrorData item)
     {
       Assert.Equal("errorId", item.Id);
       Assert.Equal(ErrorCategory.Unavailable, item.Category);

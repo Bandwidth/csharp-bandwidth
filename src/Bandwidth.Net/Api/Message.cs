@@ -17,13 +17,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Message" /> instances</returns>
+    /// <returns>Collection with <see cref="MessageData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var messages = client.Message.List(); 
     /// </code>
     /// </example>
-    IEnumerable<Message> List(MessageQuery query = null,
+    IEnumerable<MessageData> List(MessageQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -37,7 +37,7 @@ namespace Bandwidth.Net.Api
     /// var messageId = await client.Message.SendAsync(new MessageData{ From = "from", To = "to", Text = "Hello"});
     /// </code>
     /// </example>
-    Task<string> SendAsync(MessageData data, CancellationToken? cancellationToken = null);
+    Task<string> SendAsync(CreateMessageData data, CancellationToken? cancellationToken = null);
     
     /// <summary>
     ///   Send a message.
@@ -50,7 +50,7 @@ namespace Bandwidth.Net.Api
     /// var messages = await client.Message.SendAsync(new[]{new MessageData{ From = "from", To = "to", Text = "Hello"}});
     /// </code>
     /// </example>
-    Task<SendMessageResult[]> SendAsync(MessageData[] data, CancellationToken? cancellationToken = null);
+    Task<SendMessageResult[]> SendAsync(CreateMessageData[] data, CancellationToken? cancellationToken = null);
 
 
     /// <summary>
@@ -58,46 +58,46 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="messageId">Id of message to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="Message" />Message instance</returns>
+    /// <returns>Task with <see cref="MessageData" />Message instance</returns>
     /// <example>
     ///   <code>
     /// var message = await client.Message.GetAsync("messageId");
     /// </code>
     /// </example>
-    Task<Message> GetAsync(string messageId, CancellationToken? cancellationToken = null);
+    Task<MessageData> GetAsync(string messageId, CancellationToken? cancellationToken = null);
 
   }
 
   internal class MessageApi : ApiBase, IMessage
   {
-    public IEnumerable<Message> List(MessageQuery query = null, CancellationToken? cancellationToken = null)
+    public IEnumerable<MessageData> List(MessageQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Message>(Client,
+      return new LazyEnumerable<MessageData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/messages", cancellationToken, query));
     }
 
-    public Task<string> SendAsync(MessageData data,
+    public Task<string> SendAsync(CreateMessageData data,
       CancellationToken? cancellationToken = null)
     {
       return Client.MakePostJsonRequestAsync($"/users/{Client.UserId}/messages", cancellationToken, data);
     }
 
-    public async Task<SendMessageResult[]> SendAsync(MessageData[] data,
+    public async Task<SendMessageResult[]> SendAsync(CreateMessageData[] data,
       CancellationToken? cancellationToken = null)
     {
       var list =  await Client.MakeJsonRequestAsync<SendMessageResult[]>(HttpMethod.Post,  $"/users/{Client.UserId}/messages", cancellationToken, null, data);
       var l = data.Length;
       for (var i = 0; i < l; i ++)
       {
-        list[i].Message = data[i];
+        list[i].CreateMessage = data[i];
       }
       return list;
     }
 
-    public Task<Message> GetAsync(string messageId, CancellationToken? cancellationToken = null)
+    public Task<MessageData> GetAsync(string messageId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Message>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<MessageData>(HttpMethod.Get,
         $"/users/{Client.UserId}/messages/{messageId}", cancellationToken);
     }
   }
@@ -106,7 +106,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Message information
   /// </summary>
-  public class Message
+  public class MessageData
   {
     /// <summary>
     ///   The unique identifier for the message.
@@ -334,7 +334,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Parameters to send an message
   /// </summary>
-  public class MessageData
+  public class CreateMessageData
   {
     /// <summary>
     /// The message sender's telephone number (or short code).
@@ -406,12 +406,12 @@ namespace Bandwidth.Net.Api
     /// <summary>
     /// Error information (if Result is Error)
     /// </summary>
-    public Error Error { get; set; }
+    public ErrorData ErrorData { get; set; }
 
     /// <summary>
     /// Message data
     /// </summary>
-    public MessageData Message { get; set; }
+    public CreateMessageData CreateMessage { get; set; }
   }
 
   /// <summary>

@@ -18,13 +18,13 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Recording" /> instances</returns>
+    /// <returns>Collection with <see cref="RecordingData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var recordings = client.Recording.List(); 
     /// </code>
     /// </example>
-    IEnumerable<Recording> List(RecordingQuery query = null,
+    IEnumerable<RecordingData> List(RecordingQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -32,35 +32,35 @@ namespace Bandwidth.Net.Api
     /// </summary>
     /// <param name="recordingId">Id of recording to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="Recording" />Recording instance</returns>
+    /// <returns>Task with <see cref="RecordingData" />Recording instance</returns>
     /// <example>
     ///   <code>
     /// var recording = await client.Recording.GetAsync("recordingId");
     /// </code>
     /// </example>
-    Task<Recording> GetAsync(string recordingId, CancellationToken? cancellationToken = null);
+    Task<RecordingData> GetAsync(string recordingId, CancellationToken? cancellationToken = null);
 
   }
 
   internal class RecordingApi : ApiBase, IRecording
   {
-    public IEnumerable<Recording> List(RecordingQuery query = null, CancellationToken? cancellationToken = null)
+    public IEnumerable<RecordingData> List(RecordingQuery query = null, CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Recording>(Client,
+      return new LazyEnumerable<RecordingData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/recordings", cancellationToken, query));
     }
 
-    public Task<Recording> GetAsync(string recordingId, CancellationToken? cancellationToken = null)
+    public Task<RecordingData> GetAsync(string recordingId, CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Recording>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<RecordingData>(HttpMethod.Get,
         $"/users/{Client.UserId}/recordings/{recordingId}", cancellationToken);
     }
   }
   /// <summary>
   /// Recording data
   /// </summary>
-  public class Recording
+  public class RecordingData
   {
     /// <summary>
     /// The unique id of the recordings resource.

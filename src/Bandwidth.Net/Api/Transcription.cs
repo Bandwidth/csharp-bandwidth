@@ -18,13 +18,13 @@ namespace Bandwidth.Net.Api
     /// <param name="recordingId">Id of the recording</param>
     /// <param name="query">Optional query parameters</param>
     /// <param name="cancellationToken">>Optional token to cancel async operation</param>
-    /// <returns>Collection with <see cref="Transcription" /> instances</returns>
+    /// <returns>Collection with <see cref="TranscriptionData" /> instances</returns>
     /// <example>
     ///   <code>
     /// var transcriptions = client.Transcription.List("recordingId"); 
     /// </code>
     /// </example>
-    IEnumerable<Transcription> List(string recordingId, TranscriptionQuery query = null,
+    IEnumerable<TranscriptionData> List(string recordingId, TranscriptionQuery query = null,
       CancellationToken? cancellationToken = null);
 
     /// <summary>
@@ -47,21 +47,21 @@ namespace Bandwidth.Net.Api
     /// <param name="recordingId">Id of the recording</param>
     /// <param name="transcriptionId">Id of transcription to get</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
-    /// <returns>Task with <see cref="Transcription" />Transcription instance</returns>
+    /// <returns>Task with <see cref="TranscriptionData" />Transcription instance</returns>
     /// <example>
     ///   <code>
     /// var transcription = await client.Transcription.GetAsync("recordingId", "transcriptionId");
     /// </code>
     /// </example>
-    Task<Transcription> GetAsync(string recordingId, string transcriptionId, CancellationToken? cancellationToken = null);
+    Task<TranscriptionData> GetAsync(string recordingId, string transcriptionId, CancellationToken? cancellationToken = null);
   }
 
   internal class TranscriptionApi : ApiBase, ITranscription
   {
-    public IEnumerable<Transcription> List(string recordingId, TranscriptionQuery query = null,
+    public IEnumerable<TranscriptionData> List(string recordingId, TranscriptionQuery query = null,
       CancellationToken? cancellationToken = null)
     {
-      return new LazyEnumerable<Transcription>(Client,
+      return new LazyEnumerable<TranscriptionData>(Client,
         () =>
           Client.MakeJsonRequestAsync(HttpMethod.Get, $"/users/{Client.UserId}/recordings/{recordingId}/transcriptions",
             cancellationToken, query));
@@ -74,10 +74,10 @@ namespace Bandwidth.Net.Api
             cancellationToken, new object());
     }
 
-    public Task<Transcription> GetAsync(string recordingId, string transcriptionId,
+    public Task<TranscriptionData> GetAsync(string recordingId, string transcriptionId,
       CancellationToken? cancellationToken = null)
     {
-      return Client.MakeJsonRequestAsync<Transcription>(HttpMethod.Get,
+      return Client.MakeJsonRequestAsync<TranscriptionData>(HttpMethod.Get,
         $"/users/{Client.UserId}/bridges/recordings/{recordingId}/transcriptions/{transcriptionId}", cancellationToken);
     }
   }
@@ -85,7 +85,7 @@ namespace Bandwidth.Net.Api
   /// <summary>
   ///   Transcription data
   /// </summary>
-  public class Transcription
+  public class TranscriptionData
   {
     /// <summary>
     ///   The unique id of the transcriptions resource.

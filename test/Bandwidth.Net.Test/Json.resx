@@ -509,18 +509,19 @@
   </data>
 <data name="ConferenceMemberEvent" xml:space="preserve">
     <value>
-    {
-    "activeMembers": 1,
-    "callId": "{callId}",
-    "conferenceId": "{conferenceId}",
-    "eventType": "conference-member",
-    "hold": false,
-    "memberId": "{memberId}",
-    "memberUri": "https://api.catapult.inetwork.com/v1/users/{userId}/conferences/{conferenceId}/members/{memberId}",
-    "mute": false,
-    "state": "active",
-    "time": "2013-07-12T20:53:11.646Z"
-}
+{ callId: 'c-iffxp5dw6jfqvbuswxo4lyi',
+  leavingTone: false,
+  mute: false,
+  eventType: 'conference-member',
+  hold: false,
+  joinTone: false,
+  activeMembers: 1,
+  memberUri: 'https://api.perf.catapult.inetwork.com/v1/users/u-u3i5n4q67rsx6pyonygisuy/conferences/conf-alselsum372u62b4tr64xpy/members/member-ibmsz3o44pc6w5ulnpfnk2q',
+  conferenceId: 'conf-alselsum372u62b4tr64xpy',
+  state: 'active',
+  time: '2017-05-02T13:37:27Z',
+  tag: 'qaz',
+  memberId: 'member-ibmsz3o44pc6w5ulnpfnk2q' }
     </value>
   </data>
 

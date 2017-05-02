@@ -89,10 +89,10 @@ namespace Bandwidth.Net.Test
     public void TestConferenceMemberEvent()
     {
       var callbackEvent = CallbackEvent.CreateFromJson(Helpers.GetJsonResourse("ConferenceMemberEvent"));
-      Console.WriteLine("-----------------")
-      Console.WriteLine(callbackEvent)
-      Console.WriteLine(callbackEvent.EventType)
-      Console.WriteLine("-----------------")
+      Console.WriteLine("-----------------");
+      Console.WriteLine(callbackEvent);
+      Console.WriteLine(callbackEvent.EventType);
+      Console.WriteLine("-----------------");
       Assert.Equal(CallbackEventType.ConferenceMember, callbackEvent.EventType);
       Assert.Equal("{conferenceId}", callbackEvent.ConferenceId);
       Assert.Equal("{callId}", callbackEvent.CallId);

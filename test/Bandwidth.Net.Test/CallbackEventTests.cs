@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System;
 using Bandwidth.Net.Api;
 using Xunit;
 

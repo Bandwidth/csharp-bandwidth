@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Bandwidth.Net.Api;
@@ -331,7 +331,12 @@ namespace Bandwidth.Net
     /// <summary>
     ///   Transfer complete
     /// </summary>
-    TransferComplete
+    TransferComplete,
+
+    /// <summary>
+    ///   Redirect
+    /// </summary>
+    Redirect
   }
 
   /// <summary>

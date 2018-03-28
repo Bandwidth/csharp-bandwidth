@@ -331,7 +331,7 @@ namespace Bandwidth.Net
     /// <summary>
     ///   Transfer complete
     /// </summary>
-    TransferComplete,
+    Transfercomplete,
 
     /// <summary>
     ///   Redirect

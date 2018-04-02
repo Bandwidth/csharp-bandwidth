@@ -1,4 +1,4 @@
-﻿using System.Net.Http;
+using System.Net.Http;
 using Bandwidth.Net.Api;
 using Xunit;
 
@@ -173,6 +173,22 @@ namespace Bandwidth.Net.Test
       Assert.Equal("{recordingId}", callbackEvent.RecordingId);
       Assert.Equal("{transcriptionId}", callbackEvent.TranscriptionId);
       Assert.Equal(CallbackEventState.Completed, callbackEvent.State);
+    }
+
+    [Fact]
+    public void TestTransferCompleteEvent()
+    {
+      var callbackEvent = CallbackEvent.CreateFromJson(Helpers.GetJsonResourse("TransferCompleteEvent"));
+      Assert.Equal(CallbackEventType.Transfercomplete, callbackEvent.EventType);
+      Assert.Equal(CallState.Active, callbackEvent.CallState);
+    }
+
+    [Fact]
+    public void TestRedirectEvent()
+    {
+      var callbackEvent = CallbackEvent.CreateFromJson(Helpers.GetJsonResourse("RedirectEvent"));
+      Assert.Equal(CallbackEventType.Redirect, callbackEvent.EventType);
+      Assert.Equal(CallState.Active, callbackEvent.CallState);
     }
   }
 

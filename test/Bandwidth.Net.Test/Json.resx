@@ -732,4 +732,24 @@
   &lt;FailedQuantity&gt;0&lt;/FailedQuantity&gt;
 &lt;/OrderResponse&gt;</value>
   </data>
+  <data name="RedirectEvent" xml:space="preserve">
+    <value>{
+   "eventType":"redirect",
+   "from":"+13233326955",
+   "to":"+13865245000",
+   "callId":"{callId}",
+   "callState":"active"}</value>
+  </data>
+  <data name="TransferCompleteEvent" xml:space="preserve">
+    <value>{
+   "eventType":"transferComplete",
+   "from":"+13233326955",
+   "to":"+13865245000",
+   "callId":"{callId}",
+   "callUri": "https://api.catapult.inetwork.com/v1/users/{userId}/calls/{callId}",
+   "callState":"active",
+
+ "time":"2012-11-14T16:21:59.616Z"
+}</value>
+  </data>
 </root>

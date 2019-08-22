@@ -19,6 +19,20 @@ namespace Bandwidth.Net.Test.ApiV2
       Assert.Equal("+12345678901", message.ReplyTo[0]);
     }
 
+	 [Fact]
+    public void TestCreateFromJsonMessageFalied()
+    {
+      var callbackEvents = Net.ApiV2.CallbackEvent.CreateFromJson(Helpers.GetJsonResourse("IncomingMessage3"));
+      Assert.Equal(1, callbackEvents.Length);
+      var callbackEvent = callbackEvents[0];
+      Assert.Equal(Net.ApiV2.CallbackEventType.MessageFailed, callbackEvent.Type);
+      Assert.Equal("rejected-forbidden-country", callbackEvent.Description);
+      var message = callbackEvent.Message;
+      Assert.Equal("+15082837070", message.From);
+      Assert.Equal("345757070", message.To[0]);
+      Assert.Equal(1, message.ReplyTo.Length);
+    }
+
     [Fact]
     public void TestCreateFromJson2()
     {

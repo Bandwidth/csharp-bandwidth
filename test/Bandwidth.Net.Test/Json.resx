@@ -412,6 +412,28 @@
   }
 ]</value>
   </data>
+  <data name="IncomingMessage3" xml:space="preserve">
+    <value>[
+		{
+			"time": "2019-08-22T15:41:34.644Z",
+			"type": "message-failed",
+			"to": "345757070",
+			"description": "rejected-forbidden-country",
+			"message": {
+				"id": "1566488494289xd2ebgyt6tk7cyow",
+				"owner": "+15082836974",
+				"applicationId": "801137e8-e2a8-7070-8485-f44ba6276985",
+				"time": "2019-08-22T15:41:34.290Z",
+				"segmentCount": 1,
+				"direction": "out",
+				"to": ["345757070"],
+				"from": "+15082837070",
+				"text": "error"
+			},
+			"errorCode": 4432
+		}
+	]</value>
+  </data>
   <data name="SendMessageResponse2" xml:space="preserve">
     <value>{
   "id": "14762070468292kw2fuqty55yp2b2",

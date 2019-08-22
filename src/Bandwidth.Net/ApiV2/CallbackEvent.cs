@@ -112,6 +112,11 @@ namespace Bandwidth.Net.ApiV2
     /// </summary>
     MessageReceived,
 
+	/// <summary>
+    ///   Message received
+    /// </summary>
+    MessageFailed,
+
     /// <summary>
     ///   Message sent
     /// </summary>

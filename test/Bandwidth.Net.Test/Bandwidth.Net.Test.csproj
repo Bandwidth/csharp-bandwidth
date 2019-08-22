@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;netcoreapp1.0</TargetFrameworks>
+    <TargetFrameworks>netcoreapp1.0</TargetFrameworks>
     <DebugType>portable</DebugType>
     <AssemblyName>Bandwidth.Net.Test</AssemblyName>
     <PackageId>Bandwidth.Net.Test</PackageId>
@@ -44,6 +44,10 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' ">
     <PackageReference Include="LightMock.vNext" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.App" Version="1.0.4" />
   </ItemGroup>
 
 </Project>

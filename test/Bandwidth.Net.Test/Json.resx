@@ -418,6 +418,7 @@
 			"time": "2019-08-22T15:41:34.644Z",
 			"type": "message-failed",
 			"to": "345757070",
+			"errorCode": 4432,
 			"description": "rejected-forbidden-country",
 			"message": {
 				"id": "1566488494289xd2ebgyt6tk7cyow",
@@ -429,8 +430,7 @@
 				"to": ["345757070"],
 				"from": "+15082837070",
 				"text": "error"
-			},
-			"errorCode": 4432
+			}			
 		}
 	]</value>
   </data>

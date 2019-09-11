@@ -1,4 +1,4 @@
-﻿using Xunit;
+using Xunit;
 
 namespace Bandwidth.Net.Test.ApiV2
 {
@@ -28,6 +28,7 @@ namespace Bandwidth.Net.Test.ApiV2
       Assert.Equal(Net.ApiV2.CallbackEventType.MessageFailed, callbackEvent.Type);
       Assert.Equal("rejected-forbidden-country", callbackEvent.Description);
       var message = callbackEvent.Message;
+      Assert.Equal(4432, callbackEvent.ErrorCode);
       Assert.Equal("+15082837070", message.From);
       Assert.Equal("345757070", message.To[0]);
       Assert.Equal(1, message.ReplyTo.Length);

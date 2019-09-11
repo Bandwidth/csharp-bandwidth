@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -42,6 +42,11 @@ namespace Bandwidth.Net.ApiV2
     ///   Event target phone number
     /// </summary>
     public string To { get; set; }
+
+    /// <summary>
+    ///   Error Code
+    /// </summary>
+    public int ErrorCode { get; set; }
 
     /// <summary>
     ///   Message data

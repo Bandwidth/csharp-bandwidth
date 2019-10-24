@@ -56,7 +56,7 @@ namespace Bandwidth.Net.Test
         });
       Assert.Equal(HttpMethod.Get, request.Method);
       Assert.Equal(
-        "http://localhost/v1/test?field1=1&field2=text value&field3=2016-08-01T00%3A00%3A00.0000000Z",
+        "http://localhost/v1/test?field1=1&field2=text value&field3=2016-08-01T00:00:00.0000000Z",
         request.RequestUri.ToString());
       var hash = Convert.ToBase64String(Encoding.UTF8.GetBytes("apiToken:apiSecret"));
       Assert.Equal($"Basic {hash}", request.Headers.Authorization.ToString());

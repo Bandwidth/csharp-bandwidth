@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Net;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace Bandwidth.Net
 {
@@ -36,8 +37,16 @@ namespace Bandwidth.Net
       {
         if(response.StatusCode == (HttpStatusCode)429){
           var unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-          var span = double.Parse(response.Headers.GetValues("X-RateLimit-Reset").First(), CultureInfo.InvariantCulture);
-          var time = unixEpoch.AddMilliseconds(span);
+          DateTime time;
+          IEnumerable<string> headerValues;
+          if (response.Headers.TryGetValues("X-RateLimit-Reset", out headerValues) )
+          {
+            var span = double.Parse(headerValues.First(), CultureInfo.InvariantCulture);
+            time = unixEpoch.AddMilliseconds(span);
+          } else
+          {
+            time = DateTime.Now;
+          }
           throw new RateLimitException(time.ToLocalTime());
         }
         var json = await response.Content.ReadAsStringAsync();

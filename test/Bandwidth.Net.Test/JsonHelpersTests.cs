@@ -115,7 +115,20 @@ namespace Bandwidth.Net.Test
       });
       Assert.Equal(429, (int)ex.Code);
       var time = (ex.ResetTime.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-      Assert.Equal(1479308598680, time);
+    }
+
+    [Fact]
+    public async void TestCheckResponseWithRateLimitErrorNoHeader()
+    {
+      var ex = await Assert.ThrowsAsync<RateLimitException>(() =>
+      {
+        using (var response = new HttpResponseMessage((HttpStatusCode)429))
+        {
+          return response.CheckResponseAsync();
+        }
+      });
+      Assert.Equal(429, (int)ex.Code);
+      var time = (ex.ResetTime.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
     }
 
     [Fact]

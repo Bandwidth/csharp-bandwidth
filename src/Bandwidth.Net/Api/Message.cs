@@ -427,7 +427,7 @@ namespace Bandwidth.Net.Api
     /// <summary>
     /// Id of new message
     /// </summary>
-    public string Id => Location.Split('/').Last();
+    public string Id => Location?.Split('/').Last();
 
     /// <summary>
     /// Error information (if Result is Error)

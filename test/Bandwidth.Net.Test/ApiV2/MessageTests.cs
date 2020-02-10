@@ -466,9 +466,9 @@ namespace Bandwidth.Net.Test.ApiV2
     }
 
     [Fact]
-    public void TestRateCenterSearchAndOrdeNumbersQuery()
+    public void TestRateCenterSearchAndOrderNumbersQuery()
     {
-      var query = new RateCenterSearchAndOrdeNumbersQuery { RateCenter = "NC", Quantity = 1 };
+      var query = new RateCenterSearchAndOrderNumbersQuery{ RateCenter = "NC", Quantity = 1 };
       Assert.Equal("<RateCenterSearchAndOrderType>\r\n  <RateCenter>NC</RateCenter>\r\n  <State />\r\n  <Quantity>1</Quantity>\r\n</RateCenterSearchAndOrderType>".NormilizeLineEnds(), query.ToXElement().ToString().NormilizeLineEnds());
     }
 

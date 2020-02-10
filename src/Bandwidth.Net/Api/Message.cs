@@ -410,7 +410,7 @@ namespace Bandwidth.Net.Api
   }
 
   /// <summary>
-  /// Rsult of batch send of some messages
+  /// Result of batch send of some messages
   /// </summary>
   public class SendMessageResult
   {

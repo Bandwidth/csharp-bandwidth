@@ -1,7 +1,7 @@
 ﻿# LocalNumberQueryForOrder Class
  
 
-Search criterias for local numbers
+Search criteria for local numbers
 
 
 ## Inheritance Hierarchy

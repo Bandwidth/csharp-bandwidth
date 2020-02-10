@@ -269,7 +269,7 @@ namespace Bandwidth.Net
     Answer,
 
     /// <summary>
-    ///   Playback uadio
+    ///   Playback audio
     /// </summary>
     Playback,
 

@@ -1,7 +1,7 @@
 ﻿# CallbackEvent.CreateFromJson Method 
  
 
-Parse callback eevent data from JSON
+Parse callback event data from JSON
 
 **Namespace:**&nbsp;<a href ="N_Bandwidth_Net_ApiV2.md">Bandwidth.Net.ApiV2</a><br />**Assembly:**&nbsp;Bandwidth.Net (in Bandwidth.Net.dll) Version: 3.0.3
 

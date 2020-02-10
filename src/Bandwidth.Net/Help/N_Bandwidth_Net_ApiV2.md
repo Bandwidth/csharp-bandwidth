@@ -8,7 +8,7 @@ Api classes (v2)
 &nbsp;<table><tr><th></th><th>Class</th><th>Description</th></tr><tr><td>![Public class](media/pubclass.gif "Public class")![Code example](media/CodeExample.png "Code example")</td><td><a href ="T_Bandwidth_Net_ApiV2_CallbackEvent.md">CallbackEvent</a></td><td>
 Catapult Api callback event</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_ApiV2_IncomingMessage.md">IncomingMessage</a></td><td>
 Incoming message</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_ApiV2_Message.md">Message</a></td><td>
-Rsult of batch send of some messages</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_ApiV2_MessageData.md">MessageData</a></td><td>
+Result of batch send of some messages</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_ApiV2_MessageData.md">MessageData</a></td><td>
 Parameters to send an message</td></tr></table>
 
 ## Interfaces

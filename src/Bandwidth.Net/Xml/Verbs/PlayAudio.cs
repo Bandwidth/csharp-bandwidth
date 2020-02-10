@@ -18,7 +18,7 @@ namespace Bandwidth.Net.Xml.Verbs
     public string Digits { get; set; }
 
     /// <summary>
-    ///   Url of media resourse to play
+    ///   Url of media resource to play
     /// </summary>
     public string Url { get; set; }
 

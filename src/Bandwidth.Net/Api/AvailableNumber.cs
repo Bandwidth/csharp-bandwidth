@@ -13,7 +13,7 @@ namespace Bandwidth.Net.Api
     /// <summary>
     ///   Search for available local numbers
     /// </summary>
-    /// <param name="query">Search criterias</param>
+    /// <param name="query">Search criteria</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Array with <see cref="AvailableNumber" /> instances</returns>
     /// <example>
@@ -26,7 +26,7 @@ namespace Bandwidth.Net.Api
     /// <summary>
     ///   Search for available toll free numbers
     /// </summary>
-    /// <param name="query">Search criterias</param>
+    /// <param name="query">Search criteria</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Array with <see cref="AvailableNumber" /> instances</returns>
     /// <example>
@@ -39,7 +39,7 @@ namespace Bandwidth.Net.Api
     /// <summary>
     ///   Search and order available local numbers
     /// </summary>
-    /// <param name="query">Search criterias</param>
+    /// <param name="query">Search criteria</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Array with <see cref="OrderedNumber" /> instances</returns>
     /// <example>
@@ -53,7 +53,7 @@ namespace Bandwidth.Net.Api
     /// <summary>
     ///   Searches and order available toll free numbers.
     /// </summary>
-    /// <param name="query">Search criterias</param>
+    /// <param name="query">Search criteria</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Array with <see cref="OrderedNumber" /> instances</returns>
     /// <example>
@@ -96,7 +96,7 @@ namespace Bandwidth.Net.Api
   }
 
   /// <summary>
-  ///   Search criterias for toll free numbers
+  ///   Search criteria for toll free numbers
   /// </summary>
   public class TollFreeNumberQueryForOrder
   {
@@ -107,7 +107,7 @@ namespace Bandwidth.Net.Api
   }
 
   /// <summary>
-  ///   Search criterias for toll free numbers
+  ///   Search criteria for toll free numbers
   /// </summary>
   public class TollFreeNumberQuery : TollFreeNumberQueryForOrder
   {
@@ -118,7 +118,7 @@ namespace Bandwidth.Net.Api
   }
 
   /// <summary>
-  ///   Search criterias for local numbers
+  ///   Search criteria for local numbers
   /// </summary>
   public class LocalNumberQuery
   {
@@ -162,7 +162,7 @@ namespace Bandwidth.Net.Api
   }
 
   /// <summary>
-  ///   Search criterias for local numbers
+  ///   Search criteria for local numbers
   /// </summary>
   public class LocalNumberQueryForOrder : LocalNumberQuery
   {

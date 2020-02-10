@@ -58,9 +58,9 @@ var client = new Client(
 
 Your `client` object is now ready to use the API.
 
-### Lazy evalutions
+### Lazy evaluations
 
-This library uses lazy evalutions in next cases:
+This library uses lazy evaluations in next cases:
     
 - Object creation,
     
@@ -130,7 +130,8 @@ var dashboardAuthData = new IrisAuthData
     Password = "Password",
     SubaccountId = "SubaccountId"
 };
-var messagingApplication = await api.CreateMessagingApplicationAsync(dashboardAuthData, new CreateMessagingApplicationData
+
+var messagingApplication = await client.V2.Message.CreateMessagingApplicationAsync(dashboardAuthData, new CreateMessagingApplicationData
 {
     Name = "My Messaging App",
     CallbackUrl = "http://my-callback",
@@ -146,13 +147,13 @@ var messagingApplication = await api.CreateMessagingApplicationAsync(dashboardAu
 });
 
 // Reserve a phone number for messaging
-var numbers = await api.SearchAndOrderNumbersAsync(dashboardAuthData, messagingApplication, new AreaCodeSearchAndOrderNumbersQuery
+var numbers = await client.V2.Message.SearchAndOrderNumbersAsync(dashboardAuthData, messagingApplication, new AreaCodeSearchAndOrderNumbersQuery
 {
     AreaCode = "910",
     Quantity = 1
 });
 
-// Now you can send meessages via API v2
+// Now you can send messages via API v2
 var message = await client.V2.Message.SendAsync(new MessageData{ 
     From = numbers[0],  //use only numbers reserved by SearchAndOrderNumbersAsync()
     To = new[] {"+12345678902"},

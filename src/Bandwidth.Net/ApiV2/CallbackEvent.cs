@@ -67,7 +67,7 @@ namespace Bandwidth.Net.ApiV2
 
 
     /// <summary>
-    ///   Parse callback eevent data from JSON
+    ///   Parse callback event data from JSON
     /// </summary>
     public static CallbackEvent[] CreateFromJson(string json)
       => JsonConvert.DeserializeObject<CallbackEvent[]>(json, JsonHelpers.GetSerializerSettings()).Select(SetReplyTo).ToArray();

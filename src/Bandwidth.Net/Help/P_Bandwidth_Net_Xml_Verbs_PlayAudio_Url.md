@@ -1,7 +1,7 @@
 ﻿# PlayAudio.Url Property 
  
 
-Url of media resourse to play
+Url of media resource to play
 
 **Namespace:**&nbsp;<a href ="N_Bandwidth_Net_Xml_Verbs.md">Bandwidth.Net.Xml.Verbs</a><br />**Assembly:**&nbsp;Bandwidth.Net (in Bandwidth.Net.dll) Version: 3.0.3
 

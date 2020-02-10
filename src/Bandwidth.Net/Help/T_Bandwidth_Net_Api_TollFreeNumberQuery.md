@@ -1,7 +1,7 @@
 ﻿# TollFreeNumberQuery Class
  
 
-Search criterias for toll free numbers
+Search criteria for toll free numbers
 
 
 ## Inheritance Hierarchy

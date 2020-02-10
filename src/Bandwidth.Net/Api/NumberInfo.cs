@@ -13,7 +13,7 @@ namespace Bandwidth.Net.Api
     /// <summary>
     ///   Get the CNAM info of a number
     /// </summary>
-    /// <param name="number">Phone number to get CNAM informations</param>
+    /// <param name="number">Phone number to get CNAM information</param>
     /// <param name="cancellationToken">Optional token to cancel async operation</param>
     /// <returns>Task with <see cref="NumberInfo" />NumberInfo instance</returns>
     /// <example>

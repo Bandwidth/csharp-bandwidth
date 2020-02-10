@@ -35,7 +35,7 @@ Event type</td></tr></table>&nbsp;
 
 ## Methods
 &nbsp;<table><tr><th></th><th>Name</th><th>Description</th></tr><tr><td>![Public method](media/pubmethod.gif "Public method")![Static member](media/static.gif "Static member")</td><td><a href ="M_Bandwidth_Net_ApiV2_CallbackEvent_CreateFromJson.md">CreateFromJson</a></td><td>
-Parse callback eevent data from JSON</td></tr></table>&nbsp;
+Parse callback event data from JSON</td></tr></table>&nbsp;
 <a href="#callbackevent-class">Back to Top</a>
 
 ## Examples

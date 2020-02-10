@@ -44,8 +44,8 @@ Error information</td></tr><tr><td>![Public class](media/pubclass.gif "Public cl
 Error detail (name/value pair)</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_ErrorQuery.md">ErrorQuery</a></td><td>
 Query to get errors</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_GatherPrompt.md">GatherPrompt</a></td><td>
 Gather prompt</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_LocalNumberQuery.md">LocalNumberQuery</a></td><td>
-Search criterias for local numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_LocalNumberQueryForOrder.md">LocalNumberQueryForOrder</a></td><td>
-Search criterias for local numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_MediaFile.md">MediaFile</a></td><td>
+Search criteria for local numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_LocalNumberQueryForOrder.md">LocalNumberQueryForOrder</a></td><td>
+Search criteria for local numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_MediaFile.md">MediaFile</a></td><td>
 Media file information</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_Message.md">Message</a></td><td>
 Message information</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_MessageData.md">MessageData</a></td><td>
 Parameters to send an message</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_MessageQuery.md">MessageQuery</a></td><td>
@@ -58,9 +58,9 @@ Query to get phone numbers</td></tr><tr><td>![Public class](media/pubclass.gif "
 Recording data</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_RecordingQuery.md">RecordingQuery</a></td><td>
 Query to get bridges</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_SendDtmfData.md">SendDtmfData</a></td><td>
 Send DTMF data</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_SendMessageResult.md">SendMessageResult</a></td><td>
-Rsult of batch send of some messages</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_TollFreeNumberQuery.md">TollFreeNumberQuery</a></td><td>
-Search criterias for toll free numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_TollFreeNumberQueryForOrder.md">TollFreeNumberQueryForOrder</a></td><td>
-Search criterias for toll free numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_Transcription.md">Transcription</a></td><td>
+Result of batch send of some messages</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_TollFreeNumberQuery.md">TollFreeNumberQuery</a></td><td>
+Search criteria for toll free numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_TollFreeNumberQueryForOrder.md">TollFreeNumberQueryForOrder</a></td><td>
+Search criteria for toll free numbers</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_Transcription.md">Transcription</a></td><td>
 Transcription data</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_TranscriptionQuery.md">TranscriptionQuery</a></td><td>
 Query to get transcriptions</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_UpdateApplicationData.md">UpdateApplicationData</a></td><td>
 Parameters of an application to change</td></tr><tr><td>![Public class](media/pubclass.gif "Public class")</td><td><a href ="T_Bandwidth_Net_Api_UpdateBridgeData.md">UpdateBridgeData</a></td><td>

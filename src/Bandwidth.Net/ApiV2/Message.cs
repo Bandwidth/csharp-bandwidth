@@ -346,7 +346,7 @@ namespace Bandwidth.Net.ApiV2
   }
 
   /// <summary>
-  ///   Rsult of batch send of some messages
+  ///   Result of batch send of some messages
   /// </summary>
   public class Message
   {
@@ -591,7 +591,7 @@ namespace Bandwidth.Net.ApiV2
   /// <summary>
   ///   Rate center query to search phone numbers
   /// </summary>
-  public class RateCenterSearchAndOrdeNumbersQuery : SearchAndOrderNumbersQuery
+  public class RateCenterSearchAndOrderNumbersQuery: SearchAndOrderNumbersQuery
   {
     /// <summary>
     ///   Rate center

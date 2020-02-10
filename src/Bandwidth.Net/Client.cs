@@ -27,7 +27,7 @@ namespace Bandwidth.Net
     /// <param name="apiToken">Authorization token of Catapult API</param>
     /// <param name="apiSecret">Authorization secret of Catapult API</param>
     /// <param name="baseUrl">Base url of Catapult API server</param>
-    /// <param name="http">Optional processor of http requests. Use it to owerwrite default http request processing (useful for test, logs, etc)</param>
+    /// <param name="http">Optional processor of http requests. Use it to overwrite default http request processing (useful for test, logs, etc)</param>
     /// <example>
     /// Regular usage
     /// <code>
@@ -39,7 +39,7 @@ namespace Bandwidth.Net
     /// var client = new Client("userId", "apiToken", "apiSecret", "https://another.server");
     /// </code>
     /// 
-    /// Using with own implementaion of HTTP processing (usefull for tests)
+    /// Using with own implementation of HTTP processing (usefull for tests)
     /// <code>
     /// var client = new Client("userId", "apiToken", "apiSecret", "https://another.server", new YourMockHttp());
     /// </code>

@@ -1,7 +1,7 @@
 ﻿# Message Class
  
 
-Rsult of batch send of some messages
+Result of batch send of some messages
 
 
 ## Inheritance Hierarchy

@@ -40,7 +40,7 @@
         * [ ] List
         * [ ] Get individual info
     * [ ] List Recordings
-    * [ ] List Transciptions
+    * [ ] List Transcriptions
     * [ ] Gather
         * [ ] Create Gather
         * [ ] Get Gather info
@@ -98,10 +98,10 @@
 * [Recordings](http://ap.bandwidth.com/docs/rest-api/recordings/)
     * [ ] List all recordings
     * [ ] Get single recording info
-* [Transciptions](http://ap.bandwidth.com/docs/rest-api/recordingsidtranscriptions/)
+* [Transcriptions](http://ap.bandwidth.com/docs/rest-api/recordingsidtranscriptions/)
     * [ ] Create
-    * [ ] Get info for single transcrption
-    * [ ] Get all transcrptions for a recording
+    * [ ] Get info for single transcription
+    * [ ] Get all transcriptions for a recording
 * [BXML](http://ap.bandwidth.com/docs/xml/)
     * [ ] Call
     * [ ] Conference

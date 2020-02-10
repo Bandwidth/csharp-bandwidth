@@ -20,7 +20,7 @@ public Client(
 
 
 #### Parameters
-&nbsp;<dl><dt>userId</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System.String</a><br />Id of user on Catapult API</dd><dt>apiToken</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System.String</a><br />Authorization token of Catapult API</dd><dt>apiSecret</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System.String</a><br />Authorization secret of Catapult API</dd><dt>baseUrl (Optional)</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System.String</a><br />Base url of Catapult API server</dd><dt>http (Optional)</dt><dd>Type: <a href ="T_Bandwidth_Net_IHttp.md">Bandwidth.Net.IHttp</a><br />Optional processor of http requests. Use it to owerwrite default http request processing (useful for test, logs, etc)</dd></dl>
+&nbsp;<dl><dt>userId</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System.String</a><br />Id of user on Catapult API</dd><dt>apiToken</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System.String</a><br />Authorization token of Catapult API</dd><dt>apiSecret</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System.String</a><br />Authorization secret of Catapult API</dd><dt>baseUrl (Optional)</dt><dd>Type: <a href="http://msdn2.microsoft.com/en-us/library/s1wwdcbf" target="_blank">System.String</a><br />Base url of Catapult API server</dd><dt>http (Optional)</dt><dd>Type: <a href ="T_Bandwidth_Net_IHttp.md">Bandwidth.Net.IHttp</a><br />Optional processor of http requests. Use it to overwrite default http request processing (useful for test, logs, etc)</dd></dl>
 
 ## Examples
 Regular usage 
@@ -31,7 +31,7 @@ var client = new Client("userId", "apiToken", "apiSecret");
 ```
 var client = new Client("userId", "apiToken", "apiSecret", "https://another.server");
 ```
- Using with own implementaion of HTTP processing (usefull for tests) 
+ Using with own implementation of HTTP processing (usefull for tests) 
 ```
 var client = new Client("userId", "apiToken", "apiSecret", "https://another.server", new YourMockHttp());
 ```

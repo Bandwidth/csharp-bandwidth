@@ -762,7 +762,7 @@
    "callId":"{callId}",
    "callState":"active"}</value>
   </data>
-<data name="TransferCompleteEvent" xml:space="preserve">
+  <data name="TransferCompleteEvent" xml:space="preserve">
     <value>{
    "eventType":"transferComplete",
    "from":"+13233326955",
@@ -773,5 +773,27 @@
 
  "time":"2012-11-14T16:21:59.616Z"
 }</value>
-</data>
+  </data>
+  <data name="CallbackMessageSending" xml:space="preserve">
+    <value>[
+		{
+			"time": "2019-08-22T15:41:34.644Z",
+			"type": "message-sending",
+			"to": "345757070",
+			"errorCode": 4432,
+			"description": "message sending",
+			"message": {
+				"id": "1566488494289xd2ebgyt6tk7cyow",
+				"owner": "+15082836974",
+				"applicationId": "801137e8-e2a8-7070-8485-f44ba6276985",
+				"time": "2019-08-22T15:41:34.290Z",
+				"segmentCount": 1,
+				"direction": "out",
+				"to": ["345757070"],
+				"from": "+15082837070",
+				"text": "error"
+			}			
+		}
+	]</value>
+  </data>
 </root>

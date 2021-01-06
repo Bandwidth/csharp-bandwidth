@@ -35,6 +35,20 @@ namespace Bandwidth.Net.Test.ApiV2
     }
 
     [Fact]
+    public void TestCreateFromJsonMessageSening()
+    {
+      var callbackEvents = Net.ApiV2.CallbackEvent.CreateFromJson(Helpers.GetJsonResourse("CallbackMessageSending"));
+      Assert.Equal(1, callbackEvents.Length);
+      var callbackEvent = callbackEvents[0];
+      Assert.Equal(Net.ApiV2.CallbackEventType.MessageSending, callbackEvent.Type);
+      var message = callbackEvent.Message;
+      Assert.Equal(4432, callbackEvent.ErrorCode);
+      Assert.Equal("+15082837070", message.From);
+      Assert.Equal("345757070", message.To[0]);
+      Assert.Equal(1, message.ReplyTo.Length);
+    }
+
+    [Fact]
     public void TestCreateFromJson2()
     {
       var callbackEvents = Net.ApiV2.CallbackEvent.CreateFromJson(Helpers.GetJsonResourse("IncomingGroupMessage2"));

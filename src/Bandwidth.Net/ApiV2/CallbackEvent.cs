@@ -135,6 +135,11 @@ namespace Bandwidth.Net.ApiV2
     /// <summary>
     ///   Message rejected forbidden country
     /// </summary>
-    MessageRejectedForbiddenCountry
+    MessageRejectedForbiddenCountry,
+
+    /// <summary>
+    ///   Message sending
+    /// </summary>
+    MessageSending
   }
 }

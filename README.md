@@ -1,6 +1,6 @@
 # Bandwidth.Net
 
-> Deprecation Notice
+> # Deprecation Notice
 > This project is deprecated. Please go to https://github.com/Bandwidth/csharp-sdk
 
 A .Net client library for the [Bandwidth Application Platform](http://bandwidth.com/products/application-platform?utm_medium=social&utm_source=github&utm_campaign=dtolb&utm_content=_)
@@ -211,4 +211,3 @@ var xml = response.ToXml(); // will build string <?xml version="1.0" encoding="u
 ## Providing feedback
 
 Please open an [issue](https://github.com/Bandwidth/csharp-bandwidth/issues) on this repository and we'll take a look. Thanks!
-

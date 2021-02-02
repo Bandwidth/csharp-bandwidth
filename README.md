@@ -1,6 +1,7 @@
 # Bandwidth.Net
 
-This project is archived. Please go to https://github.com/Bandwidth/csharp-sdk
+> Deprecation Notice
+> This project is deprecated. Please go to https://github.com/Bandwidth/csharp-sdk
 
 A .Net client library for the [Bandwidth Application Platform](http://bandwidth.com/products/application-platform?utm_medium=social&utm_source=github&utm_campaign=dtolb&utm_content=_)
 

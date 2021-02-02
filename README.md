@@ -1,5 +1,7 @@
 # Bandwidth.Net
 
+This project is archived. Please go to https://github.com/Bandwidth/csharp-sdk
+
 A .Net client library for the [Bandwidth Application Platform](http://bandwidth.com/products/application-platform?utm_medium=social&utm_source=github&utm_campaign=dtolb&utm_content=_)
 
 The current version is v3.0, released 1 February, 2017. Version 2.15 is available  [here](https://github.com/bandwidthcom/csharp-bandwidth/tree/v2.15).
